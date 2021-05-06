@@ -13,9 +13,12 @@
 		84D2BD7F2643A2D900A3C7FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84D2BD7D2643A2D900A3C7FD /* Main.storyboard */; };
 		84D2BD812643A2DA00A3C7FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84D2BD802643A2DA00A3C7FD /* Assets.xcassets */; };
 		84D2BD842643A2DA00A3C7FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84D2BD822643A2DA00A3C7FD /* LaunchScreen.storyboard */; };
+		FDB1E4E0F49487E82F47C88D /* Pods_FoodBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65723FE104C4C74FF101636A /* Pods_FoodBook.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		57B9BE3E6ECB702B4C64CEBF /* Pods-FoodBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodBook.debug.xcconfig"; path = "Target Support Files/Pods-FoodBook/Pods-FoodBook.debug.xcconfig"; sourceTree = "<group>"; };
+		65723FE104C4C74FF101636A /* Pods_FoodBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D2BD742643A2D900A3C7FD /* FoodBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D2BD772643A2D900A3C7FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84D2BD792643A2D900A3C7FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +27,7 @@
 		84D2BD802643A2DA00A3C7FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84D2BD832643A2DA00A3C7FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84D2BD852643A2DA00A3C7FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D403B9FA8B7F6A2C11035E16 /* Pods-FoodBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodBook.release.xcconfig"; path = "Target Support Files/Pods-FoodBook/Pods-FoodBook.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDB1E4E0F49487E82F47C88D /* Pods_FoodBook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		556D14D9E79609F4DF972441 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				65723FE104C4C74FF101636A /* Pods_FoodBook.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		84D2BD6B2643A2D900A3C7FD = {
 			isa = PBXGroup;
 			children = (
 				84D2BD762643A2D900A3C7FD /* FoodBook */,
 				84D2BD752643A2D900A3C7FD /* Products */,
+				DEEE2BA00851AE435238E41D /* Pods */,
+				556D14D9E79609F4DF972441 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +82,16 @@
 			path = FoodBook;
 			sourceTree = "<group>";
 		};
+		DEEE2BA00851AE435238E41D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				57B9BE3E6ECB702B4C64CEBF /* Pods-FoodBook.debug.xcconfig */,
+				D403B9FA8B7F6A2C11035E16 /* Pods-FoodBook.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84D2BD882643A2DA00A3C7FD /* Build configuration list for PBXNativeTarget "FoodBook" */;
 			buildPhases = (
+				7D7E92534B820F85B321478B /* [CP] Check Pods Manifest.lock */,
 				84D2BD702643A2D900A3C7FD /* Sources */,
 				84D2BD712643A2D900A3C7FD /* Frameworks */,
 				84D2BD722643A2D900A3C7FD /* Resources */,
+				424B1C38F6584C59818EEFCC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -131,6 +158,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		424B1C38F6584C59818EEFCC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FoodBook/Pods-FoodBook-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FoodBook/Pods-FoodBook-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FoodBook/Pods-FoodBook-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D7E92534B820F85B321478B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FoodBook-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		84D2BD702643A2D900A3C7FD /* Sources */ = {
@@ -216,7 +285,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -271,7 +340,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -283,12 +352,14 @@
 		};
 		84D2BD892643A2DA00A3C7FD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 57B9BE3E6ECB702B4C64CEBF /* Pods-FoodBook.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FWT45ZL3HF;
 				INFOPLIST_FILE = FoodBook/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,18 +367,20 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.injunhong.FoodBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		84D2BD8A2643A2DA00A3C7FD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D403B9FA8B7F6A2C11035E16 /* Pods-FoodBook.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FWT45ZL3HF;
 				INFOPLIST_FILE = FoodBook/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,7 +388,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.injunhong.FoodBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
