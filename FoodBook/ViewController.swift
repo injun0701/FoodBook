@@ -10,9 +10,9 @@ import Alamofire
 
 class ViewController: UIViewController {
 
-    @IBAction func toItemListAction(_ sender: UIButton) {
-        let sb = UIStoryboard(name: "ItemList", bundle: nil)
-        let navi = sb.instantiateViewController(withIdentifier: "ItemListViewController") as! ItemListViewController
+    @IBAction func toLoginViewAction(_ sender: UIButton) {
+        let sb = UIStoryboard(name: "Login", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         navigationController?.pushViewController(navi, animated: true)
     }
     

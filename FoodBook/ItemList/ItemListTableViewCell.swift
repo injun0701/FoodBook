@@ -10,6 +10,7 @@ import UIKit
 class ItemListTableViewCell: UITableViewCell {
     @IBOutlet var myImgView: UIImageView!
     @IBOutlet var mylbl: UILabel!
+    @IBOutlet var lblDate: UILabel!
     @IBOutlet var imgViewlist: UIImageView!
     @IBOutlet var lblTitle: UILabel!
     @IBOutlet var lblText: UILabel!

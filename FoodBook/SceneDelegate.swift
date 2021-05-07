@@ -45,6 +45,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        
+        //로그인 정보를 저장할 파일 경로를 생성
+        let fileMgr = FileManager.default
+        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let loginPath = docPathURL.appendingPathComponent("login.txt").path
+        try? fileMgr.removeItem(atPath: loginPath)
+        NSLog("로그아웃 상태")
     }
 
 

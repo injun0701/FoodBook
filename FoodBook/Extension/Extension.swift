@@ -28,6 +28,18 @@ extension UIViewController {
         } else {
             showAlertBtn1(title: "네트워크 오류", message: "네트워크를 키고 다시 실행해주세요.", btnTitle: "확인") {}
         }
+    }
+    //네트워크 체크
+    func networkCheckSuccessAndFaile(success: @escaping () -> (), faile: @escaping () -> ()) {
+        //네트워크 사용 여부 확인
+        let reachability = Reachability()
+        let result = reachability.isConnectedToNetwork()
+        
+        if result == true {
+            success()
+        } else {
+            faile()
+        }
         
     }
     

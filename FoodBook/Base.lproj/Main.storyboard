@@ -18,11 +18,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMd-o6-cZy">
-                                <rect key="frame" x="184" y="373" width="46" height="30"/>
+                                <rect key="frame" x="188" y="373" width="39" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="로그인"/>
                                 <connections>
-                                    <action selector="toItemListAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DmX-IH-k98"/>
+                                    <action selector="toLoginViewAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DmX-IH-k98"/>
                                 </connections>
                             </button>
                         </subviews>
