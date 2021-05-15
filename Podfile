@@ -9,5 +9,6 @@ target 'FoodBook' do
 
 pod 'Alamofire'
 pod 'Nuke'
+pod 'IQKeyboardManagerSwift'
 
 end

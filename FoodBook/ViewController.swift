@@ -10,12 +10,14 @@ import Alamofire
 
 class ViewController: UIViewController {
 
+    //로그인 버튼
     @IBAction func toLoginViewAction(_ sender: UIButton) {
         let sb = UIStoryboard(name: "Login", bundle: nil)
         let navi = sb.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         navigationController?.pushViewController(navi, animated: true)
     }
     
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         //MARK: (실제 기기 테스트를 위한)임시 로컬 허용 얼럿 - 실제 url로 바뀌면 꼭 삭제하자!!!
@@ -34,8 +36,10 @@ class ViewController: UIViewController {
             }
         }
     }
-        
+    
+    //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
+        //네비게이션 세팅
         navbarSetting(title: "FoodBook")
     }
 }

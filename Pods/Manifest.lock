@@ -1,20 +1,24 @@
 PODS:
   - Alamofire (5.4.0)
+  - IQKeyboardManagerSwift (6.5.6)
   - Nuke (9.5.0)
 
 DEPENDENCIES:
   - Alamofire
+  - IQKeyboardManagerSwift
   - Nuke
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - IQKeyboardManagerSwift
     - Nuke
 
 SPEC CHECKSUMS:
   Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
+  IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Nuke: 6f400a4ea957e09149ec335a3c6acdcc814d89e4
 
-PODFILE CHECKSUM: bbd1537cf723580c3c68df55fa0d7d13c2e0906f
+PODFILE CHECKSUM: fe72f173402dcab1a66b0ff1c4bb5876f5741089
 
 COCOAPODS: 1.10.0

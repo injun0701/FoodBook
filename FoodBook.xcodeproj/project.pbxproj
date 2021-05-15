@@ -7,9 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8412622E264FA28B00966DF9 /* SQLiteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412622D264FA28B00966DF9 /* SQLiteComponent.swift */; };
+		842C65E9264FC751009AFEFF /* ItemVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C65E8264FC751009AFEFF /* ItemVO.swift */; };
+		843831B8264EC36E00FD31DF /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843831B6264EC36D00FD31DF /* Component.swift */; };
+		843831B9264EC36E00FD31DF /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843831B7264EC36D00FD31DF /* URLRequest.swift */; };
 		8482E99C2644EE8000BAA7FE /* ItemListInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E99B2644EE8000BAA7FE /* ItemListInputViewController.swift */; };
 		8482E99F26450ACE00BAA7FE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8482E99E26450ACE00BAA7FE /* Login.storyboard */; };
 		8482E9A126450ADC00BAA7FE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E9A026450ADC00BAA7FE /* LoginViewController.swift */; };
+		84A20A2B2648B9F0005DDCC3 /* ItemListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A20A292648B9F0005DDCC3 /* ItemListTableViewCell.swift */; };
+		84A20A2C2648B9F0005DDCC3 /* ItemListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A20A2A2648B9F0005DDCC3 /* ItemListTableViewCell.xib */; };
 		84D2BD782643A2D900A3C7FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2BD772643A2D900A3C7FD /* AppDelegate.swift */; };
 		84D2BD7A2643A2D900A3C7FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2BD792643A2D900A3C7FD /* SceneDelegate.swift */; };
 		84D2BD7C2643A2D900A3C7FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2BD7B2643A2D900A3C7FD /* ViewController.swift */; };
@@ -18,7 +24,6 @@
 		84D2BD842643A2DA00A3C7FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84D2BD822643A2DA00A3C7FD /* LaunchScreen.storyboard */; };
 		84D2BD8D2643BDC100A3C7FD /* ItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2BD8C2643BDC100A3C7FD /* ItemListViewController.swift */; };
 		84D2BD8F2643BDD000A3C7FD /* ItemList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84D2BD8E2643BDD000A3C7FD /* ItemList.storyboard */; };
-		84D2BD912643C16D00A3C7FD /* ItemListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2BD902643C16D00A3C7FD /* ItemListTableViewCell.swift */; };
 		84D2BD9F2643C74200A3C7FD /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2BD942643C74100A3C7FD /* FMDatabase.m */; };
 		84D2BDA02643C74200A3C7FD /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2BD952643C74100A3C7FD /* FMResultSet.m */; };
 		84D2BDA12643C74200A3C7FD /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2BD982643C74100A3C7FD /* FMDatabasePool.m */; };
@@ -32,9 +37,15 @@
 /* Begin PBXFileReference section */
 		57B9BE3E6ECB702B4C64CEBF /* Pods-FoodBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodBook.debug.xcconfig"; path = "Target Support Files/Pods-FoodBook/Pods-FoodBook.debug.xcconfig"; sourceTree = "<group>"; };
 		65723FE104C4C74FF101636A /* Pods_FoodBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8412622D264FA28B00966DF9 /* SQLiteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteComponent.swift; sourceTree = "<group>"; };
+		842C65E8264FC751009AFEFF /* ItemVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVO.swift; sourceTree = "<group>"; };
+		843831B6264EC36D00FD31DF /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		843831B7264EC36D00FD31DF /* URLRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
 		8482E99B2644EE8000BAA7FE /* ItemListInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListInputViewController.swift; sourceTree = "<group>"; };
 		8482E99E26450ACE00BAA7FE /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8482E9A026450ADC00BAA7FE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		84A20A292648B9F0005DDCC3 /* ItemListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListTableViewCell.swift; sourceTree = "<group>"; };
+		84A20A2A2648B9F0005DDCC3 /* ItemListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemListTableViewCell.xib; sourceTree = "<group>"; };
 		84D2BD742643A2D900A3C7FD /* FoodBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D2BD772643A2D900A3C7FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84D2BD792643A2D900A3C7FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,7 +56,6 @@
 		84D2BD852643A2DA00A3C7FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84D2BD8C2643BDC100A3C7FD /* ItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListViewController.swift; sourceTree = "<group>"; };
 		84D2BD8E2643BDD000A3C7FD /* ItemList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ItemList.storyboard; sourceTree = "<group>"; };
-		84D2BD902643C16D00A3C7FD /* ItemListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListTableViewCell.swift; sourceTree = "<group>"; };
 		84D2BD932643C74000A3C7FD /* FoodBook-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FoodBook-Bridging-Header.h"; sourceTree = "<group>"; };
 		84D2BD942643C74100A3C7FD /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		84D2BD952643C74100A3C7FD /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
@@ -85,6 +95,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		843831B5264EC2F100FD31DF /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				84D2BD922643C71800A3C7FD /* Fmdb */,
+				84D2BDA82643E0A600A3C7FD /* Reachability.swift */,
+				843831B7264EC36D00FD31DF /* URLRequest.swift */,
+				843831B6264EC36D00FD31DF /* Component.swift */,
+				8412622D264FA28B00966DF9 /* SQLiteComponent.swift */,
+				842C65E8264FC751009AFEFF /* ItemVO.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
 		8482E99D26450ABA00BAA7FE /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,9 +138,9 @@
 		84D2BD762643A2D900A3C7FD /* FoodBook */ = {
 			isa = PBXGroup;
 			children = (
-				8482E99D26450ABA00BAA7FE /* Login */,
+				843831B5264EC2F100FD31DF /* Component */,
 				84D2BDA62643E08400A3C7FD /* Extension */,
-				84D2BD922643C71800A3C7FD /* Fmdb */,
+				8482E99D26450ABA00BAA7FE /* Login */,
 				84D2BD8B2643BD9F00A3C7FD /* ItemList */,
 				84D2BD772643A2D900A3C7FD /* AppDelegate.swift */,
 				84D2BD792643A2D900A3C7FD /* SceneDelegate.swift */,
@@ -136,8 +159,9 @@
 			children = (
 				84D2BD8C2643BDC100A3C7FD /* ItemListViewController.swift */,
 				84D2BD8E2643BDD000A3C7FD /* ItemList.storyboard */,
-				84D2BD902643C16D00A3C7FD /* ItemListTableViewCell.swift */,
 				8482E99B2644EE8000BAA7FE /* ItemListInputViewController.swift */,
+				84A20A292648B9F0005DDCC3 /* ItemListTableViewCell.swift */,
+				84A20A2A2648B9F0005DDCC3 /* ItemListTableViewCell.xib */,
 			);
 			path = ItemList;
 			sourceTree = "<group>";
@@ -164,7 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				84D2BDA72643E0A600A3C7FD /* Extension.swift */,
-				84D2BDA82643E0A600A3C7FD /* Reachability.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -238,6 +261,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A20A2C2648B9F0005DDCC3 /* ItemListTableViewCell.xib in Resources */,
 				84D2BD842643A2DA00A3C7FD /* LaunchScreen.storyboard in Resources */,
 				84D2BD8F2643BDD000A3C7FD /* ItemList.storyboard in Resources */,
 				84D2BD812643A2DA00A3C7FD /* Assets.xcassets in Resources */,
@@ -296,14 +320,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				8482E9A126450ADC00BAA7FE /* LoginViewController.swift in Sources */,
+				842C65E9264FC751009AFEFF /* ItemVO.swift in Sources */,
 				84D2BD7C2643A2D900A3C7FD /* ViewController.swift in Sources */,
 				84D2BD8D2643BDC100A3C7FD /* ItemListViewController.swift in Sources */,
 				84D2BDAA2643E0A600A3C7FD /* Reachability.swift in Sources */,
+				843831B8264EC36E00FD31DF /* Component.swift in Sources */,
+				8412622E264FA28B00966DF9 /* SQLiteComponent.swift in Sources */,
 				84D2BDA02643C74200A3C7FD /* FMResultSet.m in Sources */,
-				84D2BD912643C16D00A3C7FD /* ItemListTableViewCell.swift in Sources */,
 				8482E99C2644EE8000BAA7FE /* ItemListInputViewController.swift in Sources */,
+				843831B9264EC36E00FD31DF /* URLRequest.swift in Sources */,
 				84D2BDA92643E0A600A3C7FD /* Extension.swift in Sources */,
 				84D2BD9F2643C74200A3C7FD /* FMDatabase.m in Sources */,
+				84A20A2B2648B9F0005DDCC3 /* ItemListTableViewCell.swift in Sources */,
 				84D2BDA12643C74200A3C7FD /* FMDatabasePool.m in Sources */,
 				84D2BD782643A2D900A3C7FD /* AppDelegate.swift in Sources */,
 				84D2BD7A2643A2D900A3C7FD /* SceneDelegate.swift in Sources */,
@@ -385,7 +413,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -440,7 +468,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -460,7 +488,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FWT45ZL3HF;
 				INFOPLIST_FILE = FoodBook/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -484,7 +512,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FWT45ZL3HF;
 				INFOPLIST_FILE = FoodBook/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

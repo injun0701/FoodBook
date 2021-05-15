@@ -95,3 +95,36 @@ extension String {
         return String(self[startIndex ..< endIndex])
     }
 }
+
+//루트 뷰 컨트롤러
+func rootVC() {
+    if UserDefaults.standard.value(forKey: UDkey().userid) != nil  {
+        let sb = UIStoryboard(name: "ItemList", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "ItemListViewController") as! ItemListViewController
+        let nav = UINavigationController(rootViewController: vc)
+        if #available(iOS 13.0, *) {
+            let sceneDelegate = UIApplication.shared.connectedScenes
+                .first!.delegate as! SceneDelegate
+            sceneDelegate.window!.rootViewController = nav
+        // iOS12 or earlier
+        } else {
+            // UIApplication.shared.keyWindow?.rootViewController
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.window!.rootViewController =  nav
+        }
+    } else {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        let nav = UINavigationController(rootViewController: vc)
+        if #available(iOS 13.0, *) {
+            let sceneDelegate = UIApplication.shared.connectedScenes
+                .first!.delegate as! SceneDelegate
+            sceneDelegate.window!.rootViewController = nav
+        // iOS12 or earlier
+        } else {
+            // UIApplication.shared.keyWindow?.rootViewController
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.window!.rootViewController =  nav
+        }
+    }
+}

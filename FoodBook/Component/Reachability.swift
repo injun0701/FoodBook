@@ -1,11 +1,12 @@
 //
 //  Reachability.swift
-//  iOSSample
+//  FoodBook
 //
 //  Created by HongInJun on 2021/04/28.
 //
 
 import SystemConfiguration
+
 public class Reachability {
     public func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in()
