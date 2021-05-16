@@ -9,13 +9,13 @@ import Foundation
 
 struct FoodBookUrl {
     let login = "http://192.168.0.4/user/login"
-    let itemGetall = "http://192.168.0.4/item/getall"
+    let itemGet = "http://192.168.0.4/item/paging?pageno="
     let lastupdate = "http://192.168.0.4/item/lastupdatetime"
     let imgurl =  "http://192.168.0.4/img/"
     let itemInsert = "http://192.168.0.4/item/insert"
     let itemUpdate = "http://192.168.0.4/item/update"
     let itemDelete = "http://192.168.0.4/item/delete/"
-    let commentGet = "http://192.168.0.4/item/comment/get/"
+    let commentGet = "http://192.168.0.4/item/comment/"
     let commentlastupdate = "http://192.168.0.4/item/comment/lastupdatetime"
     let commentInsert = "http://192.168.0.4/item/comment/insert"
     let commentUpdate = "http://192.168.0.4/item/comment/update"

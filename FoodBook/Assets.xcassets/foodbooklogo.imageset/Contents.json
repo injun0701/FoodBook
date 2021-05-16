@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "gray.jpg",
+      "filename" : "foodbooklogo.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "gray@2x.jpg",
+      "filename" : "foodbooklogo@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "gray@3x.jpg",
+      "filename" : "foodbooklogo@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

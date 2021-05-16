@@ -39,8 +39,31 @@ class ViewController: UIViewController {
     
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
-        //네비게이션 세팅
-        navbarSetting(title: "FoodBook")
+        naviDesignSetting()
     }
+    
+    //네비게이션 세팅
+    func naviDesignSetting() {
+        title = "FoodBook"
+        //백버튼 텍스트 제거
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backBarButtonItem
+        
+        let nav = self.navigationController?.navigationBar
+        nav?.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white] //타이틀 글자색
+        self.navigationController?.navigationBar.barTintColor = UIColor().mainColor //네비 바 배경색
+        self.navigationController?.navigationBar.isTranslucent = false //네비 바 배경 기본 반투명 false
+        
+        //네비 라인 삭제
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        
+        navigationController?.navigationBar.barStyle = .black //상태바 글자 흰색으로 설정하기위해 네비바 barStyle를 black
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent //상태바 글자 검정
+    }
+
 }
 

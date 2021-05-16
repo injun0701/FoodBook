@@ -4,7 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -62,12 +62,12 @@ asdasd</string>
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oo2-it-C20">
-                        <rect key="frame" x="364" y="261" width="30" height="30"/>
+                        <rect key="frame" x="364" y="326" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="81R-vv-F5p"/>
                             <constraint firstAttribute="height" constant="30" id="Wop-2e-Hn2"/>
                         </constraints>
-                        <color key="tintColor" systemColor="systemGreenColor"/>
+                        <color key="tintColor" name="MainColor"/>
                         <state key="normal" image="heart" catalog="system"/>
                         <state key="selected" image="heart.fill" catalog="system"/>
                         <connections>
@@ -75,8 +75,8 @@ asdasd</string>
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipx-GP-NSg">
-                        <rect key="frame" x="356.5" y="332" width="37.5" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <rect key="frame" x="358.5" y="371" width="35.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -84,6 +84,13 @@ asdasd</string>
                         <rect key="frame" x="358.5" y="27.5" width="35.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="좋아요:0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXl-ei-N1o">
+                        <rect key="frame" x="304" y="332.5" width="50" height="17"/>
+                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -95,20 +102,22 @@ asdasd</string>
                     <constraint firstItem="upt-EG-z8T" firstAttribute="leading" secondItem="r7o-Tr-rsB" secondAttribute="trailing" constant="10" id="Dej-8e-IUu"/>
                     <constraint firstAttribute="trailing" secondItem="ghw-4K-HLq" secondAttribute="trailing" id="FeY-1k-gcR"/>
                     <constraint firstItem="dvV-nk-scz" firstAttribute="centerY" secondItem="upt-EG-z8T" secondAttribute="centerY" id="Ije-aW-Ka7"/>
-                    <constraint firstItem="ipx-GP-NSg" firstAttribute="centerY" secondItem="FSa-MX-bVV" secondAttribute="centerY" id="KKs-B7-flh"/>
+                    <constraint firstItem="ipx-GP-NSg" firstAttribute="centerY" secondItem="mUZ-mV-9fw" secondAttribute="centerY" id="KKs-B7-flh"/>
                     <constraint firstItem="ghw-4K-HLq" firstAttribute="top" secondItem="r7o-Tr-rsB" secondAttribute="bottom" constant="10" id="KSD-SG-Zco"/>
                     <constraint firstAttribute="bottom" secondItem="H00-sX-Wms" secondAttribute="bottom" id="KZI-JU-zbC"/>
                     <constraint firstItem="r7o-Tr-rsB" firstAttribute="top" secondItem="I89-gL-GNs" secondAttribute="topMargin" constant="10" id="M5S-Zb-v3Z"/>
+                    <constraint firstItem="Oo2-it-C20" firstAttribute="leading" secondItem="HXl-ei-N1o" secondAttribute="trailing" constant="10" id="NjB-Gf-6lM"/>
                     <constraint firstItem="H00-sX-Wms" firstAttribute="leading" secondItem="I89-gL-GNs" secondAttribute="leading" id="QTK-1T-YB7"/>
                     <constraint firstAttribute="trailingMargin" secondItem="dvV-nk-scz" secondAttribute="trailing" id="VES-ou-dTY"/>
                     <constraint firstItem="FSa-MX-bVV" firstAttribute="leading" secondItem="r7o-Tr-rsB" secondAttribute="leading" id="YZs-pb-yh5"/>
+                    <constraint firstItem="Oo2-it-C20" firstAttribute="centerY" secondItem="FSa-MX-bVV" secondAttribute="centerY" id="Z6B-Ya-bap"/>
                     <constraint firstItem="mUZ-mV-9fw" firstAttribute="top" secondItem="FSa-MX-bVV" secondAttribute="bottom" constant="5" id="dzV-1u-YJY"/>
                     <constraint firstAttribute="trailingMargin" secondItem="mUZ-mV-9fw" secondAttribute="trailing" id="hX2-mc-xlt"/>
                     <constraint firstItem="upt-EG-z8T" firstAttribute="centerY" secondItem="r7o-Tr-rsB" secondAttribute="centerY" id="jDh-Qt-Fi2"/>
                     <constraint firstItem="ghw-4K-HLq" firstAttribute="leading" secondItem="I89-gL-GNs" secondAttribute="leading" id="lh2-q6-HVW"/>
                     <constraint firstAttribute="trailingMargin" secondItem="ipx-GP-NSg" secondAttribute="trailing" id="lt0-eP-HnE"/>
-                    <constraint firstItem="ghw-4K-HLq" firstAttribute="bottom" secondItem="Oo2-it-C20" secondAttribute="bottom" constant="20" id="mER-Gq-HU7"/>
                     <constraint firstAttribute="left" secondItem="r7o-Tr-rsB" secondAttribute="left" constant="-20" id="pPf-y6-bXu"/>
+                    <constraint firstItem="HXl-ei-N1o" firstAttribute="centerY" secondItem="Oo2-it-C20" secondAttribute="centerY" id="pbn-EG-kmf"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Oo2-it-C20" secondAttribute="trailing" id="sK5-QN-POC"/>
                 </constraints>
             </tableViewCellContentView>
@@ -116,6 +125,7 @@ asdasd</string>
                 <outlet property="btnLike" destination="Oo2-it-C20" id="nHd-Hz-xS5"/>
                 <outlet property="imgViewlist" destination="ghw-4K-HLq" id="Mr9-zj-J8j"/>
                 <outlet property="lblDate" destination="dvV-nk-scz" id="kKp-RF-BFJ"/>
+                <outlet property="lblLike" destination="HXl-ei-N1o" id="gWH-Vr-s97"/>
                 <outlet property="lblPrice" destination="ipx-GP-NSg" id="xN5-zT-dOi"/>
                 <outlet property="lblText" destination="mUZ-mV-9fw" id="mTz-Ne-s91"/>
                 <outlet property="lblTitle" destination="FSa-MX-bVV" id="PkZ-Pw-1js"/>
@@ -129,8 +139,8 @@ asdasd</string>
         <image name="gray" width="411" height="206.5"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <namedColor name="MainColor">
+            <color red="0.29019607843137257" green="0.68627450980392157" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

@@ -15,6 +15,7 @@ class ItemListTableViewCell: UITableViewCell {
     @IBOutlet var lblTitle: UILabel!
     @IBOutlet var lblText: UILabel!
     @IBOutlet var lblPrice: UILabel!
+    @IBOutlet var lblLike: UILabel!
     @IBOutlet var btnLike: UIButton!
     
     @IBAction func btnLikeAction(_ sender: UIButton) {

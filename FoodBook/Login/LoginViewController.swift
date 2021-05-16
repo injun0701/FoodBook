@@ -82,7 +82,22 @@ class LoginViewController: UIViewController {
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        navbarSetting(title: "")
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navibarSetting()
+    }
+    
+    func navibarSetting() {
+        self.navigationController?.navigationBar.barTintColor = UIColor.white //네비 바 배경색
+        
+        setNeedsStatusBarAppearanceUpdate() //상태바 업데이트
+        navigationController?.navigationBar.barStyle = .default //상태바 글자 검정색으로 설정하기위해 네비바 barStyle를 default
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default //상태바 글자 검정
+    }
 }

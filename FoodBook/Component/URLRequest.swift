@@ -67,9 +67,9 @@ class URLRequest {
     }
     
     //MARK: 리스트 받아오기
-    func apiGetAll(success: @escaping (NSArray) -> Void, fail: @escaping voidToVoid)  {
+    func apiItemGet(page: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
         
-        let url = FoodBookUrl().itemGetall
+        let url = "\(FoodBookUrl().itemGet)\(page)&count=10"
         
         //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
         let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
@@ -88,9 +88,11 @@ class URLRequest {
                     //전체 데이터를 NSDictionary로 받기
                     if let jsonObject = value as? [String:Any] {
                         NSLog("데이터 받아오기 성공")
-                        //전체 데이터에서 list 키의 값을 배열로 가져오기
+                        //데이터에서 전체 데이터 개수를 Int로 가져오기
+                        let count = jsonObject["count"] as! Int
+                        //데이터에서 list 키의 값을 배열로 가져오기
                         let list = jsonObject["list"] as! NSArray
-                        success(list)
+                        success(count, list)
                     }
                 case GetAllStatusCode.fail.rawValue:
                     NSLog("데이터 받아오기 실패")
@@ -365,9 +367,9 @@ class URLRequest {
     }
     
     //MARK: 댓글 리스트 받아오기
-    func apiCommentGet(itemid: String, success: @escaping (NSArray) -> Void, fail: @escaping voidToVoid)  {
+    func apiCommentGet(itemid: String, page: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
         
-        let url = FoodBookUrl().commentGet + itemid
+        let url = "\(FoodBookUrl().commentGet)\(itemid)/paging?pageno=\(page)&count=3"
         
         //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
         let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
@@ -385,9 +387,11 @@ class URLRequest {
                     //전체 데이터를 NSDictionary로 받기
                     if let jsonObject = value as? [String:Any] {
                         NSLog("데이터 받아오기 성공")
-                        //전체 데이터에서 list 키의 값을 배열로 가져오기
+                        //데이터에서 전체 데이터 개수를 Int로 가져오기
+                        let count = jsonObject["count"] as! Int
+                        //데이터에서 list 키의 값을 배열로 가져오기
                         let list = jsonObject["list"] as! NSArray
-                        success(list)
+                        success(count, list)
                     }
                 case GetAllStatusCode.fail.rawValue:
                     NSLog("데이터 받아오기 실패")

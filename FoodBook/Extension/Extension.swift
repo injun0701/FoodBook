@@ -11,7 +11,7 @@ extension UIViewController {
     
     //네비게이션바 세팅
     func navbarSetting(title: String) {
-        self.title = title
+        self.navigationItem.title = title
         //백버튼 텍스트 제거
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backBarButtonItem
@@ -126,5 +126,12 @@ func rootVC() {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.window!.rootViewController =  nav
         }
+    }
+}
+
+//MARK: 유아이_컬러 extension
+extension UIColor {
+    var mainColor : UIColor {
+        return UIColor(named: "MainColor")!
     }
 }
