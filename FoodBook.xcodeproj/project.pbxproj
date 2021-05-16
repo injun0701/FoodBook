@@ -11,7 +11,7 @@
 		842C65E9264FC751009AFEFF /* ItemVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C65E8264FC751009AFEFF /* ItemVO.swift */; };
 		843831B8264EC36E00FD31DF /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843831B6264EC36D00FD31DF /* Component.swift */; };
 		843831B9264EC36E00FD31DF /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843831B7264EC36D00FD31DF /* URLRequest.swift */; };
-		8482E99C2644EE8000BAA7FE /* ItemListInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E99B2644EE8000BAA7FE /* ItemListInputViewController.swift */; };
+		8482E99C2644EE8000BAA7FE /* ItemListPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */; };
 		8482E99F26450ACE00BAA7FE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8482E99E26450ACE00BAA7FE /* Login.storyboard */; };
 		8482E9A126450ADC00BAA7FE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E9A026450ADC00BAA7FE /* LoginViewController.swift */; };
 		84A20A2B2648B9F0005DDCC3 /* ItemListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A20A292648B9F0005DDCC3 /* ItemListTableViewCell.swift */; };
@@ -31,6 +31,12 @@
 		84D2BDA32643C74200A3C7FD /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D2BD9E2643C74200A3C7FD /* FMDatabaseAdditions.m */; };
 		84D2BDA92643E0A600A3C7FD /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2BDA72643E0A600A3C7FD /* Extension.swift */; };
 		84D2BDAA2643E0A600A3C7FD /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2BDA82643E0A600A3C7FD /* Reachability.swift */; };
+		84FA37AC2650AD8900F37673 /* Comment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84FA37AB2650AD8900F37673 /* Comment.storyboard */; };
+		84FA37AF2650ADB900F37673 /* CommentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA37AD2650ADB900F37673 /* CommentListTableViewCell.swift */; };
+		84FA37B02650ADB900F37673 /* CommentListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FA37AE2650ADB900F37673 /* CommentListTableViewCell.xib */; };
+		84FA37B22650B0A000F37673 /* CommentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA37B12650B0A000F37673 /* CommentListViewController.swift */; };
+		84FA37B42650B17000F37673 /* CommentVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA37B32650B17000F37673 /* CommentVO.swift */; };
+		84FA37B62650B68600F37673 /* CommentPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA37B52650B68600F37673 /* CommentPostViewController.swift */; };
 		FDB1E4E0F49487E82F47C88D /* Pods_FoodBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65723FE104C4C74FF101636A /* Pods_FoodBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,7 +47,7 @@
 		842C65E8264FC751009AFEFF /* ItemVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVO.swift; sourceTree = "<group>"; };
 		843831B6264EC36D00FD31DF /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		843831B7264EC36D00FD31DF /* URLRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
-		8482E99B2644EE8000BAA7FE /* ItemListInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListInputViewController.swift; sourceTree = "<group>"; };
+		8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListPostViewController.swift; sourceTree = "<group>"; };
 		8482E99E26450ACE00BAA7FE /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8482E9A026450ADC00BAA7FE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		84A20A292648B9F0005DDCC3 /* ItemListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListTableViewCell.swift; sourceTree = "<group>"; };
@@ -71,6 +77,12 @@
 		84D2BDA42643C86100A3C7FD /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		84D2BDA72643E0A600A3C7FD /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		84D2BDA82643E0A600A3C7FD /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		84FA37AB2650AD8900F37673 /* Comment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Comment.storyboard; sourceTree = "<group>"; };
+		84FA37AD2650ADB900F37673 /* CommentListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListTableViewCell.swift; sourceTree = "<group>"; };
+		84FA37AE2650ADB900F37673 /* CommentListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentListTableViewCell.xib; sourceTree = "<group>"; };
+		84FA37B12650B0A000F37673 /* CommentListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentListViewController.swift; sourceTree = "<group>"; };
+		84FA37B32650B17000F37673 /* CommentVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVO.swift; sourceTree = "<group>"; };
+		84FA37B52650B68600F37673 /* CommentPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentPostViewController.swift; sourceTree = "<group>"; };
 		D403B9FA8B7F6A2C11035E16 /* Pods-FoodBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodBook.release.xcconfig"; path = "Target Support Files/Pods-FoodBook/Pods-FoodBook.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,6 +116,7 @@
 				843831B6264EC36D00FD31DF /* Component.swift */,
 				8412622D264FA28B00966DF9 /* SQLiteComponent.swift */,
 				842C65E8264FC751009AFEFF /* ItemVO.swift */,
+				84FA37B32650B17000F37673 /* CommentVO.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -141,6 +154,7 @@
 				843831B5264EC2F100FD31DF /* Component */,
 				84D2BDA62643E08400A3C7FD /* Extension */,
 				8482E99D26450ABA00BAA7FE /* Login */,
+				84FA37AA2650AD2100F37673 /* Comment */,
 				84D2BD8B2643BD9F00A3C7FD /* ItemList */,
 				84D2BD772643A2D900A3C7FD /* AppDelegate.swift */,
 				84D2BD792643A2D900A3C7FD /* SceneDelegate.swift */,
@@ -159,7 +173,7 @@
 			children = (
 				84D2BD8C2643BDC100A3C7FD /* ItemListViewController.swift */,
 				84D2BD8E2643BDD000A3C7FD /* ItemList.storyboard */,
-				8482E99B2644EE8000BAA7FE /* ItemListInputViewController.swift */,
+				8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */,
 				84A20A292648B9F0005DDCC3 /* ItemListTableViewCell.swift */,
 				84A20A2A2648B9F0005DDCC3 /* ItemListTableViewCell.xib */,
 			);
@@ -190,6 +204,18 @@
 				84D2BDA72643E0A600A3C7FD /* Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		84FA37AA2650AD2100F37673 /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				84FA37B12650B0A000F37673 /* CommentListViewController.swift */,
+				84FA37AB2650AD8900F37673 /* Comment.storyboard */,
+				84FA37B52650B68600F37673 /* CommentPostViewController.swift */,
+				84FA37AD2650ADB900F37673 /* CommentListTableViewCell.swift */,
+				84FA37AE2650ADB900F37673 /* CommentListTableViewCell.xib */,
+			);
+			path = Comment;
 			sourceTree = "<group>";
 		};
 		DEEE2BA00851AE435238E41D /* Pods */ = {
@@ -262,11 +288,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				84A20A2C2648B9F0005DDCC3 /* ItemListTableViewCell.xib in Resources */,
+				84FA37AC2650AD8900F37673 /* Comment.storyboard in Resources */,
 				84D2BD842643A2DA00A3C7FD /* LaunchScreen.storyboard in Resources */,
 				84D2BD8F2643BDD000A3C7FD /* ItemList.storyboard in Resources */,
 				84D2BD812643A2DA00A3C7FD /* Assets.xcassets in Resources */,
 				8482E99F26450ACE00BAA7FE /* Login.storyboard in Resources */,
 				84D2BD7F2643A2D900A3C7FD /* Main.storyboard in Resources */,
+				84FA37B02650ADB900F37673 /* CommentListTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,14 +355,18 @@
 				843831B8264EC36E00FD31DF /* Component.swift in Sources */,
 				8412622E264FA28B00966DF9 /* SQLiteComponent.swift in Sources */,
 				84D2BDA02643C74200A3C7FD /* FMResultSet.m in Sources */,
-				8482E99C2644EE8000BAA7FE /* ItemListInputViewController.swift in Sources */,
+				84FA37B42650B17000F37673 /* CommentVO.swift in Sources */,
+				8482E99C2644EE8000BAA7FE /* ItemListPostViewController.swift in Sources */,
+				84FA37B62650B68600F37673 /* CommentPostViewController.swift in Sources */,
 				843831B9264EC36E00FD31DF /* URLRequest.swift in Sources */,
 				84D2BDA92643E0A600A3C7FD /* Extension.swift in Sources */,
 				84D2BD9F2643C74200A3C7FD /* FMDatabase.m in Sources */,
+				84FA37B22650B0A000F37673 /* CommentListViewController.swift in Sources */,
 				84A20A2B2648B9F0005DDCC3 /* ItemListTableViewCell.swift in Sources */,
 				84D2BDA12643C74200A3C7FD /* FMDatabasePool.m in Sources */,
 				84D2BD782643A2D900A3C7FD /* AppDelegate.swift in Sources */,
 				84D2BD7A2643A2D900A3C7FD /* SceneDelegate.swift in Sources */,
+				84FA37AF2650ADB900F37673 /* CommentListTableViewCell.swift in Sources */,
 				84D2BDA22643C74200A3C7FD /* FMDatabaseQueue.m in Sources */,
 				84D2BDA32643C74200A3C7FD /* FMDatabaseAdditions.m in Sources */,
 			);

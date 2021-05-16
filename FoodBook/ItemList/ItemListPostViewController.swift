@@ -9,7 +9,7 @@ import UIKit
 import Alamofire
 import Photos
 
-class ItemListInputViewController: UIViewController {
+class ItemListPostViewController: UIViewController {
     
     @IBOutlet var imgView: UIImageView!
     @IBOutlet var tfTitle: UITextField!
@@ -23,17 +23,17 @@ class ItemListInputViewController: UIViewController {
     //셀의 게시물 제목
     var itemName = ""
     //셀의 이미지
-    var listImg = UIImage()
+    var itemImg = UIImage()
     //셀의 이미지 url
-    var listImgUrl = "gray.jpg"
+    var itemImgUrl = "gray.jpg"
     //셀의 가격
     var itemPrice = ""
     //셀의 텍스트
     var itemDescription = ""
     //셀의 유저 이미지 이름
-    var userimgurl = ""
+    var userImgUrl = ""
     //셀의 유저 이름
-    var username = ""
+    var userName = ""
     
     //앨범 객체 생성
     let imagePickerController = UIImagePickerController()
@@ -44,6 +44,9 @@ class ItemListInputViewController: UIViewController {
     //저장, 수정 모드 설정
     var mode = "저장"
     
+    //이미지 변화 체크
+    var imgChange = false
+    
     @IBAction func btnImgAction(_ sender: UIButton) {
         //사진을 선택하기 위해 앨범 출력
         self.imagePickerController.sourceType = .photoLibrary
@@ -53,8 +56,11 @@ class ItemListInputViewController: UIViewController {
     //삽입, 수정 버튼
     @IBAction func btnAddAction(_ sender: UIButton) {
         if mode == "저장" {
-            //아이템 삽입
-            itemAdd()
+            //유효성 검사
+            validateField() {
+                //아이템 삽입
+                self.itemAdd()
+            }
         } else {
             //유효성 검사
             validateField() {
@@ -69,13 +75,13 @@ class ItemListInputViewController: UIViewController {
         let itemname = tfTitle.text!
         let price = tfPrice.text!
         let description = tvDescription.text!
-        let listimgUrl = listImgUrl
-        let userimgurl = userimgurl
-        let username = username
+        let itemimgurl = itemImgUrl
+        let userimgurl = userImgUrl
+        let username = userName
         let img = imgView.image!//이미지
         
         //서버에서 아이템 데이터 삽입
-        req.apiItemInsert(itemname: itemname, price: price, description: description, userimgurl: userimgurl, listimgUrl: listimgUrl, username: username, img: img) {
+        req.apiItemInsert(itemname: itemname, price: price, description: description, userimgurl: userimgurl, itemimgurl: itemimgurl, username: username, img: img) {
             self.navigationController?.popViewController(animated: true)
         } fail: {
             self.showAlertBtn1(title: "업로드 오류", message: "업로드 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
@@ -87,12 +93,16 @@ class ItemListInputViewController: UIViewController {
         let itemname = tfTitle.text!
         let price = tfPrice.text!
         let description = tvDescription.text!
-        let listImg = listImg
+        let itemImg = itemImg
         
-        if itemname == self.itemName && price == self.itemPrice && description == self.itemDescription && listImg == imgView.image {
-            showAlertBtn1(title: "업로드 오류", message: "게시물 정보가 이전과 동일합니다.", btnTitle: "확인") {}
+        if itemname == "" || price == "" || description == "" {
+            showAlertBtn1(title: "업로드 오류", message: "빈칸 없이 모두 작성해주세요.", btnTitle: "확인") {}
         } else {
-            success()
+            if itemname == self.itemName && price == self.itemPrice && description == self.itemDescription && itemImg == imgView.image {
+                showAlertBtn1(title: "업로드 오류", message: "게시물 정보가 이전과 동일합니다.", btnTitle: "확인") {}
+            } else {
+                success()
+            }
         }
     }
     
@@ -102,15 +112,17 @@ class ItemListInputViewController: UIViewController {
         let itemname = tfTitle.text!
         let price = tfPrice.text!
         let description = tvDescription.text!
-        let listimgUrl = listImgUrl
-        let username = username
+        let itemimgurl = itemImgUrl
+        let username = userName
         
         //이미지
         let img = imgView.image
         
+        let imgChange = self.imgChange
+        
         //서버에서 아이템 데이터 수정
-        req.apiItemEdit(itemid: itemid, itemname: itemname, price: price, description: description, listimgUrl: listimgUrl, username: username, img: img!) {
-            self.navigationController?.popViewController(animated: true)
+        req.apiItemEdit(itemid: itemid, itemname: itemname, price: price, description: description, itemimgurl: itemimgurl, username: username, img: img!, imgChange: imgChange) {
+            self.navigationController?.popToRootViewController(animated: false)
         } fail: {
             self.showAlertBtn1(title: "업로드 오류", message: "업로드 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
@@ -130,10 +142,10 @@ class ItemListInputViewController: UIViewController {
                     msg = "아이템 삭제 실패"
                 }
                 showAlertBtn1(title: "아이템 삭제", message: "\(msg)했습니다.", btnTitle: "확인") {
-                    navigationController?.popViewController(animated: true)
+                    navigationController?.popToRootViewController(animated: true)
                 }
             } fail: {
-                self.showAlertBtn1(title: "아이템 삭제", message: "삭제를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {
+                showAlertBtn1(title: "아이템 삭제", message: "삭제를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {
                     navigationController?.popViewController(animated: true)
                 }
             }
@@ -154,13 +166,17 @@ class ItemListInputViewController: UIViewController {
         tvDescription.layer.cornerRadius = 4
         
         if mode == "저장" {
+            navbarSetting(title: "게시물 저장")
+            
             btnDelete.isHidden = true
             btnAdd.setTitle(mode, for: .normal)
         } else {
+            navbarSetting(title: "게시물 수정")
+            
             btnAdd.setTitle(mode, for: .normal)
             
             tfTitle.text = itemName
-            imgView.image = listImg
+            imgView.image = itemImg
             tfPrice.text = itemPrice
             tvDescription.text = itemDescription
         }
@@ -172,7 +188,7 @@ class ItemListInputViewController: UIViewController {
 }
 
 //MARK: 이미지피커컨트롤러
-extension ItemListInputViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ItemListPostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //이미지 선택했을때
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //이미지뷰를 선택된 이미지로 교체
@@ -181,9 +197,10 @@ extension ItemListInputViewController: UIImagePickerControllerDelegate, UINaviga
         }
         //선택된 이미지의 이름과 확장자 받아오기
         if let url = info[UIImagePickerController.InfoKey.imageURL] as? URL {
-            listImgUrl = url.lastPathComponent
-            print(listImgUrl)
+            itemImgUrl = url.lastPathComponent
+            print(itemImgUrl)
         }
+        imgChange = true
         dismiss(animated: true, completion: nil)
     }
     

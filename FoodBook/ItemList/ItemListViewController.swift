@@ -30,13 +30,12 @@ class ItemListViewController: UIViewController {
     //글쓰기 버튼
     @IBAction func btnAddAction(_ sender: UIButton) {
         let sb = UIStoryboard(name: "ItemList", bundle: nil)
-        let navi = sb.instantiateViewController(withIdentifier: "ItemListInputViewController") as! ItemListInputViewController
+        let navi = sb.instantiateViewController(withIdentifier: "ItemListPostViewController") as! ItemListPostViewController
         
-        let userimgurl = UserDefaults.standard.value(forKey: UDkey().userimgurl)
-        let username = UserDefaults.standard.value(forKey: UDkey().username)
-        
-        navi.userimgurl = userimgurl as! String
-        navi.username = username as! String
+        let userImgUrl = UserDefaults.standard.value(forKey: UDkey().userimgurl)
+        let userName = UserDefaults.standard.value(forKey: UDkey().username)
+        navi.userImgUrl = userImgUrl as! String
+        navi.userName = userName as! String
         navi.mode = "저장"
         self.navigationController?.pushViewController(navi, animated: true)
     }
@@ -57,6 +56,9 @@ class ItemListViewController: UIViewController {
     
     //MARK: 서버, 로컬 데이터 세팅
     func dataSetting() {
+        //초기화
+        itemList = []
+        
         //파일 핸들링하기 위한 객체 생성
         let fileMgr = FileManager.default
         
@@ -212,6 +214,7 @@ class ItemListViewController: UIViewController {
             //데이터 가져와서 파싱하는 문장 종료
             self.tableView.reloadData()
             itemDB.close()
+            NSLog("데이터 베이스 생성 성공")
         } fail: {
             self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
@@ -251,6 +254,7 @@ class ItemListViewController: UIViewController {
             }
             //테이블 뷰 다시 출력
             self.tableView.reloadData()
+            NSLog("데이터 베이스 읽기 성공")
         } catch let error as NSError {
             NSLog("데이터 베이스 읽기 실패: \(error.localizedDescription)")
         }
@@ -296,7 +300,7 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.lblText.text = item.description
         cell.lblPrice.text = "가격: \(item.price ?? 0)"
         
-        //유저 이미지 출력
+        //아이템 이미지 출력
         req.getImg(imgurlName: item.imgurl!, defaultImgurlName: "gray", toImg: cell.imgViewlist)
         
         //유저이미지 라운드 처리
@@ -318,22 +322,19 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         guard let currentCell = tableView.cellForRow(at: cellIndexPath!) as? ItemListTableViewCell else { return }
         let item = itemList[indexPath.row]
         
-        let username = UserDefaults.standard.value(forKey: UDkey().username) as? String
-        //내 게시물만 수정 가능
-        if username == item.username! {
-            let sb = UIStoryboard(name: "ItemList", bundle: nil)
-            let navi = sb.instantiateViewController(withIdentifier: "ItemListInputViewController") as! ItemListInputViewController
-            navi.itemId = "\(item.itemid!)"
-            navi.itemName = item.itemname!
-            navi.listImg = currentCell.imgViewlist.image!
-            navi.listImgUrl = item.imgurl!
-            navi.itemPrice = "\(item.price!)"
-            navi.itemDescription = item.description!
-            navi.userimgurl = item.userimgurl!
-            navi.username = item.username!
-            navi.mode = "수정"
-            self.navigationController?.pushViewController(navi, animated: true)
-        }
+        let sb = UIStoryboard(name: "Comment", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "CommentListViewController") as! CommentListViewController
+        navi.itemId = "\(item.itemid!)"
+        navi.itemName = item.itemname!
+        navi.itemImg = currentCell.imgViewlist.image!
+        navi.itemImgUrl = item.imgurl!
+        navi.itemPrice = "\(item.price!)"
+        navi.itemDescription = item.description!
+        navi.itemDate = "\(item.updatedate!)"
+        navi.userImgUrl = item.userimgurl!
+        navi.userImg = currentCell.myImgView.image!
+        navi.userName = item.username!
+        self.navigationController?.pushViewController(navi, animated: true)
     }
 }
 

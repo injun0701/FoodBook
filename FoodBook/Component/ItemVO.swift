@@ -7,7 +7,6 @@
 
 import Foundation
 
-//DTO 역할을 수행할 구조체
 struct Item {
     var username : String?
     var userimgurl : String?
