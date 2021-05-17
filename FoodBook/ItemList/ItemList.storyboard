@@ -107,7 +107,7 @@
                                     <constraint firstAttribute="width" constant="50" id="Shx-e2-1Tg"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="plus" catalog="system"/>
+                                <state key="normal" image="plus"/>
                                 <connections>
                                     <action selector="btnImgAction:" destination="hIV-Lk-zNW" eventType="touchUpInside" id="Tkf-5m-ofd"/>
                                 </connections>
@@ -218,7 +218,7 @@
     </scenes>
     <resources>
         <image name="gray" width="274" height="137"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus" width="50" height="50"/>
         <namedColor name="MainColor">
             <color red="0.29019607843137257" green="0.68627450980392157" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

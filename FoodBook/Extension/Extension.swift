@@ -79,6 +79,17 @@ extension UIViewController {
         }
     }
     
+    //문자열 자르기
+    func cutString(str: String, endIndex: Int, fromTheFront: Bool) -> String {
+        if fromTheFront == true {
+            let result = String(str.prefix(endIndex))
+            return result
+        } else {
+            let result = String(str.suffix(endIndex))
+            return result
+        }
+    }
+    
 }
 
 extension String {

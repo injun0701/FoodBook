@@ -8,8 +8,8 @@
 import Foundation
 
 struct SQLiteSql {
-    let createTableItem = "create table if not exists item(itemid INTEGER not null primary key, username text, userimgurl text, itemname text, price INTEGER, description text, imgurl text, updatedate text, likecount INTEGER)"
-    let insertIntoItem = "insert into item(itemid, username, userimgurl, itemname, price, description, imgurl, updatedate, likecount) values(:itemid, :username, :userimgurl, :itemname, :price, :description, :imgurl, :updatedate, :likecount)"
+    let createTableItem = "create table if not exists item(itemid INTEGER not null primary key, username text, userimgurl text, itemname text, price INTEGER, description text, imgurl text, updatedate text, commentcount INTEGER, likecount INTEGER, useritemlike INTEGER)"
+    let insertIntoItem = "insert into item(itemid, username, userimgurl, itemname, price, description, imgurl, updatedate, commentcount, likecount, useritemlike) values(:itemid, :username, :userimgurl, :itemname, :price, :description, :imgurl, :updatedate, :commentcount, :likecount, :useritemlike)"
     let selectFromItem = "select * from item order by itemid desc"
     let createTableComment = "create table if not exists comment(commentid INTEGER not null primary key, itemid INTEGER, username text, userimgurl text, comment text, updatedate text)"
     let insertIntoComment = "insert into comment(commentid, itemid, username, userimgurl, comment, updatedate) values(:commentid, :itemid, :username, :userimgurl, :comment, :updatedate)"

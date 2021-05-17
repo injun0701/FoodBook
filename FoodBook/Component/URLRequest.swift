@@ -67,9 +67,14 @@ class URLRequest {
     }
     
     //MARK: 리스트 받아오기
-    func apiItemGet(page: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
+    func apiItemGet(page: Int, count: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
+        //url은 한글을 인코딩해야함
         
-        let url = "\(FoodBookUrl().itemGet)\(page)&count=10"
+        let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let userNameEncoding = userName?.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().itemGet)\(page)&count=\(count)&username=\(userNameEncoding!)"
         
         //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
         let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
@@ -369,7 +374,7 @@ class URLRequest {
     //MARK: 댓글 리스트 받아오기
     func apiCommentGet(itemid: String, page: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
         
-        let url = "\(FoodBookUrl().commentGet)\(itemid)/paging?pageno=\(page)&count=3"
+        let url = "\(FoodBookUrl().commentGet)\(page)&count=3&itemid=\(itemid)"
         
         //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
         let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
@@ -496,9 +501,9 @@ class URLRequest {
     }
     
     //MARK: 댓글 삭제
-    func apiCommentDelete(commentid: String, success: @escaping (Int) -> (), fail: @escaping voidToVoid)  {
+    func apiCommentDelete(commentid: String, itemid: String, success: @escaping (Int) -> (), fail: @escaping voidToVoid)  {
         
-        let url = "\(FoodBookUrl().commentDelete)\(commentid)"
+        let url = "\(FoodBookUrl().commentDelete)\(commentid)&itemid=\(itemid)"
         
         //데이터 삭제 - delete 방식이고 파라미터 없고 결과는 json
         let request = AF.request(url, method: .delete, encoding: URLEncoding.httpBody, headers: nil)
@@ -562,6 +567,101 @@ class URLRequest {
                     fail()
                 default:
                     NSLog("마지막 업데이트 시간 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 좋아요 삽입
+    func apiItemLikeInsert(itemid: String, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+        
+        let username = UserDefaults.standard.value(forKey: UDkey().username) as? String
+        
+        //post 방식으로 전송할 파라미터
+        let parameters = ["itemid": itemid, "username": username ?? ""]
+        
+        let url = FoodBookUrl().itemLikeInsert
+        
+        //로그인 - post 방식이고 파라미터 있고 결과는 json
+        let request = AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers: nil)
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+              
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case ItemLikeInsertStatusCode.success.rawValue:
+                    //전체 데이터를 NSDictionary로 변환
+                    if let jsonObject = value as? [String:Any] {
+                        let result = jsonObject["result"] as! Int32
+                        if result == 1 {
+                            NSLog("좋아요 삽입 성공")
+                            success()
+                        } else {
+                            NSLog("좋아요 삽입 실패")
+                            fail()
+                        }
+                    }
+                case ItemLikeInsertStatusCode.fail.rawValue:
+                    NSLog("좋아요 삽입 실패")
+                    fail()
+                default:
+                    NSLog("좋아요 삽입 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 좋아요 삭제
+    func apiItemLikeDelete(itemid: String, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+        
+        let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let userNameEncoding = userName?.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().itemLikeDelete)\(itemid)&username=\(userNameEncoding!)"
+        
+        print(url)
+        //데이터 삭제 - delete 방식이고 파라미터 없고 결과는 json
+        let request = AF.request(url, method: .delete, encoding: URLEncoding.httpBody, headers: nil)
+        //요청을 전송하고 결과 사용하기
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case ItemLikeDeleteStatusCode.success.rawValue:
+                    //전체 데이터를 NSDictionary로 변환
+                    if let jsonObject = value as? [String:Any] {
+                        let result = jsonObject["result"] as! Int32
+                        if result == 1 {
+                            NSLog("좋아요 삭제 성공")
+                            success()
+                        } else {
+                            NSLog("좋아요 삭제 실패")
+                            fail()
+                        }
+                    }
+                case ItemLikeDeleteStatusCode.fail.rawValue:
+                    NSLog("좋아요 삭제 실패")
+                    fail()
+                default:
+                    NSLog("좋아요 삭제 실패")
                     fail()
                 }
                 

@@ -58,7 +58,7 @@ class CommentPostViewController: UIViewController {
         showAlertBtn2(title: "아이템 삭제", message: "아이템을 삭제하시겠습니까?", btn1Title: "취소", btn2Title: "삭제") {} btn2Action: { [self] in
             let commentid = "\(commentId)"
             //서버와 커뮤니케이션
-            req.apiCommentDelete(commentid: commentid) { result in
+            req.apiCommentDelete(commentid: commentid, itemid: itemId) { result in
                 var msg = ""
                 if result == 1 {
                     msg = "댓글 삭제 성공"
@@ -80,7 +80,7 @@ class CommentPostViewController: UIViewController {
         
         let comment = tvComment.text!
         //서버와 커뮤니케이션
-        self.req.apiCommentInsert(itemid: itemId, username: username!, userimgurl: userimgurl!, comment: comment) {
+        self.req.apiCommentInsert(itemid: itemId, username: username ?? "", userimgurl: userimgurl ?? "", comment: comment) {
             self.showAlertBtn1(title: "업로드 알림", message: "댓글 업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
                 self.navigationController?.popViewController(animated: true)
             }

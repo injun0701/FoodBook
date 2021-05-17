@@ -51,7 +51,7 @@
 sdklf
 asdasd</string>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H00-sX-Wms">
@@ -68,7 +68,7 @@ asdasd</string>
                             <constraint firstAttribute="height" constant="30" id="Wop-2e-Hn2"/>
                         </constraints>
                         <color key="tintColor" name="MainColor"/>
-                        <state key="normal" image="heart" catalog="system"/>
+                        <state key="normal" image="like"/>
                         <state key="selected" image="heart.fill" catalog="system"/>
                         <connections>
                             <action selector="btnLikeAction:" destination="Sb3-bo-PAH" eventType="touchUpInside" id="Reb-XH-GtP"/>
@@ -77,20 +77,20 @@ asdasd</string>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipx-GP-NSg">
                         <rect key="frame" x="358.5" y="371" width="35.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dvV-nk-scz">
                         <rect key="frame" x="358.5" y="27.5" width="35.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="좋아요:0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXl-ei-N1o">
-                        <rect key="frame" x="304" y="332.5" width="50" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="댓글: 0, 좋아요:0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXl-ei-N1o">
+                        <rect key="frame" x="262" y="332.5" width="99" height="17"/>
                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -106,7 +106,7 @@ asdasd</string>
                     <constraint firstItem="ghw-4K-HLq" firstAttribute="top" secondItem="r7o-Tr-rsB" secondAttribute="bottom" constant="10" id="KSD-SG-Zco"/>
                     <constraint firstAttribute="bottom" secondItem="H00-sX-Wms" secondAttribute="bottom" id="KZI-JU-zbC"/>
                     <constraint firstItem="r7o-Tr-rsB" firstAttribute="top" secondItem="I89-gL-GNs" secondAttribute="topMargin" constant="10" id="M5S-Zb-v3Z"/>
-                    <constraint firstItem="Oo2-it-C20" firstAttribute="leading" secondItem="HXl-ei-N1o" secondAttribute="trailing" constant="10" id="NjB-Gf-6lM"/>
+                    <constraint firstItem="Oo2-it-C20" firstAttribute="leading" secondItem="HXl-ei-N1o" secondAttribute="trailing" constant="3" id="NjB-Gf-6lM"/>
                     <constraint firstItem="H00-sX-Wms" firstAttribute="leading" secondItem="I89-gL-GNs" secondAttribute="leading" id="QTK-1T-YB7"/>
                     <constraint firstAttribute="trailingMargin" secondItem="dvV-nk-scz" secondAttribute="trailing" id="VES-ou-dTY"/>
                     <constraint firstItem="FSa-MX-bVV" firstAttribute="leading" secondItem="r7o-Tr-rsB" secondAttribute="leading" id="YZs-pb-yh5"/>
@@ -136,9 +136,9 @@ asdasd</string>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="gray" width="411" height="206.5"/>
-        <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="gray" width="274" height="137"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
+        <image name="like" width="30" height="30"/>
         <namedColor name="MainColor">
             <color red="0.29019607843137257" green="0.68627450980392157" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

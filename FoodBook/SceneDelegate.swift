@@ -35,9 +35,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidEnterBackground(_ scene: UIScene) {
 
         //앲 삭제(UserDefault는 액삭제시 자동 날라감), 회원 탈퇴, 로그아웃, 핸드폰 변경, 로그인 등등
-        UserDefaults.standard.removeObject(forKey: UDkey().userid)
-        UserDefaults.standard.removeObject(forKey: UDkey().username)
-        UserDefaults.standard.removeObject(forKey: UDkey().userimgurl)
+//        UserDefaults.standard.removeObject(forKey: UDkey().userid)
+//        UserDefaults.standard.removeObject(forKey: UDkey().username)
+//        UserDefaults.standard.removeObject(forKey: UDkey().userimgurl)
         NSLog("로그아웃 상태")
     }
 }

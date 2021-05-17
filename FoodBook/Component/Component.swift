@@ -15,11 +15,14 @@ struct FoodBookUrl {
     let itemInsert = "http://192.168.0.4/item/insert"
     let itemUpdate = "http://192.168.0.4/item/update"
     let itemDelete = "http://192.168.0.4/item/delete/"
-    let commentGet = "http://192.168.0.4/item/comment/"
+    let commentGet = "http://192.168.0.4/item/comment/paging?pageno="
     let commentlastupdate = "http://192.168.0.4/item/comment/lastupdatetime"
     let commentInsert = "http://192.168.0.4/item/comment/insert"
     let commentUpdate = "http://192.168.0.4/item/comment/update"
-    let commentDelete = "http://192.168.0.4/item/comment/delete/"
+    let commentDelete = "http://192.168.0.4/item/comment/delete?commentid="
+    let itemLikeInsert = "http://192.168.0.4/item/like/insert"
+    let itemLikeDelete = "http://192.168.0.4/item/like/delete?itemid="
+    
 }
 
 struct UDkey {
@@ -62,6 +65,14 @@ enum CommentUpdateStatusCode : Int {
     case fail = 400
 }
 enum CommentDeleteStatusCode : Int {
+    case success = 200
+    case fail = 400
+}
+enum ItemLikeInsertStatusCode : Int {
+    case success = 200
+    case fail = 400
+}
+enum ItemLikeDeleteStatusCode : Int {
     case success = 200
     case fail = 400
 }

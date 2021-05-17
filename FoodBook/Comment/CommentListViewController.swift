@@ -15,6 +15,7 @@ class CommentListViewController: UIViewController {
     @IBOutlet var lblItemName: UILabel!
     @IBOutlet var lblPrice: UILabel!
     @IBOutlet var lblDescription: UILabel!
+    @IBOutlet var lblItemLikeCount: UILabel!
     @IBOutlet var lblCommentCount: UILabel!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var btnItemEdit: UIButton!
@@ -113,7 +114,7 @@ class CommentListViewController: UIViewController {
         lblDescription.text = itemDescription
         lblDate.text = itemDate
         lblPrice.text = "\(itemPrice)원"
-        lblCommentCount.text = "좋아요: \(itemLikeCount)"
+        lblItemLikeCount.text = "좋아요: \(itemLikeCount)"
         
         if userName != UserDefaults.standard.value(forKey: UDkey().username) as? String {
             btnItemEdit.isHidden = true

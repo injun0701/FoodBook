@@ -82,7 +82,7 @@ class ItemListViewController: UIViewController {
             NSLog("데이터가 없어서 다운받아 출력")
             networkCheck {
                 //아이템 추가
-                self.itemAdd()
+                self.itemAdd(page: 1, count: 10)
                 //마지막 업데이트 시간을 기록
                 self.lastUpdateAdd()
             }
@@ -134,7 +134,7 @@ class ItemListViewController: UIViewController {
                 try! fileMgr.removeItem(atPath: updatePath) //업데이트 시간 파일 삭제
                 self.itemList.removeAll() //itemList 배열 초기화
                 //아이템 추가
-                self.itemAdd()
+                self.itemAdd(page: 1, count: 10)
                 
                 //마지막 업데이트 시간을 기록
                 self.lastUpdateAdd()
@@ -165,9 +165,7 @@ class ItemListViewController: UIViewController {
     }
     
     //MARK: 아이템 업로드
-    func itemAdd() {
-        //페이지 번호
-        page = 1
+    func itemAdd(page: Int, count: Int) {
         
         //파일 핸들링하기 위한 객체 생성
         let fileMgr = FileManager.default
@@ -177,7 +175,7 @@ class ItemListViewController: UIViewController {
         let dbPath = docPathURL.appendingPathComponent(DirectoryPath.item).path
         
         //서버에서 아이템 데이터 받아오기
-        req.apiItemGet(page: page) { count, list in
+        req.apiItemGet(page: page, count: count) { count, list in
             print(list)
             
             //데이터베이스 파일 생성
@@ -204,7 +202,9 @@ class ItemListViewController: UIViewController {
                 item.itemid = ((itemDict["itemid"] as! NSNumber).intValue)
                 item.itemname = itemDict["itemname"] as? String
                 item.price = ((itemDict["price"] as! NSNumber).intValue)
+                item.commentcount = ((itemDict["commentcount"] as! NSNumber).intValue)
                 item.likecount = ((itemDict["likecount"] as! NSNumber).intValue)
+                item.useritemlike = ((itemDict["useritemlike"] as! NSNumber).intValue)
                 item.description = itemDict["description"] as? String
                 item.imgurl = itemDict["imgurl"] as? String
                 item.updatedate = itemDict["updatedate"] as? String
@@ -221,7 +221,9 @@ class ItemListViewController: UIViewController {
                 paramDict["itemid"] = item.itemid!
                 paramDict["itemname"] = item.itemname!
                 paramDict["price"] = item.price!
+                paramDict["commentcount"] = item.commentcount!
                 paramDict["likecount"] = item.likecount!
+                paramDict["useritemlike"] = item.useritemlike!
                 paramDict["description"] = item.description!
                 paramDict["imgurl"] = item.imgurl!
                 paramDict["updatedate"] = item.updatedate!
@@ -265,7 +267,9 @@ class ItemListViewController: UIViewController {
                 item.itemid = Int(rs.int(forColumn: "itemid"))
                 item.itemname = rs.string(forColumn: "itemname")
                 item.price = Int(rs.int(forColumn: "price"))
+                item.commentcount = Int(rs.int(forColumn: "commentcount"))
                 item.likecount = Int(rs.int(forColumn: "likecount"))
+                item.useritemlike = Int(rs.int(forColumn: "useritemlike"))
                 item.description = rs.string(forColumn: "description")
                 item.imgurl = rs.string(forColumn: "imgurl")
                 item.updatedate = rs.string(forColumn: "updatedate")
@@ -303,7 +307,7 @@ class ItemListViewController: UIViewController {
         let dbPath = docPathURL.appendingPathComponent(DirectoryPath.item).path
         
         //서버에서 아이템 데이터 받아오기
-        req.apiItemGet(page: page) { count, list in
+        req.apiItemGet(page: page, count: 10) { count, list in
             print(list)
             
             //데이터베이스 파일 생성
@@ -328,7 +332,9 @@ class ItemListViewController: UIViewController {
                     item.itemid = ((itemDict["itemid"] as! NSNumber).intValue)
                     item.itemname = itemDict["itemname"] as? String
                     item.price = ((itemDict["price"] as! NSNumber).intValue)
+                    item.commentcount = ((itemDict["commentcount"] as! NSNumber).intValue)
                     item.likecount = ((itemDict["likecount"] as! NSNumber).intValue)
+                    item.useritemlike = ((itemDict["useritemlike"] as! NSNumber).intValue)
                     item.description = itemDict["description"] as? String
                     item.imgurl = itemDict["imgurl"] as? String
                     item.updatedate = itemDict["updatedate"] as? String
@@ -345,7 +351,9 @@ class ItemListViewController: UIViewController {
                     paramDict["itemid"] = item.itemid!
                     paramDict["itemname"] = item.itemname!
                     paramDict["price"] = item.price!
+                    paramDict["commentcount"] = item.commentcount!
                     paramDict["likecount"] = item.likecount!
+                    paramDict["useritemlike"] = item.useritemlike!
                     paramDict["description"] = item.description!
                     paramDict["imgurl"] = item.imgurl!
                     paramDict["updatedate"] = item.updatedate!
@@ -381,11 +389,7 @@ class ItemListViewController: UIViewController {
         //테이블뷰 리로드
         self.tableView.reloadData()
     }
-//    
-//    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-//
-//        navigationController.navigationBar.backItem?.title = ""
-//    }
+    
 }
 
 //MARK: 테이블뷰
@@ -412,14 +416,29 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         //유저 이미지 출력
         req.getImg(imgurlName: item.userimgurl!, defaultImgurlName: "userimg", toImg: cell.myImgView)
         
-        cell.lblDate.text = item.updatedate
+        let itemDate = cutString(str: item.updatedate!, endIndex: 10, fromTheFront: true)
+        cell.lblDate.text = itemDate
         cell.lblTitle.text = item.itemname
         cell.lblText.text = item.description
         cell.lblPrice.text = "\(item.price ?? 0)원"
-        cell.lblLike.text = "좋아요: \(item.likecount ?? 0)"
+        cell.lblLike.text = "댓글: \(item.commentcount ?? 0), 좋아요: \(item.likecount ?? 0)"
         
         //아이템 이미지 출력
         req.getImg(imgurlName: item.imgurl!, defaultImgurlName: "gray", toImg: cell.imgViewlist)
+        
+        if item.useritemlike == 1 { //좋아요한 상태
+            cell.btnLike.setImage(UIImage(named: "like_fill"), for: .normal)
+            //btnLikeTapHandler 작성
+            cell.btnLikeTapHandler = {
+                self.itemLikeDelete(itemid: "\(item.itemid!)")
+            }
+        } else { //좋아요 안한 상태
+            cell.btnLike.setImage(UIImage(named: "like"), for: .normal)
+            //btnLikeTapHandler 작성
+            cell.btnLikeTapHandler = {
+                self.itemLikeInsert(itemid: "\(item.itemid!)")
+            }
+        }
         
         //유저이미지 라운드 처리
         DispatchQueue.main.async {
@@ -431,6 +450,49 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         
         return cell
+    }
+    
+    //좋아요 삭제 메소드
+    func itemLikeDelete(itemid: String) {
+        req.apiItemLikeDelete(itemid: itemid) {
+            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 삭제가 성공적으로 완료되었습니다.", btnTitle: "확인") {
+                self.itemLike()
+            }
+        } fail: {
+            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 업로드를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
+        }
+    }
+    
+    //좋아요 업로드 메소드
+    func itemLikeInsert(itemid: String) {
+        req.apiItemLikeInsert(itemid: itemid) {
+            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
+                self.itemLike()
+            }
+        } fail: {
+            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 업로드를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
+        }
+    }
+    
+    //좋아요 메소드
+    func itemLike() {
+        let itemListCount = itemList.count
+        //파일 핸들링하기 위한 객체 생성
+        let fileMgr = FileManager.default
+        
+        //데이터베이스 팡리 경로를 생성
+        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let dbPath = docPathURL.appendingPathComponent(DirectoryPath.item).path
+        //업데이트 된 시간을 저장할 텍스트 파일 경로를 생성
+        let updatePath = docPathURL.appendingPathComponent(DirectoryPath.update).path
+        //기존 데이터를 지우고 새로 다운로드
+        try! fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
+        try! fileMgr.removeItem(atPath: updatePath) //업데이트 시간 파일 삭제
+        self.itemList.removeAll() //itemList 배열 초기화
+        //아이템 추가
+        itemAdd(page: 1, count: itemListCount)
+        //마지막 업데이트 시간을 기록
+        lastUpdateAdd()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -448,8 +510,9 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         navi.itemImgUrl = item.imgurl!
         navi.itemPrice = "\(item.price!)"
         navi.itemDescription = item.description!
-        navi.itemDate = "\(item.updatedate!)"
-        navi.itemLikeCount = "\(item.updatedate!)"
+        let itemDate = cutString(str: item.updatedate!, endIndex: 10, fromTheFront: true)
+        navi.itemDate = "\(itemDate)"
+        navi.itemLikeCount = "\(item.likecount!)"
         navi.userImgUrl = item.userimgurl!
         navi.userImg = currentCell.myImgView.image!
         navi.userName = item.username!

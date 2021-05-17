@@ -15,6 +15,8 @@ struct Item {
     var price : Int?
     var description : String?
     var imgurl : String?
+    var commentcount : Int?
     var likecount : Int?
+    var useritemlike : Int? //0이면 false, 1이면 ture
     var updatedate : String?
 }
