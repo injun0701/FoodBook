@@ -31,7 +31,12 @@ class ItemListViewController: UIViewController {
     
     //내정보 버튼
     @IBAction func btnMyInfoAction(_ sender: UIButton) {
-        
+        //앲 삭제(UserDefault는 액삭제시 자동 날라감), 회원 탈퇴, 로그아웃, 핸드폰 변경, 로그인 등등
+        UserDefaults.standard.removeObject(forKey: UDkey().userid)
+        UserDefaults.standard.removeObject(forKey: UDkey().username)
+        UserDefaults.standard.removeObject(forKey: UDkey().userimgurl)
+        NSLog("로그아웃 상태")
+        rootVC()
     }
     
     //글쓰기 버튼
@@ -429,14 +434,20 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         if item.useritemlike == 1 { //좋아요한 상태
             cell.btnLike.setImage(UIImage(named: "like_fill"), for: .normal)
             //btnLikeTapHandler 작성
-            cell.btnLikeTapHandler = {
-                self.itemLikeDelete(itemid: "\(item.itemid!)")
+            cell.btnLikeTapHandler = { [self] in
+                //네트워크 사용 여부 확인
+                networkCheck() {
+                    itemLikeDelete(itemid: "\(item.itemid!)")
+                }
             }
         } else { //좋아요 안한 상태
             cell.btnLike.setImage(UIImage(named: "like"), for: .normal)
             //btnLikeTapHandler 작성
-            cell.btnLikeTapHandler = {
-                self.itemLikeInsert(itemid: "\(item.itemid!)")
+            cell.btnLikeTapHandler = { [self] in
+                //네트워크 사용 여부 확인
+                networkCheck() {
+                    itemLikeInsert(itemid: "\(item.itemid!)")
+                }
             }
         }
         

@@ -10,8 +10,8 @@ import Alamofire
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet var tfId: UITextField!
-    @IBOutlet var tfPw: UITextField!
+    @IBOutlet var tfUserId: UITextField!
+    @IBOutlet var tfPassWd: UITextField!
     
     //서버 통신을 위한 객체
     let req = URLRequest()
@@ -27,16 +27,16 @@ class LoginViewController: UIViewController {
     
     //유효성 검사
     func validateField(success: @escaping () -> ()) {
-        let id = tfId.text!
-        let pw = tfPw.text!
+        let id = tfUserId.text!.trimmingCharacters(in: .whitespacesAndNewlines) //공백 제거
+        let pw = tfPassWd.text!.trimmingCharacters(in: .whitespacesAndNewlines) //공백 제거
         let alertTitle = "로그인 오류"
-        if id.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+        if id == "" {
             showAlertBtn1(title: alertTitle, message: "아이디을 입력해 주세요.", btnTitle: "확인") {}
         } else {
             if id.count < 3 {
                 showAlertBtn1(title: alertTitle, message: "아이디는 3글자 이상입니다.", btnTitle: "확인") {}
             } else {
-                if pw.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+                if pw == "" {
                     showAlertBtn1(title: alertTitle, message: "비밀번호를 입력해 주세요.", btnTitle: "확인") {}
                 } else {
                     if pw.count < 5 {
@@ -51,8 +51,8 @@ class LoginViewController: UIViewController {
     
     //로그인 처리
     func login() {
-        let userid = tfId.text!
-        let passwd = tfPw.text!
+        let userid = tfUserId.text!
+        let passwd = tfPassWd.text!
         networkCheck {
             self.req.apiUserLogin(userid: userid, passwd: passwd) { userid, username, userimgurl in
                 print("userid:\(userid), username:\(username), userimgurl\(userimgurl)")
@@ -75,8 +75,11 @@ class LoginViewController: UIViewController {
         navigationController?.pushViewController(navi, animated: true)
     }
     
-    @IBAction func btnSignUpAction(_ sender: UIButton) {
-        
+    //회원가입 버튼
+    @IBAction func btnToSignUpViewAction(_ sender: UIButton) {
+        let sb = UIStoryboard(name: "SignUp", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+        navigationController?.pushViewController(navi, animated: true)
     }
     
     //MARK: viewDidLoad
@@ -86,6 +89,7 @@ class LoginViewController: UIViewController {
         
     }
     
+    //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         navibarSetting()
     }

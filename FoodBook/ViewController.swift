@@ -10,8 +10,15 @@ import Alamofire
 
 class ViewController: UIViewController {
 
+    //회원가입 버튼
+    @IBAction func btnToSignUpViewAction(_ sender: UIButton) {
+        let sb = UIStoryboard(name: "SignUp", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+        navigationController?.pushViewController(navi, animated: true)
+    }
+    
     //로그인 버튼
-    @IBAction func toLoginViewAction(_ sender: UIButton) {
+    @IBAction func btnToLoginViewAction(_ sender: UIButton) {
         let sb = UIStoryboard(name: "Login", bundle: nil)
         let navi = sb.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         navigationController?.pushViewController(navi, animated: true)

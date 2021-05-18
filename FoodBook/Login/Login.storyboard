@@ -45,7 +45,7 @@
                                 <color key="tintColor" name="MainColor"/>
                                 <state key="normal" title="회원가입"/>
                                 <connections>
-                                    <action selector="btnSignUpAction:" destination="SKq-qk-8ag" eventType="touchUpInside" id="RM8-vI-O28"/>
+                                    <action selector="btnToSignUpViewAction:" destination="SKq-qk-8ag" eventType="touchUpInside" id="RM8-vI-O28"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fOO-rj-EeA">
@@ -87,8 +87,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="tfId" destination="pfv-Z3-lRh" id="C4e-DU-H13"/>
-                        <outlet property="tfPw" destination="gB3-hl-WsZ" id="2mI-jD-3Ks"/>
+                        <outlet property="tfPassWd" destination="gB3-hl-WsZ" id="2mI-jD-3Ks"/>
+                        <outlet property="tfUserId" destination="pfv-Z3-lRh" id="C4e-DU-H13"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wPd-XI-3ab" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

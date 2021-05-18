@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840FC1592653574A00E4DB40 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840FC1582653574A00E4DB40 /* SignUpViewController.swift */; };
+		840FC15B265357DF00E4DB40 /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 840FC15A265357DF00E4DB40 /* SignUp.storyboard */; };
+		840FC15D265370CE00E4DB40 /* DisabledBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840FC15C265370CE00E4DB40 /* DisabledBtn.swift */; };
 		8412622E264FA28B00966DF9 /* SQLiteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412622D264FA28B00966DF9 /* SQLiteComponent.swift */; };
 		842C65E9264FC751009AFEFF /* ItemVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C65E8264FC751009AFEFF /* ItemVO.swift */; };
 		843831B8264EC36E00FD31DF /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843831B6264EC36D00FD31DF /* Component.swift */; };
@@ -43,6 +46,9 @@
 /* Begin PBXFileReference section */
 		57B9BE3E6ECB702B4C64CEBF /* Pods-FoodBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodBook.debug.xcconfig"; path = "Target Support Files/Pods-FoodBook/Pods-FoodBook.debug.xcconfig"; sourceTree = "<group>"; };
 		65723FE104C4C74FF101636A /* Pods_FoodBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		840FC1582653574A00E4DB40 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		840FC15A265357DF00E4DB40 /* SignUp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
+		840FC15C265370CE00E4DB40 /* DisabledBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledBtn.swift; sourceTree = "<group>"; };
 		8412622D264FA28B00966DF9 /* SQLiteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteComponent.swift; sourceTree = "<group>"; };
 		842C65E8264FC751009AFEFF /* ItemVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVO.swift; sourceTree = "<group>"; };
 		843831B6264EC36D00FD31DF /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
@@ -107,6 +113,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		840FC157265353FF00E4DB40 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				840FC15A265357DF00E4DB40 /* SignUp.storyboard */,
+				840FC1582653574A00E4DB40 /* SignUpViewController.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		843831B5264EC2F100FD31DF /* Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +168,7 @@
 			children = (
 				843831B5264EC2F100FD31DF /* Component */,
 				84D2BDA62643E08400A3C7FD /* Extension */,
+				840FC157265353FF00E4DB40 /* SignUp */,
 				8482E99D26450ABA00BAA7FE /* Login */,
 				84FA37AA2650AD2100F37673 /* Comment */,
 				84D2BD8B2643BD9F00A3C7FD /* ItemList */,
@@ -202,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				84D2BDA72643E0A600A3C7FD /* Extension.swift */,
+				840FC15C265370CE00E4DB40 /* DisabledBtn.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -289,6 +306,7 @@
 			files = (
 				84A20A2C2648B9F0005DDCC3 /* ItemListTableViewCell.xib in Resources */,
 				84FA37AC2650AD8900F37673 /* Comment.storyboard in Resources */,
+				840FC15B265357DF00E4DB40 /* SignUp.storyboard in Resources */,
 				84D2BD842643A2DA00A3C7FD /* LaunchScreen.storyboard in Resources */,
 				84D2BD8F2643BDD000A3C7FD /* ItemList.storyboard in Resources */,
 				84D2BD812643A2DA00A3C7FD /* Assets.xcassets in Resources */,
@@ -347,12 +365,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840FC15D265370CE00E4DB40 /* DisabledBtn.swift in Sources */,
 				8482E9A126450ADC00BAA7FE /* LoginViewController.swift in Sources */,
 				842C65E9264FC751009AFEFF /* ItemVO.swift in Sources */,
 				84D2BD7C2643A2D900A3C7FD /* ViewController.swift in Sources */,
 				84D2BD8D2643BDC100A3C7FD /* ItemListViewController.swift in Sources */,
 				84D2BDAA2643E0A600A3C7FD /* Reachability.swift in Sources */,
 				843831B8264EC36E00FD31DF /* Component.swift in Sources */,
+				840FC1592653574A00E4DB40 /* SignUpViewController.swift in Sources */,
 				8412622E264FA28B00966DF9 /* SQLiteComponent.swift in Sources */,
 				84D2BDA02643C74200A3C7FD /* FMResultSet.m in Sources */,
 				84FA37B42650B17000F37673 /* CommentVO.swift in Sources */,

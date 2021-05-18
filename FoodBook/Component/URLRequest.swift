@@ -13,6 +13,146 @@ class URLRequest {
     
     typealias voidToVoid = () -> ()
     
+    //MARK: 아이디 중복 체크
+    func apiSignUpUserIdCheck(userid: String, success: @escaping () -> Void, fail: @escaping voidToVoid)  {
+        
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let userIdEncoding = userid.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().signUpUserIdCheck)\(userIdEncoding ?? "")"
+        
+        //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
+        let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
+        //요청을 전송하고 결과 사용하기
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+              
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case SignUpUserIdCheckStatusCode.success.rawValue:
+                    
+                    //전체 데이터를 NSDictionary로 변환
+                    if let jsonObject = value as? [String:Any] {
+                        let result = jsonObject["result"] as! Int32
+                        if result == 1 {
+                            NSLog("아이디 체크 성공")
+                            success()
+                        } else {
+                            NSLog("아이디 체크 실패")
+                            fail()
+                        }
+                    }
+                case SignUpUserIdCheckStatusCode.fail.rawValue:
+                    NSLog("아이디 체크 실패")
+                    fail()
+                default:
+                    NSLog("아이디 체크 실패")
+                    fail()
+                }
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 유저네임 중복 체크
+    func apiSignUpUserNameCheck(username: String, success: @escaping () -> Void, fail: @escaping voidToVoid)  {
+        //url은 한글을 인코딩해야함
+        
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let userNameEncoding = username.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().signUpUserNameCheck)\(userNameEncoding ?? "")"
+        
+        //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
+        let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
+        //요청을 전송하고 결과 사용하기
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+              
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case SignUpUserNameCheckStatusCode.success.rawValue:
+                    
+                    //전체 데이터를 NSDictionary로 변환
+                    if let jsonObject = value as? [String:Any] {
+                        let result = jsonObject["result"] as! Int32
+                        if result == 1 {
+                            NSLog("유저네임 체크 성공")
+                            success()
+                        } else {
+                            NSLog("유저네임 체크 실패")
+                            fail()
+                        }
+                    }
+                case SignUpUserNameCheckStatusCode.fail.rawValue:
+                    NSLog("유저네임 체크 실패")
+                    fail()
+                default:
+                    NSLog("유저네임 체크 실패")
+                    fail()
+                }
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 회원가입
+    func apiSignUp(userid: String, username: String, passwd: String, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+        //post 방식으로 전송할 파라미터
+        let parameters = ["userid": userid, "username": username, "userpw": passwd]
+        
+        let url = FoodBookUrl().signUp
+        
+        //로그인 - post 방식이고 파라미터 있고 결과는 json
+        let request = AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers: nil)
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+              
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case SignUpStatusCode.success.rawValue:
+                    //전체 데이터를 NSDictionary로 변환
+                    if let jsonObject = value as? [String:Any] {
+                        //result 키의 데이터 가져오기
+                        let result = jsonObject["result"] as! Int32
+                        //로그인 성공
+                        if result == 1 {
+                            success()
+                            NSLog("회원가입 성공")
+                        } else { //회원가입 실패
+                            fail()
+                        }
+                    }
+                case SignUpStatusCode.fail.rawValue:
+                    NSLog("회원가입 실패")
+                    fail()
+                default:
+                    NSLog("회원가입 실패")
+                    fail()
+                }
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    
+    
+    
     //MARK: 로그인
     func apiUserLogin(userid: String, passwd: String, success: @escaping (String, String, String) -> Void, fail: @escaping voidToVoid)  {
         //post 방식으로 전송할 파라미터
