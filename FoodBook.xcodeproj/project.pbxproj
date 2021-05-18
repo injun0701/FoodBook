@@ -14,6 +14,9 @@
 		842C65E9264FC751009AFEFF /* ItemVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C65E8264FC751009AFEFF /* ItemVO.swift */; };
 		843831B8264EC36E00FD31DF /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843831B6264EC36D00FD31DF /* Component.swift */; };
 		843831B9264EC36E00FD31DF /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843831B7264EC36D00FD31DF /* URLRequest.swift */; };
+		844A7BD52653EEE70079FC29 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844A7BD42653EEE70079FC29 /* Search.storyboard */; };
+		844A7BD72653EEF30079FC29 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A7BD62653EEF30079FC29 /* SearchViewController.swift */; };
+		844A7BDB265400F80079FC29 /* ItemDataConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A7BDA265400F80079FC29 /* ItemDataConfig.swift */; };
 		8482E99C2644EE8000BAA7FE /* ItemListPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */; };
 		8482E99F26450ACE00BAA7FE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8482E99E26450ACE00BAA7FE /* Login.storyboard */; };
 		8482E9A126450ADC00BAA7FE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E9A026450ADC00BAA7FE /* LoginViewController.swift */; };
@@ -53,6 +56,9 @@
 		842C65E8264FC751009AFEFF /* ItemVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVO.swift; sourceTree = "<group>"; };
 		843831B6264EC36D00FD31DF /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		843831B7264EC36D00FD31DF /* URLRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
+		844A7BD42653EEE70079FC29 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
+		844A7BD62653EEF30079FC29 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		844A7BDA265400F80079FC29 /* ItemDataConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDataConfig.swift; sourceTree = "<group>"; };
 		8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListPostViewController.swift; sourceTree = "<group>"; };
 		8482E99E26450ACE00BAA7FE /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8482E9A026450ADC00BAA7FE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -132,8 +138,18 @@
 				8412622D264FA28B00966DF9 /* SQLiteComponent.swift */,
 				842C65E8264FC751009AFEFF /* ItemVO.swift */,
 				84FA37B32650B17000F37673 /* CommentVO.swift */,
+				844A7BDA265400F80079FC29 /* ItemDataConfig.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		844A7BD32653EED90079FC29 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				844A7BD42653EEE70079FC29 /* Search.storyboard */,
+				844A7BD62653EEF30079FC29 /* SearchViewController.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		8482E99D26450ABA00BAA7FE /* Login */ = {
@@ -171,6 +187,7 @@
 				840FC157265353FF00E4DB40 /* SignUp */,
 				8482E99D26450ABA00BAA7FE /* Login */,
 				84FA37AA2650AD2100F37673 /* Comment */,
+				844A7BD32653EED90079FC29 /* Search */,
 				84D2BD8B2643BD9F00A3C7FD /* ItemList */,
 				84D2BD772643A2D900A3C7FD /* AppDelegate.swift */,
 				84D2BD792643A2D900A3C7FD /* SceneDelegate.swift */,
@@ -308,6 +325,7 @@
 				84FA37AC2650AD8900F37673 /* Comment.storyboard in Resources */,
 				840FC15B265357DF00E4DB40 /* SignUp.storyboard in Resources */,
 				84D2BD842643A2DA00A3C7FD /* LaunchScreen.storyboard in Resources */,
+				844A7BD52653EEE70079FC29 /* Search.storyboard in Resources */,
 				84D2BD8F2643BDD000A3C7FD /* ItemList.storyboard in Resources */,
 				84D2BD812643A2DA00A3C7FD /* Assets.xcassets in Resources */,
 				8482E99F26450ACE00BAA7FE /* Login.storyboard in Resources */,
@@ -379,7 +397,9 @@
 				8482E99C2644EE8000BAA7FE /* ItemListPostViewController.swift in Sources */,
 				84FA37B62650B68600F37673 /* CommentPostViewController.swift in Sources */,
 				843831B9264EC36E00FD31DF /* URLRequest.swift in Sources */,
+				844A7BDB265400F80079FC29 /* ItemDataConfig.swift in Sources */,
 				84D2BDA92643E0A600A3C7FD /* Extension.swift in Sources */,
+				844A7BD72653EEF30079FC29 /* SearchViewController.swift in Sources */,
 				84D2BD9F2643C74200A3C7FD /* FMDatabase.m in Sources */,
 				84FA37B22650B0A000F37673 /* CommentListViewController.swift in Sources */,
 				84A20A2B2648B9F0005DDCC3 /* ItemListTableViewCell.swift in Sources */,

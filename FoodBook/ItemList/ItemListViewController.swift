@@ -16,15 +16,15 @@ class ItemListViewController: UIViewController {
     var page = 1
     //마지막 셀이 처음 보여진 것인지 여부를 설정하는 프로퍼티
     var flag = false
-    //전체 데이터 개수
-    var itemCountAll = 0
     
     //서버 통신을 위한 객체
     let req = URLRequest()
     //SQLite sql 명령어 객체
     let sql = SQLiteSql()
     //SQLite 파일 urlpath
-    let DirectoryPath = SQLiteDocumentDirectoryPath()
+    let directoryPath = SQLiteDocumentDirectoryPath()
+    //마지막 업데이트 함수 파라미터 이름
+    let lastUpdatePara = LastUpdateParameterName()
     
     //테이블 뷰에 출력할 데이터 배열
     var itemList: [Item] = []
@@ -56,6 +56,7 @@ class ItemListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewSetting()
+        naviSetting()
     }
     
     //테이블뷰 세팅
@@ -73,6 +74,20 @@ class ItemListViewController: UIViewController {
         }
     }
     
+    //네비게이션 세팅
+    func naviSetting() {
+        //네비게이션 오른쪽 버튼 - Search 뷰로 이동 버튼
+        let btnSearch = UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(btnSearchAction))
+        navigationItem.rightBarButtonItems = [btnSearch]
+    }
+    
+    //Search 뷰로 이동
+    @objc func btnSearchAction() {
+        let sb = UIStoryboard(name: "Search", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        navigationController?.pushViewController(navi, animated: true)
+    }
+    
     //MARK: 서버, 로컬 데이터 세팅
     func dataSetting() {
         //파일 핸들링하기 위한 객체 생성
@@ -80,215 +95,70 @@ class ItemListViewController: UIViewController {
         
         //데이터베이스 팡리 경로를 생성
         let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let dbPath = docPathURL.appendingPathComponent(DirectoryPath.item).path
+        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
         
         //데이터베이스 파일이 없으면 다운로드 받아서 저장한 후 출력
-        if fileMgr.fileExists(atPath: dbPath) == false { //데이터베이스 파일이 존재하지 않으면
-            NSLog("데이터가 없어서 다운받아 출력")
-            networkCheck {
-                //아이템 추가
-                self.itemAdd(page: 1, count: 10)
-                //마지막 업데이트 시간을 기록
-                self.lastUpdateAdd()
-            }
+        if fileMgr.fileExists(atPath: dbPath) == false {
+            //데이터베이스 파일이 존재하지 않으면
+            fileExistsFalse()
         } else { //데이터베이스 파일이 존재하면
-            networkCheckSuccessAndFaile {
-                //마지막 업데이트 시간 체크해서 시간이 같으면 로컬 데이터 출력, 다르면 서버 데이터 출력
-                self.checkApiLastUpdate()
-            } faile: { //네트워크가 연결이 안돼서 로컬 데이터 출력
-                NSLog("네트워크가 연결이 안돼서 로컬 데이터 출력")
-                self.itemList.removeAll() //itemList 배열 초기화
-                //로컬 데이터 출력
-                self.localData()
+            fileExistsTrue()
+        }
+    }
+    //데이터베이스 파일이 존재하지 않으면
+    func fileExistsFalse() {
+        NSLog("데이터가 없어서 다운받아 출력")
+        networkCheck {
+            //아이템 추가
+            self.itemAdd(page: 1, count: 10) { itemList, itemCountAll in
+                self.itemList = itemList
+                self.tableView.reloadData()
+                UserDefaults.standard.set(itemCountAll, forKey: UDkey().itemcount)
             }
+            //마지막 업데이트 시간을  로컬 데이터베이스에 기록
+            self.lastUpdateAddToLocal(updatePathName: self.lastUpdatePara.update, urlName: self.lastUpdatePara.lastupdate)
         }
     }
     
-    //MARK: 마지막 업데이트 시간 체크해서 시간이 같으면 로컬 데이터 출력, 다르면 서버 데이터 출력
-    func checkApiLastUpdate() {
+    func fileExistsTrue() {
         //파일 핸들링하기 위한 객체 생성
         let fileMgr = FileManager.default
         
         //데이터베이스 팡리 경로를 생성
         let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let dbPath = docPathURL.appendingPathComponent(DirectoryPath.item).path
-        //업데이트 된 시간을 저장할 텍스트 파일 경로를 생성
-        let updatePath = docPathURL.appendingPathComponent(DirectoryPath.update).path
+        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
+        let updatePath = docPathURL.appendingPathComponent(directoryPath.update).path
         
-        //서버에서 마지막 업데이트 시간 받아오기
-        req.apiLastUpdate() { result in
-            print("result:\(result)")
-            
-            //업데이트 된 시간을 기혹한 파일의 경로를 이용해 데이터 읽어오기
-            let databuffer = fileMgr.contents(atPath: updatePath)
-            let updatetime = NSString(data: databuffer!, encoding: String.Encoding.utf8.rawValue) as String?
-            
-            //로컬에 저장된 시간과 서버의 시간을 비교
-            //MARK: 서버의 시간과 로컬의 시간이 같다면 다운로드 받지 않고 SQLite의 내용을 그대로 출력
-            if updatetime == result {
-                NSLog("서버 업데이트 시간과 로컬 업데이트 시간이 같아서 로컬 데이터 출력")
+        networkCheckSuccessAndFaile {
+            //마지막 업데이트 시간 체크해서 시간이 같으면 로컬 데이터 출력, 다르면 서버 데이터 출력
+            self.checkApiLastUpdate(updatePathName: self.lastUpdatePara.update, urlName: self.lastUpdatePara.lastupdate) {
                 self.itemList.removeAll() //itemList 배열 초기화
                 //로컬 데이터 출력
-                self.localData()
-                
-            } else { //MARK: 서버 업데이트 시간과 로컬 업데이트 시간이 달라서 서버 데이터 다시 다운로드
-                NSLog("서버 업데이트 시간과 로컬 업데이트 시간이 달라서 서버 데이터 다시 다운로드")
-                
+                self.itemLocalData() { result in
+                    self.itemList = result
+                    self.tableView.reloadData()
+                }
+            } updatetimeDifferent: {
                 //기존 데이터를 지우고 새로 다운로드
                 try! fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
                 try! fileMgr.removeItem(atPath: updatePath) //업데이트 시간 파일 삭제
                 self.itemList.removeAll() //itemList 배열 초기화
                 //아이템 추가
-                self.itemAdd(page: 1, count: 10)
-                
-                //마지막 업데이트 시간을 기록
-                self.lastUpdateAdd()
+                self.itemAdd(page: 1, count: 10) { itemList, itemCountAll in
+                    self.itemList = itemList
+                    self.tableView.reloadData()
+                    UserDefaults.standard.set(itemCountAll, forKey: UDkey().itemcount)
+                }
             }
-        } fail: {
-            self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
-        }
-    }
-    
-    //MARK: 아이템의 마지막 업데이트 시간을 기록
-    func lastUpdateAdd() {
-        //파일 핸들링하기 위한 객체 생성
-        let fileMgr = FileManager.default
-        //데이터베이스 팡리 경로를 생성
-        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        //업데이트 된 시간을 저장할 텍스트 파일 경로를 생성
-        let updatePath = docPathURL.appendingPathComponent(DirectoryPath.update).path
-        
-        self.req.apiLastUpdate() { result in
-            print("result:\(result)")
-            
-            //result를 파일에 기록
-            let dataBuffer = result.data(using: String.Encoding.utf8)
-            fileMgr.createFile(atPath: updatePath, contents: dataBuffer, attributes: nil)
-        } fail: {
-            self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
-        }
-    }
-    
-    //MARK: 아이템 업로드
-    func itemAdd(page: Int, count: Int) {
-        
-        //파일 핸들링하기 위한 객체 생성
-        let fileMgr = FileManager.default
-        
-        //데이터베이스 팡리 경로를 생성
-        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let dbPath = docPathURL.appendingPathComponent(DirectoryPath.item).path
-        
-        //서버에서 아이템 데이터 받아오기
-        req.apiItemGet(page: page, count: count) { count, list in
-            print(list)
-            
-            //데이터베이스 파일 생성
-            let itemDB = FMDatabase(path: dbPath)
-            //데이터베이스 열기
-            itemDB.open()
-            
-            //데이터를 저장할 테이블 생성
-            let sql = self.sql.createTableItem
-            itemDB.executeStatements(sql)
-            
-            //전체 데이터의 개수
-            self.itemCountAll = count
-            
-            //배열의 데이터 순회
-            for index in 0...(list.count - 1) {
-                    //배열에서 하나씩 가져오기
-                let itemDict = list[index] as! [String: Any] //NSDictionary
-                //하나의 DTO 객체를 생성
-                var item = Item()
-                //json 파싱해서 객체에 데이터 대입
-                item.username = itemDict["username"] as? String
-                item.userimgurl = itemDict["userimgurl"] as? String
-                item.itemid = ((itemDict["itemid"] as! NSNumber).intValue)
-                item.itemname = itemDict["itemname"] as? String
-                item.price = ((itemDict["price"] as! NSNumber).intValue)
-                item.commentcount = ((itemDict["commentcount"] as! NSNumber).intValue)
-                item.likecount = ((itemDict["likecount"] as! NSNumber).intValue)
-                item.useritemlike = ((itemDict["useritemlike"] as! NSNumber).intValue)
-                item.description = itemDict["description"] as? String
-                item.imgurl = itemDict["imgurl"] as? String
-                item.updatedate = itemDict["updatedate"] as? String
-                //배열에 추가
-                self.itemList.append(item)
-                self.itemList.sort(by: {$0.itemid! > $1.itemid!}) //순서 정렬
-
-                //데이터를 삽입할 SQL 생성
-                let sql = self.sql.insertIntoItem
-                //파라미터 생성
-                var paramDict = [String:Any]()
-                paramDict["username"] = item.username!
-                paramDict["userimgurl"] = item.userimgurl!
-                paramDict["itemid"] = item.itemid!
-                paramDict["itemname"] = item.itemname!
-                paramDict["price"] = item.price!
-                paramDict["commentcount"] = item.commentcount!
-                paramDict["likecount"] = item.likecount!
-                paramDict["useritemlike"] = item.useritemlike!
-                paramDict["description"] = item.description!
-                paramDict["imgurl"] = item.imgurl!
-                paramDict["updatedate"] = item.updatedate!
-                
-                //sql 실행
-                itemDB.executeUpdate(sql, withParameterDictionary: paramDict)
-            }//반복문 종료
-            
-            //데이터 가져와서 파싱하는 문장 종료
-            self.tableView.reloadData()
-            itemDB.close()
-            NSLog("데이터 베이스 생성 성공")
-        } fail: {
-            self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
-        }
-    }
-    
-    //MARK: 로컬 데이터 출력
-    func localData() {
-        //파일 핸들링하기 위한 객체 생성
-        let fileMgr = FileManager.default
-        
-        //데이터베이스 팡리 경로를 생성
-        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let dbPath = docPathURL.appendingPathComponent(DirectoryPath.item).path
-        //저장해놓은 데이터베이스 파일의 내용 읽기
-        let itemDB = FMDatabase(path: dbPath)
-        itemDB.open()
-        
-        do {
-            let sql = self.sql.selectFromItem
-            
-            //sql 실행
-            let rs = try itemDB.executeQuery(sql, values: nil)
-            
-            //결과를 순회
-            while  rs.next() {
-                var item = Item()
-                item.username = rs.string(forColumn: "username")
-                item.userimgurl = rs.string(forColumn: "userimgurl")
-                item.itemid = Int(rs.int(forColumn: "itemid"))
-                item.itemname = rs.string(forColumn: "itemname")
-                item.price = Int(rs.int(forColumn: "price"))
-                item.commentcount = Int(rs.int(forColumn: "commentcount"))
-                item.likecount = Int(rs.int(forColumn: "likecount"))
-                item.useritemlike = Int(rs.int(forColumn: "useritemlike"))
-                item.description = rs.string(forColumn: "description")
-                item.imgurl = rs.string(forColumn: "imgurl")
-                item.updatedate = rs.string(forColumn: "updatedate")
-                //데이터를 list에 저장
-                self.itemList.append(item)
+        } fail: { //네트워크가 연결이 안돼서 로컬 데이터 출력
+            NSLog("네트워크가 연결이 안돼서 로컬 데이터 출력")
+            self.itemList.removeAll() //itemList 배열 초기화
+            //로컬 데이터 출력
+            self.itemLocalData() { result in
+                self.itemList = result
+                self.tableView.reloadData()
             }
-            //테이블 뷰 다시 출력
-            self.tableView.reloadData()
-            NSLog("데이터 베이스 읽기 성공")
-        } catch let error as NSError {
-            NSLog("데이터 베이스 읽기 실패: \(error.localizedDescription)")
         }
-        //데이터베이스 닫기
-        itemDB.close()
     }
     
     //MARK: viewWillAppear
@@ -309,10 +179,10 @@ class ItemListViewController: UIViewController {
         
         //데이터베이스 팡리 경로를 생성
         let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let dbPath = docPathURL.appendingPathComponent(DirectoryPath.item).path
+        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
         
         //서버에서 아이템 데이터 받아오기
-        req.apiItemGet(page: page, count: 10) { count, list in
+        req.apiItemGet(page: page, count: 10, searchKeyWord: nil) { count, list in
             print(list)
             
             //데이터베이스 파일 생성
@@ -321,7 +191,7 @@ class ItemListViewController: UIViewController {
             itemDB.open()
             
             //전체 데이터의 개수
-            self.itemCountAll = count
+            UserDefaults.standard.set(count, forKey: UDkey().itemcount)
             
             //페이지에서 가져온 데이터
             if list.count != 0 {
@@ -493,17 +363,22 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         
         //데이터베이스 팡리 경로를 생성
         let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let dbPath = docPathURL.appendingPathComponent(DirectoryPath.item).path
+        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
         //업데이트 된 시간을 저장할 텍스트 파일 경로를 생성
-        let updatePath = docPathURL.appendingPathComponent(DirectoryPath.update).path
+        let updatePath = docPathURL.appendingPathComponent(directoryPath.update).path
         //기존 데이터를 지우고 새로 다운로드
         try! fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
         try! fileMgr.removeItem(atPath: updatePath) //업데이트 시간 파일 삭제
         self.itemList.removeAll() //itemList 배열 초기화
         //아이템 추가
-        itemAdd(page: 1, count: itemListCount)
+        self.itemAdd(page: 1, count: itemListCount) { itemList, itemCountAll in
+            self.itemList = itemList
+            UserDefaults.standard.set(itemCountAll, forKey: UDkey().itemcount)
+            
+            self.tableView.reloadData()
+        }
         //마지막 업데이트 시간을 기록
-        lastUpdateAdd()
+        lastUpdateAddToLocal(updatePathName: lastUpdatePara.update, urlName: lastUpdatePara.lastupdate)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -536,6 +411,7 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         if flag == false && indexPath.row == self.itemList.count - 1 {
             flag = true
         } else if flag == true && indexPath.row == self.itemList.count - 1 {
+            let itemCountAll = UserDefaults.standard.value(forKey: UDkey().itemcount) as? Int ?? 0
             print("\(itemCountAll), \(itemList.count)")
             //api db의 전체 데이터 갯수가 리스트 배열의 개수보다 크면 실행
             if itemCountAll > self.itemList.count {

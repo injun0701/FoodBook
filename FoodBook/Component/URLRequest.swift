@@ -207,14 +207,20 @@ class URLRequest {
     }
     
     //MARK: 리스트 받아오기
-    func apiItemGet(page: Int, count: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
+    func apiItemGet(page: Int, count: Int, searchKeyWord: String?, success: @escaping (Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
         //url은 한글을 인코딩해야함
+        
+        var searchKeyWord = searchKeyWord
         
         let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
         //한글일 경우를 대비하려면 인코딩 해야함
         let userNameEncoding = userName?.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
         
-        let url = "\(FoodBookUrl().itemGet)\(page)&count=\(count)&username=\(userNameEncoding!)"
+        if searchKeyWord == nil {
+            searchKeyWord = ""
+        }
+        
+        let url = "\(FoodBookUrl().itemGet)\(page)&count=\(count)&username=\(userNameEncoding!)&searchkeyword=\(searchKeyWord!)"
         
         //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
         let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
@@ -254,9 +260,7 @@ class URLRequest {
     }
     
     //MARK: 마지막 업데이트 시간 받아오기
-    func apiLastUpdate(success: @escaping (String) -> Void, fail: @escaping voidToVoid)  {
-        
-        let url = FoodBookUrl().lastupdate
+    func apiLastUpdate(url: String, success: @escaping (String) -> Void, fail: @escaping voidToVoid)  {
         
         //마지막 업데이트 시간 받아오기 - get 방식이고 파라미터 없고 결과는 json
         let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: [:])
@@ -668,45 +672,6 @@ class URLRequest {
                     fail()
                 default:
                     NSLog("데이터 삭제 실패")
-                    fail()
-                }
-                
-            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
-                print(error)
-            }
-        }
-    }
-    
-    //MARK: 마지막 업데이트 시간 받아오기
-    func apiCommentLastUpdate(success: @escaping (String) -> Void, fail: @escaping voidToVoid)  {
-        
-        let url = FoodBookUrl().commentlastupdate
-        
-        //마지막 업데이트 시간 받아오기 - get 방식이고 파라미터 없고 결과는 json
-        let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: [:])
-        request.validate(statusCode: 200...500).responseJSON { response in
-            switch response.result {
-            case .success(let value):
-              
-                //응답받은 statusCode
-                let statusCode = response.response?.statusCode ?? 404
-                
-                //성공 실패 케이스 나누기
-                switch statusCode {
-                case LastUpdateStatusCode.success.rawValue:
-                    
-                    //전체 데이터를 NSDictionary로 변환
-                    if let jsonObject = value as? [String:Any] {
-                        NSLog("마지막 업데이트 시간 받아오기 성공")
-                        //result키 값을 문자열로 불러오기
-                        let result = jsonObject["result"] as! String
-                        success(result)
-                    }
-                case LastUpdateStatusCode.fail.rawValue:
-                    NSLog("마지막 업데이트 시간 실패")
-                    fail()
-                default:
-                    NSLog("마지막 업데이트 시간 실패")
                     fail()
                 }
                 

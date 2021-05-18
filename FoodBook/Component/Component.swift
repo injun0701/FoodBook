@@ -32,6 +32,8 @@ struct UDkey {
     let userid = "userid"
     let username = "username"
     let userimgurl = "userimgurl"
+    let itemcount = "itemcount"
+    let commentcount = "commentcount"
 }
 
 //enumutation(열거형): 나만의 타입을 만듬

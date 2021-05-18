@@ -30,7 +30,7 @@ extension UIViewController {
         }
     }
     //네트워크 체크
-    func networkCheckSuccessAndFaile(success: @escaping () -> (), faile: @escaping () -> ()) {
+    func networkCheckSuccessAndFaile(success: @escaping () -> (), fail: @escaping () -> ()) {
         //네트워크 사용 여부 확인
         let reachability = Reachability()
         let result = reachability.isConnectedToNetwork()
@@ -38,7 +38,7 @@ extension UIViewController {
         if result == true {
             success()
         } else {
-            faile()
+            fail()
         }
         
     }

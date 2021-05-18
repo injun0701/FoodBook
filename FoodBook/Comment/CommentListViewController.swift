@@ -38,13 +38,13 @@ class CommentListViewController: UIViewController {
     let sql = SQLiteSql()
     //SQLite 파일 urlpath
     let DirectoryPath = SQLiteDocumentDirectoryPath()
+    //마지막 업데이트 함수 파라미터 이름
+    let lastUpdatePara = LastUpdateParameterName()
     
     //현재 출력한 체이지 번호를 저장할 프로퍼티
     var page = 1
     //마지막 셀이 처음 보여진 것인지 여부를 설정하는 프로퍼티
     var flag = false
-    //전체 데이터 개수
-    var itemCountAll = 0
     
     //테이블뷰 배열
     var tableList : [Comment] = []
@@ -132,214 +132,152 @@ class CommentListViewController: UIViewController {
         let dbPath = docPathURL.appendingPathComponent(DirectoryPath).path
         
         //데이터베이스 파일이 없으면 다운로드 받아서 저장한 후 출력
-        if fileMgr.fileExists(atPath: dbPath) == false { //데이터베이스 파일이 존재하지 않으면
-            NSLog("데이터가 없어서 다운받아 출력")
-            networkCheck {
-                //아이템 추가
-                self.itemAdd()
-                //마지막 업데이트 시간을 기록
-                self.lastUpdateAdd()
-            }
-        } else { //데이터베이스 파일이 존재하면
-            networkCheckSuccessAndFaile {
-                //마지막 업데이트 시간 체크해서 시간이 같으면 로컬 데이터 출력, 다르면 서버 데이터 출력
-                self.checkApiLastUpdate()
-            } faile: { //네트워크가 연결이 안돼서 로컬 데이터 출력
-                NSLog("네트워크가 연결이 안돼서 로컬 데이터 출력")
-                self.tableList.removeAll() //tableList 배열 초기화
-                //로컬 데이터 출력
-                self.localData()
-            }
+        if fileMgr.fileExists(atPath: dbPath) == false {
+            //데이터베이스 파일이 존재하지 않으면
+            fileExistsFalse()
+        } else {
+            //데이터베이스 파일이 존재하면
+            fileExistsTrue()
         }
     }
     
-    //MARK: 마지막 업데이트 시간 체크해서 시간이 같으면 로컬 데이터 출력, 다르면 서버 데이터 출력
-    func checkApiLastUpdate() {
+    //데이터베이스 파일이 존재하지 않으면
+    func fileExistsFalse() {
+        NSLog("데이터가 없어서 다운받아 출력")
+        networkCheck {
+            //아이템 추가
+            self.commentAdd(page: 1, count: 10, itemId: self.itemId) { commentList, count in
+                self.tableList = commentList
+                self.tableView.reloadData()
+                UserDefaults.standard.set(count, forKey: UDkey().commentcount)
+                self.lblCommentCount.text = "댓글 개수: \(count)"
+            }
+            //마지막 업데이트 시간을  로컬 데이터베이스에 기록
+            self.lastUpdateAddToLocal(updatePathName: self.lastUpdatePara.commentupdate, urlName: self.lastUpdatePara.commentlastupdate)
+        }
+    }
+    
+    //데이터베이스 파일이 존재하면
+    func fileExistsTrue() {
         //파일 핸들링하기 위한 객체 생성
         let fileMgr = FileManager.default
         
         //데이터베이스 팡리 경로를 생성
         let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let commentDirectoryPath = "\(DirectoryPath.comment)\(itemId)\(DirectoryPath.sqlite)"
-        let dbPath = docPathURL.appendingPathComponent(commentDirectoryPath).path
-        //업데이트 된 시간을 저장할 텍스트 파일 경로를 생성
-        let updatePath = docPathURL.appendingPathComponent(DirectoryPath.commentupdate).path
+        let DirectoryPath = "\(DirectoryPath.comment)\(itemId)\(DirectoryPath.sqlite)"
+        let dbPath = docPathURL.appendingPathComponent(DirectoryPath).path
+        let updatePath = docPathURL.appendingPathComponent(self.DirectoryPath.commentupdate).path
         
-        //서버에서 마지막 업데이트 시간 받아오기
-        req.apiCommentLastUpdate() { result in
-            print("result:\(result)")
-            
-            //업데이트 된 시간을 기혹한 파일의 경로를 이용해 데이터 읽어오기
-            let databuffer = fileMgr.contents(atPath: updatePath)
-            let updatetime = NSString(data: databuffer!, encoding: String.Encoding.utf8.rawValue) as String?
-            
-            //로컬에 저장된 시간과 서버의 시간을 비교
-            //MARK: 서버의 시간과 로컬의 시간이 같다면 다운로드 받지 않고 SQLite의 내용을 그대로 출력
-            if updatetime == result {
-                NSLog("서버 업데이트 시간과 로컬 업데이트 시간이 같아서 로컬 데이터 출력")
+        networkCheckSuccessAndFaile {
+            //마지막 업데이트 시간 체크해서 시간이 같으면 로컬 데이터 출력, 다르면 서버 데이터 출력
+            self.checkApiLastUpdate(updatePathName: self.lastUpdatePara.commentupdate, urlName: self.lastUpdatePara.commentlastupdate) {
                 self.tableList.removeAll() //itemList 배열 초기화
                 //로컬 데이터 출력
-                self.localData()
-                
-            } else { //MARK: 서버 업데이트 시간과 로컬 업데이트 시간이 달라서 서버 데이터 다시 다운로드
-                NSLog("서버 업데이트 시간과 로컬 업데이트 시간이 달라서 서버 데이터 다시 다운로드")
-                
+                self.commentLocalData(itemId: self.itemId) { commentList, count in
+                    self.tableList = commentList
+                    self.tableView.reloadData()
+                    self.lblCommentCount.text = "댓글 개수: \(count)"
+                }
+            } updatetimeDifferent: {
                 //기존 데이터를 지우고 새로 다운로드
                 try! fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
                 try! fileMgr.removeItem(atPath: updatePath) //업데이트 시간 파일 삭제
                 self.tableList.removeAll() //itemList 배열 초기화
                 //아이템 추가
-                self.itemAdd()
-                
-                //마지막 업데이트 시간을 기록
-                self.lastUpdateAdd()
+                self.commentAdd(page: 1, count: 10, itemId: self.itemId) { commentList, count in
+                    self.tableList = commentList
+                    self.tableView.reloadData()
+                    UserDefaults.standard.set(count, forKey: UDkey().commentcount)
+                    self.lblCommentCount.text = "댓글 개수: \(count)"
+                }
             }
-        } fail: {
-            self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
-        }
-    }
-    
-    //MARK: 댓글의 마지막 업데이트 시간을 기록
-    func lastUpdateAdd() {
-        //파일 핸들링하기 위한 객체 생성
-        let fileMgr = FileManager.default
-        //데이터베이스 팡리 경로를 생성
-        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        //업데이트 된 시간을 저장할 텍스트 파일 경로를 생성
-        let updatePath = docPathURL.appendingPathComponent(DirectoryPath.commentupdate).path
-        
-        self.req.apiCommentLastUpdate() { result in
-            print("result:\(result)")
-            
-            //result를 파일에 기록
-            let dataBuffer = result.data(using: String.Encoding.utf8)
-            fileMgr.createFile(atPath: updatePath, contents: dataBuffer, attributes: nil)
-        } fail: {
-            self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
-        }
-    }
-    
-    //MARK: 댓글 업로드
-    func itemAdd() {
-        //페이지 번호
-        page = 1
-        
-        //파일 핸들링하기 위한 객체 생성
-        let fileMgr = FileManager.default
-        
-        //데이터베이스 팡리 경로를 생성
-        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let commentDirectoryPath = "\(DirectoryPath.comment)\(itemId)\(DirectoryPath.sqlite)"
-        let dbPath = docPathURL.appendingPathComponent(commentDirectoryPath).path
-        
-        //서버에서 아이템 데이터 받아오기
-        req.apiCommentGet(itemid: itemId, page: page) { count, list in
-            print(list)
-            
-            //데이터베이스 파일 생성
-            let itemDB = FMDatabase(path: dbPath)
-            //데이터베이스 열기
-            itemDB.open()
-            //데이터를 저장할 테이블 생성
-            let sql = self.sql.createTableComment
-            itemDB.executeStatements(sql)
-            
-            //전체 데이터의 개수
-            self.itemCountAll = count
-            
-            self.lblCommentCount.text = "댓글 개수: \(count)"
-            
-            //배열의 데이터 순회
-            if list.count != 0 {
-                //배열의 데이터 순회
-                for index in 0...(list.count - 1) {
-                        //배열에서 하나씩 가져오기
-                    let itemDict = list[index] as! [String: Any] //NSDictionary
-                    //하나의 DTO 객체를 생성
-                    var item = Comment()
-                    //json 파싱해서 객체에 데이터 대입
-                    item.username = itemDict["username"] as? String
-                    item.userimgurl = itemDict["userimgurl"] as? String
-                    item.comment = itemDict["comment"] as? String
-                    item.itemid = ((itemDict["itemid"] as! NSNumber).intValue)
-                    item.commentid = ((itemDict["commentid"] as! NSNumber).intValue)
-                    item.updatedate = itemDict["updatedate"] as? String
-                    //배열에 추가
-                    self.tableList.append(item)
-                    self.tableList.sort(by: {$0.commentid! > $1.commentid!}) //순서 정렬
-                    
-                    //데이터를 삽입할 SQL 생성
-                    let sql = self.sql.insertIntoComment
-                    //파라미터 생성
-                    var paramDict = [String:Any]()
-                    paramDict["username"] = item.username!
-                    paramDict["userimgurl"] = item.userimgurl!
-                    paramDict["itemid"] = item.itemid!
-                    paramDict["commentid"] = item.commentid!
-                    paramDict["comment"] = item.comment!
-                    paramDict["updatedate"] = item.updatedate!
-                    
-                    //sql 실행
-                    itemDB.executeUpdate(sql, withParameterDictionary: paramDict)
-                }//반복문 종료
+
+        } fail: { //네트워크가 연결이 안돼서 로컬 데이터 출력
+            NSLog("네트워크가 연결이 안돼서 로컬 데이터 출력")
+            self.tableList.removeAll() //tableList 배열 초기화
+            //로컬 데이터 출력
+            self.commentLocalData(itemId: self.itemId) { commentList, count in
+                self.tableList = commentList
+                self.tableView.reloadData()
+                self.lblCommentCount.text = "댓글 개수: \(count)"
             }
-            //데이터 가져와서 파싱하는 문장 종료
-            self.tableView.reloadData()
-            itemDB.close()
-            NSLog("데이터 베이스 생성 성공")
-        } fail: {
-            self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
     }
     
-    //MARK: 로컬 데이터 출력
-    func localData() {
-        //파일 핸들링하기 위한 객체 생성
-        let fileMgr = FileManager.default
-        
-        //데이터베이스 팡리 경로를 생성
-        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let commentDirectoryPath = "\(DirectoryPath.comment)\(itemId)\(DirectoryPath.sqlite)"
-        let dbPath = docPathURL.appendingPathComponent(commentDirectoryPath).path
-        //저장해놓은 데이터베이스 파일의 내용 읽기
-        let itemDB = FMDatabase(path: dbPath)
-        itemDB.open()
-        
-        do {
-            var count = 0
-            
-            let sql = self.sql.selectFromComment
-            
-            //sql 실행
-            let rs = try itemDB.executeQuery(sql, values: nil)
-            
-            //결과를 순회
-            while rs.next() {
-                count = count + 1
-                var item = Comment()
-                item.username = rs.string(forColumn: "username")
-                item.userimgurl = rs.string(forColumn: "userimgurl")
-                item.comment = rs.string(forColumn: "comment")
-                item.itemid = Int(rs.int(forColumn: "itemid"))
-                item.commentid = Int(rs.int(forColumn: "commentid"))
-                item.updatedate = rs.string(forColumn: "updatedate")
-                //데이터를 list에 저장
-                self.tableList.append(item)
-            }
-            //테이블 뷰 다시 출력
-            self.tableView.reloadData()
-            
-            self.lblCommentCount.text = "댓글 개수: \(count)"
-            
-            NSLog("데이터 베이스 읽기 성공")
-        } catch let error as NSError {
-            NSLog("데이터 베이스 읽기 실패: \(error.localizedDescription)")
-        }
-        //데이터베이스 닫기
-        itemDB.close()
-        
     
-    }
+//    
+//    //MARK: 댓글 업로드
+//    func commentAdd() {
+//        //페이지 번호
+//        page = 1
+//        
+//        //파일 핸들링하기 위한 객체 생성
+//        let fileMgr = FileManager.default
+//        
+//        //데이터베이스 팡리 경로를 생성
+//        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        let commentDirectoryPath = "\(DirectoryPath.comment)\(itemId)\(DirectoryPath.sqlite)"
+//        let dbPath = docPathURL.appendingPathComponent(commentDirectoryPath).path
+//        
+//        //서버에서 아이템 데이터 받아오기
+//        req.apiCommentGet(itemid: itemId, page: page) { count, list in
+//            print(list)
+//            
+//            //데이터베이스 파일 생성
+//            let itemDB = FMDatabase(path: dbPath)
+//            //데이터베이스 열기
+//            itemDB.open()
+//            //데이터를 저장할 테이블 생성
+//            let sql = self.sql.createTableComment
+//            itemDB.executeStatements(sql)
+//            
+//            //전체 데이터의 개수
+//            self.itemCountAll = count
+//            
+//            self.lblCommentCount.text = "댓글 개수: \(count)"
+//            
+//            //배열의 데이터 순회
+//            if list.count != 0 {
+//                //배열의 데이터 순회
+//                for index in 0...(list.count - 1) {
+//                        //배열에서 하나씩 가져오기
+//                    let itemDict = list[index] as! [String: Any] //NSDictionary
+//                    //하나의 DTO 객체를 생성
+//                    var item = Comment()
+//                    //json 파싱해서 객체에 데이터 대입
+//                    item.username = itemDict["username"] as? String
+//                    item.userimgurl = itemDict["userimgurl"] as? String
+//                    item.comment = itemDict["comment"] as? String
+//                    item.itemid = ((itemDict["itemid"] as! NSNumber).intValue)
+//                    item.commentid = ((itemDict["commentid"] as! NSNumber).intValue)
+//                    item.updatedate = itemDict["updatedate"] as? String
+//                    //배열에 추가
+//                    self.tableList.append(item)
+//                    self.tableList.sort(by: {$0.commentid! > $1.commentid!}) //순서 정렬
+//                    
+//                    //데이터를 삽입할 SQL 생성
+//                    let sql = self.sql.insertIntoComment
+//                    //파라미터 생성
+//                    var paramDict = [String:Any]()
+//                    paramDict["username"] = item.username!
+//                    paramDict["userimgurl"] = item.userimgurl!
+//                    paramDict["itemid"] = item.itemid!
+//                    paramDict["commentid"] = item.commentid!
+//                    paramDict["comment"] = item.comment!
+//                    paramDict["updatedate"] = item.updatedate!
+//                    
+//                    //sql 실행
+//                    itemDB.executeUpdate(sql, withParameterDictionary: paramDict)
+//                }//반복문 종료
+//            }
+//            //데이터 가져와서 파싱하는 문장 종료
+//            self.tableView.reloadData()
+//            itemDB.close()
+//            NSLog("데이터 베이스 생성 성공")
+//        } fail: {
+//            self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
+//        }
+//    }
     
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
@@ -372,7 +310,7 @@ class CommentListViewController: UIViewController {
             itemDB.open()
             
             //전체 데이터의 개수
-            self.itemCountAll = count
+            UserDefaults.standard.set(count, forKey: UDkey().commentcount)
             
             //배열의 데이터 순회
             if list.count != 0 {
@@ -506,9 +444,10 @@ extension CommentListViewController: UITableViewDelegate, UITableViewDataSource 
         if flag == false && indexPath.row == self.tableList.count - 1 {
             flag = true
         } else if flag == true && indexPath.row == self.tableList.count - 1 {
-            print("\(itemCountAll), \(tableList.count)")
+            let commentCountAll = UserDefaults.standard.value(forKey: UDkey().commentcount) as? Int ?? 0
+            print("\(commentCountAll), \(tableList.count)")
             //api db의 전체 데이터 갯수가 리스트 배열의 개수보다 크면 실행
-            if itemCountAll > self.tableList.count {
+            if commentCountAll > self.tableList.count {
                 //네트워크 사용 여부 확인
                 networkCheck() { [self] in
                     scrollItemAdd()

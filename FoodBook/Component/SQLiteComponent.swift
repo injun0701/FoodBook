@@ -23,3 +23,10 @@ struct SQLiteDocumentDirectoryPath {
     let sqlite = ".sqlite"
     let commentupdate = "commentupdate.txt"
 }
+
+struct LastUpdateParameterName {
+    let update = "update"
+    let lastupdate = "lastupdate"
+    let commentupdate = "commentupdate"
+    let commentlastupdate = "commentlastupdate"
+}
