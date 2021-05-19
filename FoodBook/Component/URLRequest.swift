@@ -207,7 +207,7 @@ class URLRequest {
     }
     
     //MARK: 리스트 받아오기
-    func apiItemGet(page: Int, count: Int, searchKeyWord: String?, success: @escaping (Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
+    func apiItemGet(page: Int, count: Int, searchKeyWord: String?, success: @escaping (Int, Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
         //url은 한글을 인코딩해야함
         
         var searchKeyWord = searchKeyWord
@@ -220,7 +220,10 @@ class URLRequest {
             searchKeyWord = ""
         }
         
-        let url = "\(FoodBookUrl().itemGet)\(page)&count=\(count)&username=\(userNameEncoding!)&searchkeyword=\(searchKeyWord!)"
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let searchKeyWordEncoding = searchKeyWord?.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().itemGet)\(page)&count=\(count)&username=\(userNameEncoding!)&searchkeyword=\(searchKeyWordEncoding!)"
         
         //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
         let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
@@ -240,10 +243,12 @@ class URLRequest {
                     if let jsonObject = value as? [String:Any] {
                         NSLog("데이터 받아오기 성공")
                         //데이터에서 전체 데이터 개수를 Int로 가져오기
-                        let count = jsonObject["count"] as! Int
+                        let allcount = jsonObject["allcount"] as! Int
+                        //데이터에서 서치한 데이터 전체 개수를 Int로 가져오기
+                        let searchcount = jsonObject["searchcount"] as! Int
                         //데이터에서 list 키의 값을 배열로 가져오기
                         let list = jsonObject["list"] as! NSArray
-                        success(count, list)
+                        success(allcount, searchcount, list)
                     }
                 case GetAllStatusCode.fail.rawValue:
                     NSLog("데이터 받아오기 실패")
