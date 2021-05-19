@@ -82,7 +82,7 @@ class ItemListPostViewController: UIViewController {
         
         //서버에서 아이템 데이터 삽입
         req.apiItemInsert(itemname: itemname, price: price, description: description, userimgurl: userimgurl, itemimgurl: itemimgurl, username: username, img: img) {
-            self.navigationController?.popViewController(animated: true)
+            self.navigationController?.popToRootViewController(animated: true)
         } fail: {
             self.showAlertBtn1(title: "업로드 오류", message: "업로드 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }

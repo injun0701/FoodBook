@@ -31,12 +31,9 @@ class ItemListViewController: UIViewController {
     
     //내정보 버튼
     @IBAction func btnMyInfoAction(_ sender: UIButton) {
-        //앲 삭제(UserDefault는 액삭제시 자동 날라감), 회원 탈퇴, 로그아웃, 핸드폰 변경, 로그인 등등
-        UserDefaults.standard.removeObject(forKey: UDkey().userid)
-        UserDefaults.standard.removeObject(forKey: UDkey().username)
-        UserDefaults.standard.removeObject(forKey: UDkey().userimgurl)
-        NSLog("로그아웃 상태")
-        rootVC()
+        let sb = UIStoryboard(name: "MyPage", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "MyPageViewController") as! MyPageViewController
+        self.navigationController?.pushViewController(navi, animated: true)
     }
     
     //글쓰기 버튼
@@ -138,9 +135,9 @@ class ItemListViewController: UIViewController {
                     self.tableView.reloadData()
                 }
             } updatetimeDifferent: {
-                var itemListCount = 10
+                var itemListCount = 10 //초기화
                 if self.itemList.count != 0 {
-                    itemListCount = self.itemList.count
+                    itemListCount = self.itemList.count //메모리에 리스트가 있으면 리스트 만큼 출력
                 }
                 //기존 데이터를 지우고 새로 다운로드
                 try! fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
@@ -171,84 +168,6 @@ class ItemListViewController: UIViewController {
         dataSetting()
     }
     
-    //MARK: 아래로 스크롤 시 아이템 업로드
-//    func scrollItemAdd() {
-//        //이 메소드가 호출될때 마다 페이지 수 1씩 증가
-//        page = page + 1
-//        
-//        //파일 핸들링하기 위한 객체 생성
-//        let fileMgr = FileManager.default
-//        
-//        //데이터베이스 팡리 경로를 생성
-//        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-//        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
-//        
-//        //서버에서 아이템 데이터 받아오기
-//        req.apiItemGet(page: page, count: 10, searchKeyWord: nil) { count, list in
-//            print(list)
-//            
-//            //데이터베이스 파일 생성
-//            let itemDB = FMDatabase(path: dbPath)
-//            //데이터베이스 열기
-//            itemDB.open()
-//            
-//            //전체 데이터의 개수
-//            UserDefaults.standard.set(count, forKey: UDkey().itemcount)
-//            
-//            //페이지에서 가져온 데이터
-//            if list.count != 0 {
-//                //배열의 데이터 순회
-//                for index in 0...(list.count - 1) {
-//                        //배열에서 하나씩 가져오기
-//                    let itemDict = list[index] as! [String: Any] //NSDictionary
-//                    //하나의 DTO 객체를 생성
-//                    var item = Item()
-//                    //json 파싱해서 객체에 데이터 대입
-//                    item.username = itemDict["username"] as? String
-//                    item.userimgurl = itemDict["userimgurl"] as? String
-//                    item.itemid = ((itemDict["itemid"] as! NSNumber).intValue)
-//                    item.itemname = itemDict["itemname"] as? String
-//                    item.price = ((itemDict["price"] as! NSNumber).intValue)
-//                    item.commentcount = ((itemDict["commentcount"] as! NSNumber).intValue)
-//                    item.likecount = ((itemDict["likecount"] as! NSNumber).intValue)
-//                    item.useritemlike = ((itemDict["useritemlike"] as! NSNumber).intValue)
-//                    item.description = itemDict["description"] as? String
-//                    item.imgurl = itemDict["imgurl"] as? String
-//                    item.updatedate = itemDict["updatedate"] as? String
-//                    //배열에 추가
-//                    self.itemList.append(item)
-//                    self.itemList.sort(by: {$0.itemid! > $1.itemid!}) //순서 정렬
-//
-//                    //데이터를 삽입할 SQL 생성
-//                    let sql = self.sql.insertIntoItem
-//                    //파라미터 생성
-//                    var paramDict = [String:Any]()
-//                    paramDict["username"] = item.username!
-//                    paramDict["userimgurl"] = item.userimgurl!
-//                    paramDict["itemid"] = item.itemid!
-//                    paramDict["itemname"] = item.itemname!
-//                    paramDict["price"] = item.price!
-//                    paramDict["commentcount"] = item.commentcount!
-//                    paramDict["likecount"] = item.likecount!
-//                    paramDict["useritemlike"] = item.useritemlike!
-//                    paramDict["description"] = item.description!
-//                    paramDict["imgurl"] = item.imgurl!
-//                    paramDict["updatedate"] = item.updatedate!
-//                    
-//                    //sql 실행
-//                    itemDB.executeUpdate(sql, withParameterDictionary: paramDict)
-//                }//반복문 종료
-//            }
-//            
-//            //데이터 가져와서 파싱하는 문장 종료
-//            self.tableView.reloadData()
-//            itemDB.close()
-//            NSLog("데이터 베이스 생성 성공")
-//        } fail: {
-//            self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
-//        }
-//    }
-
     //refreshControl 객체 생성
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -309,7 +228,7 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.btnLikeTapHandler = { [self] in
                 //네트워크 사용 여부 확인
                 networkCheck() {
-                    itemLikeDelete(itemid: "\(item.itemid!)") {
+                    itemLikeDelete(homePage: true, itemid: "\(item.itemid!)") {
                         let itemListCount = itemList.count
                         self.itemList.removeAll() //itemList 배열 초기화
                         //아이템 추가
@@ -326,7 +245,7 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.btnLikeTapHandler = { [self] in
                 //네트워크 사용 여부 확인
                 networkCheck() {
-                    itemLikeInsert(itemid: "\(item.itemid!)") {
+                    itemLikeInsert(homePage: true, itemid: "\(item.itemid!)") {
                         let itemListCount = itemList.count
                         self.itemList.removeAll() //itemList 배열 초기화
                         //아이템 추가
@@ -350,54 +269,6 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-    
-    //좋아요 삭제 메소드
-//    func itemLikeDelete(itemid: String) {
-//        req.apiItemLikeDelete(itemid: itemid) {
-//            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 삭제가 성공적으로 완료되었습니다.", btnTitle: "확인") {
-//                self.itemLike()
-//            }
-//        } fail: {
-//            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 업로드를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
-//        }
-//    }
-//
-//    //좋아요 업로드 메소드
-//    func itemLikeInsert(itemid: String) {
-//        req.apiItemLikeInsert(itemid: itemid) {
-//            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
-//                self.itemLike()
-//            }
-//        } fail: {
-//            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 업로드를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
-//        }
-//    }
-//
-//    //좋아요 메소드
-//    func itemLike() {
-//        let itemListCount = itemList.count
-//        //파일 핸들링하기 위한 객체 생성
-//        let fileMgr = FileManager.default
-//
-//        //데이터베이스 팡리 경로를 생성
-//        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-//        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
-//        //업데이트 된 시간을 저장할 텍스트 파일 경로를 생성
-//        let updatePath = docPathURL.appendingPathComponent(directoryPath.update).path
-//        //기존 데이터를 지우고 새로 다운로드
-//        try! fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
-//        try! fileMgr.removeItem(atPath: updatePath) //업데이트 시간 파일 삭제
-//        self.itemList.removeAll() //itemList 배열 초기화
-//        //아이템 추가
-//        self.itemAdd(page: 1, count: itemListCount) { itemList, itemCountAll in
-//            self.itemList = itemList
-//            UserDefaults.standard.set(itemCountAll, forKey: UDkey().itemcount)
-//
-//            self.tableView.reloadData()
-//        }
-//        //마지막 업데이트 시간을 기록
-//        lastUpdateAddToLocal(updatePathName: lastUpdatePara.update, urlName: lastUpdatePara.lastupdate)
-//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //테이블 셀의 인덱스
@@ -437,7 +308,7 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
                 page = page + 1
                 //네트워크 사용 여부 확인
                 networkCheck() { [self] in
-                    scrollItemAdd(page: page, itemList: self.itemList) { itemList in
+                    scrollItemAdd(page: page, count: 10, itemList: self.itemList) { itemList in
                         self.itemList = itemList
                         self.tableView.reloadData()
                     }

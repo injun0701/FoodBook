@@ -17,6 +17,8 @@
 		844A7BD52653EEE70079FC29 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844A7BD42653EEE70079FC29 /* Search.storyboard */; };
 		844A7BD72653EEF30079FC29 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A7BD62653EEF30079FC29 /* SearchViewController.swift */; };
 		844A7BDB265400F80079FC29 /* ItemDataConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A7BDA265400F80079FC29 /* ItemDataConfig.swift */; };
+		844EAE5D2654FFD900F1C3EC /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EAE5C2654FFD900F1C3EC /* MyPageViewController.swift */; };
+		844EAE5F2655004F00F1C3EC /* MyPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844EAE5E2655004F00F1C3EC /* MyPage.storyboard */; };
 		8482E99C2644EE8000BAA7FE /* ItemListPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */; };
 		8482E99F26450ACE00BAA7FE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8482E99E26450ACE00BAA7FE /* Login.storyboard */; };
 		8482E9A126450ADC00BAA7FE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E9A026450ADC00BAA7FE /* LoginViewController.swift */; };
@@ -59,6 +61,8 @@
 		844A7BD42653EEE70079FC29 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		844A7BD62653EEF30079FC29 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		844A7BDA265400F80079FC29 /* ItemDataConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDataConfig.swift; sourceTree = "<group>"; };
+		844EAE5C2654FFD900F1C3EC /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		844EAE5E2655004F00F1C3EC /* MyPage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyPage.storyboard; sourceTree = "<group>"; };
 		8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListPostViewController.swift; sourceTree = "<group>"; };
 		8482E99E26450ACE00BAA7FE /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8482E9A026450ADC00BAA7FE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +156,15 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		844EAE5B2654FEE700F1C3EC /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				844EAE5E2655004F00F1C3EC /* MyPage.storyboard */,
+				844EAE5C2654FFD900F1C3EC /* MyPageViewController.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
 		8482E99D26450ABA00BAA7FE /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +200,7 @@
 				840FC157265353FF00E4DB40 /* SignUp */,
 				8482E99D26450ABA00BAA7FE /* Login */,
 				84FA37AA2650AD2100F37673 /* Comment */,
+				844EAE5B2654FEE700F1C3EC /* MyPage */,
 				844A7BD32653EED90079FC29 /* Search */,
 				84D2BD8B2643BD9F00A3C7FD /* ItemList */,
 				84D2BD772643A2D900A3C7FD /* AppDelegate.swift */,
@@ -327,6 +341,7 @@
 				84D2BD842643A2DA00A3C7FD /* LaunchScreen.storyboard in Resources */,
 				844A7BD52653EEE70079FC29 /* Search.storyboard in Resources */,
 				84D2BD8F2643BDD000A3C7FD /* ItemList.storyboard in Resources */,
+				844EAE5F2655004F00F1C3EC /* MyPage.storyboard in Resources */,
 				84D2BD812643A2DA00A3C7FD /* Assets.xcassets in Resources */,
 				8482E99F26450ACE00BAA7FE /* Login.storyboard in Resources */,
 				84D2BD7F2643A2D900A3C7FD /* Main.storyboard in Resources */,
@@ -393,6 +408,7 @@
 				840FC1592653574A00E4DB40 /* SignUpViewController.swift in Sources */,
 				8412622E264FA28B00966DF9 /* SQLiteComponent.swift in Sources */,
 				84D2BDA02643C74200A3C7FD /* FMResultSet.m in Sources */,
+				844EAE5D2654FFD900F1C3EC /* MyPageViewController.swift in Sources */,
 				84FA37B42650B17000F37673 /* CommentVO.swift in Sources */,
 				8482E99C2644EE8000BAA7FE /* ItemListPostViewController.swift in Sources */,
 				84FA37B62650B68600F37673 /* CommentPostViewController.swift in Sources */,

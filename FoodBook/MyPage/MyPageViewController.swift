@@ -1,16 +1,18 @@
 //
-//  SearchViewController.swift
+//  MyPageViewController.swift
 //  FoodBook
 //
-//  Created by HongInJun on 2021/05/18.
+//  Created by HongInJun on 2021/05/19.
 //
 
 import UIKit
 
-class SearchViewController: UIViewController {
-
-    @IBOutlet var tfSearch: UITextField!
-    @IBOutlet var lblItemCount: UILabel!
+class MyPageViewController: UIViewController {
+    
+    @IBOutlet var imgView: UIImageView!
+    @IBOutlet var lblUserId: UILabel!
+    @IBOutlet var lblUserName: UILabel!
+    @IBOutlet var lblMyItemCount: UILabel!
     @IBOutlet var tableView: UITableView!
     
     //현재 출력한 체이지 번호를 저장할 프로퍼티
@@ -23,15 +25,36 @@ class SearchViewController: UIViewController {
     
     //테이블 뷰에 출력할 데이터 배열
     var itemList: [Item] = []
-    
+
     //검색 결과 개수
     var searchItemCountAll = 0
     
-    @IBAction func tfSearchAction(_ sender: UITextField) {
-        //검색어로 데이터 세팅
-        searchDataSetting(count: 10)
+    let userId = UserDefaults.standard.value(forKey: UDkey().userid) as? String
+    let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
+    let userImgUrl = UserDefaults.standard.value(forKey: UDkey().userimgurl) as? String
+    
+    //내정보 버튼
+    @IBAction func btnLogoutAction(_ sender: UIButton) {
+        //앲 삭제(UserDefault는 액삭제시 자동 날라감), 회원 탈퇴, 로그아웃, 핸드폰 변경, 로그인 등등
+        UserDefaults.standard.removeObject(forKey: UDkey().userid)
+        UserDefaults.standard.removeObject(forKey: UDkey().username)
+        UserDefaults.standard.removeObject(forKey: UDkey().userimgurl)
+        NSLog("로그아웃 상태")
+        rootVC()
     }
     
+    //글쓰기 버튼
+    @IBAction func btnAddAction(_ sender: UIButton) {
+        let sb = UIStoryboard(name: "ItemList", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "ItemListPostViewController") as! ItemListPostViewController
+        
+        let userImgUrl = UserDefaults.standard.value(forKey: UDkey().userimgurl)
+        let userName = UserDefaults.standard.value(forKey: UDkey().username)
+        navi.userImgUrl = userImgUrl as! String
+        navi.userName = userName as! String
+        navi.mode = "저장"
+        self.navigationController?.pushViewController(navi, animated: true)
+    }
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,13 +76,32 @@ class SearchViewController: UIViewController {
         }
     }
     
-    //검색어로 데이터 세팅
-    func searchDataSetting(count: Int) {
-        let searchKeyWord = tfSearch.text ?? ""
-        
-        if tfSearch.text != "" {
-            //데이터 세팅
-            dataSetting(count: count, searchKeyWord: searchKeyWord)
+    //MARK: viewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
+        //뷰 세팅
+        viewSetting()
+        //데이터 세팅
+        dataSetting(count: 10, searchKeyWord: userName ?? "")
+    }
+    
+    //뷰 세팅
+    func viewSetting() {
+        lblUserId.text = userId
+        lblUserName.text = userName
+        //이미지 세팅
+        imgSetting()
+    }
+    
+    //이미지 세팅
+    func imgSetting() {
+        networkCheck() { [self] in
+            //유저 이미지 출력
+            req.getImg(imgurlName: userImgUrl!, defaultImgurlName: "userimg", toImg: imgView)
+        }
+        //유저이미지 라운드 처리
+        DispatchQueue.main.async { [self] in
+            imgView.layer.cornerRadius = imgView.frame.height/2
+            imgView.clipsToBounds = true
         }
     }
     
@@ -97,7 +139,7 @@ class SearchViewController: UIViewController {
                 }//반복문 종료
                 
                 searchItemCountAll = searchcount
-                lblItemCount.text = "\(searchcount)"
+                lblMyItemCount.text = "\(searchcount)"
                 tableView.reloadData()
                 
                 //refreshControl 제거
@@ -119,14 +161,14 @@ class SearchViewController: UIViewController {
     
     //맨 위로 스크롤 시 refesh 기능
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        //검색어로 데이터 세팅
-        searchDataSetting(count: 10)
+        //데이터 세팅
+        dataSetting(count: 10, searchKeyWord: userName ?? "")
     }
     
 }
 
 //MARK: 테이블뷰
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemList.count
@@ -167,8 +209,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 networkCheck() {
                     itemLikeDelete(homePage: false, itemid: "\(item.itemid!)") {
                         let itemListCount = itemList.count
-                        //검색어로 데이터 세팅
-                        searchDataSetting(count: itemListCount)
+                        //데이터 세팅
+                        dataSetting(count: itemListCount, searchKeyWord: userName ?? "")
                     }
                 }
             }
@@ -178,10 +220,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             cell.btnLikeTapHandler = { [self] in
                 //네트워크 사용 여부 확인
                 networkCheck() {
-                    itemLikeInsert(homePage: flag, itemid: "\(item.itemid!)") {
+                    itemLikeInsert(homePage: false, itemid: "\(item.itemid!)") {
                         let itemListCount = itemList.count
-                        //검색어로 데이터 세팅
-                        searchDataSetting(count: itemListCount)
+                        //데이터 세팅
+                        dataSetting(count: itemListCount, searchKeyWord: userName ?? "")
                     }
                 }
             }
@@ -235,16 +277,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             if searchItemCountAll > self.itemList.count {
                 //네트워크 사용 여부 확인
                 networkCheck() { [self] in
-                    let searchKeyWord = tfSearch.text ?? ""
-                    
-                    if tfSearch.text != "" {
-                        searchScrollItemAdd(page: page, itemList: self.itemList, searchKeyWord: searchKeyWord) { itemList in
-                            self.itemList = itemList
-                            self.tableView.reloadData()
-                        }
-                        page = page + 1
-                        flag = false
+                    searchScrollItemAdd(page: page, itemList: self.itemList, searchKeyWord: userName ?? "") { itemList in
+                        self.itemList = itemList
+                        self.tableView.reloadData()
                     }
+                    page = page + 1
+                    flag = false
                 }
             }
         }

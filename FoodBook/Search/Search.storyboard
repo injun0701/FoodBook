@@ -19,11 +19,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g4A-CX-aUa">
-                                <rect key="frame" x="0.0" y="136" width="414" height="760"/>
+                                <rect key="frame" x="0.0" y="156" width="414" height="740"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4T2-Rh-ENs">
-                                <rect key="frame" x="20" y="109" width="90.5" height="17"/>
+                                <rect key="frame" x="20" y="129" width="90.5" height="17"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="검색결과 총 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajf-zI-1tK">
                                         <rect key="frame" x="0.0" y="0.0" width="68.5" height="17"/>
@@ -46,7 +46,7 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QJ8-hN-da9">
-                                <rect key="frame" x="20" y="44" width="374" height="45"/>
+                                <rect key="frame" x="20" y="64" width="374" height="45"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Nf1-eK-Cf8">
                                         <rect key="frame" x="10" y="0.0" width="354" height="45"/>
@@ -97,7 +97,7 @@
                             <constraint firstItem="g4A-CX-aUa" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="HGF-F5-EVw"/>
                             <constraint firstAttribute="bottom" secondItem="g4A-CX-aUa" secondAttribute="bottom" id="Jez-EJ-pgN"/>
                             <constraint firstItem="g4A-CX-aUa" firstAttribute="top" secondItem="4T2-Rh-ENs" secondAttribute="bottom" constant="10" id="TKG-yZ-UxL"/>
-                            <constraint firstItem="QJ8-hN-da9" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="TeS-Ff-XmE"/>
+                            <constraint firstItem="QJ8-hN-da9" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="20" id="TeS-Ff-XmE"/>
                             <constraint firstItem="4T2-Rh-ENs" firstAttribute="top" secondItem="QJ8-hN-da9" secondAttribute="bottom" constant="20" id="cEW-bP-RMB"/>
                             <constraint firstItem="4T2-Rh-ENs" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="eMp-KU-Kjk"/>
                         </constraints>
