@@ -30,7 +30,7 @@
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="내정보"/>
+                                        <state key="normal" title="내 정보"/>
                                         <connections>
                                             <action selector="btnMyInfoAction:" destination="K9F-vZ-whx" eventType="touchUpInside" id="frA-zY-8zb"/>
                                         </connections>
@@ -109,7 +109,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="plus"/>
                                 <connections>
-                                    <action selector="btnImgAction:" destination="hIV-Lk-zNW" eventType="touchUpInside" id="Tkf-5m-ofd"/>
+                                    <action selector="btnImgAddAction:" destination="hIV-Lk-zNW" eventType="touchUpInside" id="Tkf-5m-ofd"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="제목을 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vaI-Pq-hJ3">

@@ -90,6 +90,14 @@ extension UIViewController {
         }
     }
     
+    //텍스트뷰 디자인
+    func textViewDesign(textView: UITextView) {
+        textView.layer.borderWidth = 0.3
+        textView.layer.borderColor = UIColor(displayP3Red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
+        textView.layer.masksToBounds = true
+        textView.layer.cornerRadius = 4
+    }
+    
 }
 
 extension String {

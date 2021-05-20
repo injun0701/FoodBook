@@ -1,15 +1,14 @@
 //
-//  SearchViewController.swift
+//  ItemLikeListViewController.swift
 //  FoodBook
 //
-//  Created by HongInJun on 2021/05/18.
+//  Created by HongInJun on 2021/05/20.
 //
 
 import UIKit
 
-class SearchViewController: UIViewController {
-
-    @IBOutlet var tfSearch: UITextField!
+class ItemLikeListViewController: UIViewController {
+    
     @IBOutlet var lblItemCount: UILabel!
     @IBOutlet var tableView: UITableView!
     
@@ -25,19 +24,16 @@ class SearchViewController: UIViewController {
     var itemList: [Item] = []
     
     //검색 결과 개수
-    var searchItemCountAll = 0
-    
-    @IBAction func tfSearchAction(_ sender: UITextField) {
-        //검색어로 데이터 세팅
-        searchDataSetting(count: 10)
-    }
+    var itemLikeCountAll = 0
     
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewSetting()
         //네비 세팅
-        navbarSetting(title: "게시물 검색")
+        navbarSetting(title: "좋아요 누른 게시물")
+        //좋아요 누른 게시물 데이터 세팅
+        dataSetting(count: 10)
     }
     
     //테이블뷰 세팅
@@ -55,20 +51,10 @@ class SearchViewController: UIViewController {
         }
     }
     
-    //검색어로 데이터 세팅
-    func searchDataSetting(count: Int) {
-        let searchKeyWord = tfSearch.text ?? ""
-        
-        if tfSearch.text != "" {
-            //데이터 세팅
-            dataSetting(count: count, searchKeyWord: searchKeyWord)
-        }
-    }
-    
     //데이터 세팅
-    func dataSetting(count: Int, searchKeyWord: String) {
+    func dataSetting(count: Int) {
         //서버에서 아이템 데이터 받아오기
-        req.apiItemGet(page: 1, count: count, searchKeyWord: searchKeyWord) { [self] allcount, searchcount, list in
+        req.apiItemLikeGet(page: 1, count: count) { [self] count, list in
             print(list)
             
             itemList = [] //초기화
@@ -98,8 +84,8 @@ class SearchViewController: UIViewController {
                     itemList.sort(by: {$0.itemid! > $1.itemid!}) //순서 정렬
                 }//반복문 종료
                 
-                searchItemCountAll = searchcount
-                lblItemCount.text = "\(searchcount)"
+                itemLikeCountAll = count
+                lblItemCount.text = "\(count)"
                 tableView.reloadData()
                 
                 //refreshControl 제거
@@ -121,14 +107,14 @@ class SearchViewController: UIViewController {
     
     //맨 위로 스크롤 시 refesh 기능
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        //검색어로 데이터 세팅
-        searchDataSetting(count: 10)
+        //좋아요 누른 게시물 데이터 세팅
+        dataSetting(count: 10)
     }
     
 }
 
 //MARK: 테이블뷰
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+extension ItemLikeListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemList.count
@@ -166,22 +152,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 //네트워크 사용 여부 확인
                 networkCheck() {
                     itemLikeDelete(homePage: false, itemid: "\(item.itemid!)") {
-                        let itemListCount = itemList.count
-                        //검색어로 데이터 세팅
-                        searchDataSetting(count: itemListCount)
-                    }
-                }
-            }
-        } else { //좋아요 안한 상태
-            cell.btnLike.setImage(UIImage(named: "like"), for: .normal)
-            //btnLikeTapHandler 작성
-            cell.btnLikeTapHandler = { [self] in
-                //네트워크 사용 여부 확인
-                networkCheck() {
-                    itemLikeInsert(homePage: flag, itemid: "\(item.itemid!)") {
-                        let itemListCount = itemList.count
-                        //검색어로 데이터 세팅
-                        searchDataSetting(count: itemListCount)
+                        itemList.remove(at: indexPath.row)
+                        itemLikeCountAll = itemLikeCountAll - 1
+                        lblItemCount.text = "\(itemLikeCountAll)"
+                        tableView.reloadData()
                     }
                 }
             }
@@ -230,21 +204,17 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             flag = true
         } else if flag == true && indexPath.row == self.itemList.count - 1 {
 
-            print("\(searchItemCountAll), \(itemList.count)")
+            print("\(itemLikeCountAll), \(itemList.count)")
             //api db의 전체 데이터 갯수가 리스트 배열의 개수보다 크면 실행
-            if searchItemCountAll > self.itemList.count {
+            if itemLikeCountAll > self.itemList.count {
                 //네트워크 사용 여부 확인
                 networkCheck() { [self] in
-                    let searchKeyWord = tfSearch.text ?? ""
-                    
-                    if tfSearch.text != "" {
-                        searchScrollItemAdd(page: page, itemList: self.itemList, searchKeyWord: searchKeyWord) { itemList in
-                            self.itemList = itemList
-                            self.tableView.reloadData()
-                        }
-                        page = page + 1
-                        flag = false
+                    itemLikeScrollItemAdd(page: page, itemList: self.itemList) { itemList in
+                        self.itemList = itemList
+                        self.tableView.reloadData()
                     }
+                    page = page + 1
+                    flag = false
                 }
             }
         }

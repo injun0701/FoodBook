@@ -150,9 +150,6 @@ class URLRequest {
         }
     }
     
-    
-    
-    
     //MARK: 로그인
     func apiUserLogin(userid: String, passwd: String, success: @escaping (String, String, String) -> Void, fail: @escaping voidToVoid)  {
         //post 방식으로 전송할 파라미터
@@ -206,6 +203,74 @@ class URLRequest {
         }
     }
     
+    //MARK: 유저 정보 수정
+    func apiUserEdit(userid: String, username: String, userimgurl: String, img: UIImage, imgChange: Bool, success: @escaping (String, String, String) -> Void, fail: @escaping voidToVoid)  {
+        
+        let userid = userid
+        let username = username
+        let userimgurl = userimgurl
+        
+        //이미지
+        let img = img
+        
+        //이미지 데이터가 nil이 아니면
+        if let imageData = imageDataCheck(img: img, imgurl: userimgurl).0 { //이미지 데이터
+            let imageDataFileExtension = imageDataCheck(img: img, imgurl: userimgurl).1 //이미지 확장자
+            
+            let url = FoodBookUrl().userUpdate
+            
+            //데이터 수정 - put 방식이고 multipartFormData 방식이고 결과는 json
+            AF.upload(multipartFormData: { multipartFormData in
+                multipartFormData.append(Data(userid.utf8), withName: "userid")
+                multipartFormData.append(Data(username.utf8), withName: "username")
+                multipartFormData.append(Data(userimgurl.utf8), withName: "oldimgurl")
+                if imgChange == true {//이미지를 바꿨다면
+                    //이미지파일 전송
+                    multipartFormData.append(imageData, withName: "userimgurl", fileName: userimgurl, mimeType: "image/\(imageDataFileExtension)")
+                }
+            }, to: url, method: .put).validate(statusCode: 200...500).responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                  
+                    //응답받은 statusCode
+                    let statusCode = response.response?.statusCode ?? 404
+                    
+                    //성공 실패 케이스 나누기
+                    switch statusCode {
+                    case UserUpdateStatusCode.success.rawValue:
+                        //전체 데이터를 NSDictionary로 변환
+                        if let jsonObject = value as? [String:Any] {
+                            let result = jsonObject["result"] as! Int32
+                            if result == 1 {
+                                NSLog("수정 성공")
+                                //user키의 값을 가져오기
+                                let user = jsonObject["user"] as! NSDictionary
+                                //username 가져오기
+                                let userid = user["userid"] as! String
+                                //username 가져오기
+                                let username = user["username"] as! String
+                                //userimgurl 가져오기
+                                let userimgurl = user["userimgurl"] as! String
+                                success(userid, username, userimgurl)
+                            } else {
+                                NSLog("수정 실패")
+                                fail()
+                            }
+                        }
+                    case UserUpdateStatusCode.fail.rawValue:
+                        NSLog("수정 실패")
+                        fail()
+                    default:
+                        NSLog("수정 실패")
+                        fail()
+                    }
+                case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                    print(error)
+                }
+            }
+        }
+    }
+    
     //MARK: 리스트 받아오기
     func apiItemGet(page: Int, count: Int, searchKeyWord: String?, success: @escaping (Int, Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
         //url은 한글을 인코딩해야함
@@ -237,7 +302,7 @@ class URLRequest {
                 
                 //성공 실패 케이스 나누기
                 switch statusCode {
-                case GetAllStatusCode.success.rawValue:
+                case ItemGetStatusCode.success.rawValue:
                     
                     //전체 데이터를 NSDictionary로 받기
                     if let jsonObject = value as? [String:Any] {
@@ -250,7 +315,52 @@ class URLRequest {
                         let list = jsonObject["list"] as! NSArray
                         success(allcount, searchcount, list)
                     }
-                case GetAllStatusCode.fail.rawValue:
+                case ItemGetStatusCode.fail.rawValue:
+                    NSLog("데이터 받아오기 실패")
+                    fail()
+                default:
+                    NSLog("데이터 받아오기 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 좋아요 누른 리스트만 받아오기
+    func apiItemLikeGet(page: Int, count: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
+        //url은 한글을 인코딩해야함
+        let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let userNameEncoding = userName?.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().itemLikeGet)\(page)&count=\(count)&username=\(userNameEncoding!)"
+        
+        //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
+        let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
+        //요청을 전송하고 결과 사용하기
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+              
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case ItemLikeGetStatusCode.success.rawValue:
+                    //전체 데이터를 NSDictionary로 받기
+                    if let jsonObject = value as? [String:Any] {
+                        NSLog("데이터 받아오기 성공")
+                        //데이터에서 서치한 데이터 전체 개수를 Int로 가져오기
+                        let count = jsonObject["count"] as! Int
+                        //데이터에서 list 키의 값을 배열로 가져오기
+                        let list = jsonObject["list"] as! NSArray
+                        success(count, list)
+                    }
+                case ItemLikeGetStatusCode.fail.rawValue:
                     NSLog("데이터 받아오기 실패")
                     fail()
                 default:
@@ -315,12 +425,11 @@ class URLRequest {
     }
     
     //MARK: 아이템 삽입
-    func apiItemInsert(itemname: String, price: String, description: String, userimgurl: String, itemimgurl: String, username: String, img: UIImage, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+    func apiItemInsert(itemname: String, price: String, description: String, itemimgurl: String, username: String, img: UIImage, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
         
         let itemname = itemname
         let price = price
         let description = description
-        let userimgurl = userimgurl
         let itemimgurl = itemimgurl
         let username = username
         
@@ -328,17 +437,16 @@ class URLRequest {
         let img = img
         
         //이미지 데이터가 nil이 아니면
-        if let imageData = imageDataCheck(img: img, itemimgurl: itemimgurl).0 { //이미지 데이터
-            let imageDataFileExtension = imageDataCheck(img: img, itemimgurl: itemimgurl).1 //이미지 확장자
+        if let imageData = imageDataCheck(img: img, imgurl: itemimgurl).0 { //이미지 데이터
+            let imageDataFileExtension = imageDataCheck(img: img, imgurl: itemimgurl).1 //이미지 확장자
                 
             let url = FoodBookUrl().itemInsert
             
-            //데이터 수정 - post 방식이고 multipartFormData 방식이고 결과는 json
+            //데이터 삽입 - post 방식이고 multipartFormData 방식이고 결과는 json
             AF.upload(multipartFormData: { multipartFormData in
                 multipartFormData.append(Data(itemname.utf8), withName: "itemname")
                 multipartFormData.append(Data(price.utf8), withName: "price")
                 multipartFormData.append(Data(username.utf8), withName: "username")
-                multipartFormData.append(Data(userimgurl.utf8), withName: "userimgurl")
                 multipartFormData.append(Data(description.utf8), withName: "description")
                 //이미지파일 전송
                 multipartFormData.append(imageData, withName: "imgurl", fileName: itemimgurl, mimeType: "image/\(imageDataFileExtension)")
@@ -391,8 +499,8 @@ class URLRequest {
         let img = img
         
         //이미지 데이터가 nil이 아니면
-        if let imageData = imageDataCheck(img: img, itemimgurl: itemimgurl).0 { //이미지 데이터
-            let imageDataFileExtension = imageDataCheck(img: img, itemimgurl: itemimgurl).1 //이미지 확장자
+        if let imageData = imageDataCheck(img: img, imgurl: itemimgurl).0 { //이미지 데이터
+            let imageDataFileExtension = imageDataCheck(img: img, imgurl: itemimgurl).1 //이미지 확장자
             
             let url = FoodBookUrl().itemUpdate
             
@@ -444,12 +552,12 @@ class URLRequest {
     }
     
     //이미지의 이름에서 확장자 체크
-    func imageDataCheck(img: UIImage?, itemimgurl: String) -> (Data?, String) {
+    func imageDataCheck(img: UIImage?, imgurl: String) -> (Data?, String) {
         let image = img
         var imageDataFileExtension = "jpg"
         
-        if itemimgurl.contains(".jpg") {
-            print("이미지 이름 : \(itemimgurl)")
+        if imgurl.contains(".jpg") {
+            print("이미지 이름 : \(imgurl)")
             //jpg파일이면 jpegData()로 imageData세팅
             let imageData = image?.jpegData(compressionQuality: 0.5)
             
@@ -458,8 +566,8 @@ class URLRequest {
             
             return (imageData!, imageDataFileExtension)
             
-        } else if itemimgurl.contains(".jpeg")  {
-            print("이미지 이름 : \(itemimgurl)")
+        } else if imgurl.contains(".jpeg")  {
+            print("이미지 이름 : \(imgurl)")
             //jpeg파일이면 jpegData()로 imageData세팅
             let imageData = image?.jpegData(compressionQuality: 0.5)
             
@@ -468,8 +576,8 @@ class URLRequest {
             
             return (imageData!, imageDataFileExtension)
             
-        } else if itemimgurl.contains(".png")  {
-            print("이미지 이름 : \(itemimgurl)")
+        } else if imgurl.contains(".png")  {
+            print("이미지 이름 : \(imgurl)")
             //png파일이면 pngData()로 imageData세팅
             let imageData = image?.pngData()
             
@@ -537,7 +645,7 @@ class URLRequest {
                 
                 //성공 실패 케이스 나누기
                 switch statusCode {
-                case GetAllStatusCode.success.rawValue:
+                case ItemGetStatusCode.success.rawValue:
                     //전체 데이터를 NSDictionary로 받기
                     if let jsonObject = value as? [String:Any] {
                         NSLog("데이터 받아오기 성공")
@@ -547,7 +655,7 @@ class URLRequest {
                         let list = jsonObject["list"] as! NSArray
                         success(count, list)
                     }
-                case GetAllStatusCode.fail.rawValue:
+                case ItemGetStatusCode.fail.rawValue:
                     NSLog("데이터 받아오기 실패")
                     fail()
                 default:
@@ -562,9 +670,9 @@ class URLRequest {
     }
     
     //MARK: 댓글 삽입
-    func apiCommentInsert(itemid: String, username: String, userimgurl: String, comment: String, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+    func apiCommentInsert(itemid: String, username: String, comment: String, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
         //post 방식으로 전송할 파라미터
-        let parameters = ["itemid": itemid, "username": username, "userimgurl": userimgurl, "comment": comment]
+        let parameters = ["itemid": itemid, "username": username, "comment": comment]
         
         let url = FoodBookUrl().commentInsert
         

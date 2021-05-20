@@ -19,6 +19,8 @@
 		844A7BDB265400F80079FC29 /* ItemDataConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A7BDA265400F80079FC29 /* ItemDataConfig.swift */; };
 		844EAE5D2654FFD900F1C3EC /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EAE5C2654FFD900F1C3EC /* MyPageViewController.swift */; };
 		844EAE5F2655004F00F1C3EC /* MyPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844EAE5E2655004F00F1C3EC /* MyPage.storyboard */; };
+		8461D2A126564BAD0022F31E /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461D2A026564BAD0022F31E /* MyPageEditViewController.swift */; };
+		8461D2A3265683D50022F31E /* ItemLikeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461D2A2265683D50022F31E /* ItemLikeListViewController.swift */; };
 		8482E99C2644EE8000BAA7FE /* ItemListPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */; };
 		8482E99F26450ACE00BAA7FE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8482E99E26450ACE00BAA7FE /* Login.storyboard */; };
 		8482E9A126450ADC00BAA7FE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E9A026450ADC00BAA7FE /* LoginViewController.swift */; };
@@ -63,6 +65,8 @@
 		844A7BDA265400F80079FC29 /* ItemDataConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDataConfig.swift; sourceTree = "<group>"; };
 		844EAE5C2654FFD900F1C3EC /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		844EAE5E2655004F00F1C3EC /* MyPage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyPage.storyboard; sourceTree = "<group>"; };
+		8461D2A026564BAD0022F31E /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
+		8461D2A2265683D50022F31E /* ItemLikeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemLikeListViewController.swift; sourceTree = "<group>"; };
 		8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListPostViewController.swift; sourceTree = "<group>"; };
 		8482E99E26450ACE00BAA7FE /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8482E9A026450ADC00BAA7FE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +165,8 @@
 			children = (
 				844EAE5E2655004F00F1C3EC /* MyPage.storyboard */,
 				844EAE5C2654FFD900F1C3EC /* MyPageViewController.swift */,
+				8461D2A026564BAD0022F31E /* MyPageEditViewController.swift */,
+				8461D2A2265683D50022F31E /* ItemLikeListViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -419,10 +425,12 @@
 				84D2BD9F2643C74200A3C7FD /* FMDatabase.m in Sources */,
 				84FA37B22650B0A000F37673 /* CommentListViewController.swift in Sources */,
 				84A20A2B2648B9F0005DDCC3 /* ItemListTableViewCell.swift in Sources */,
+				8461D2A3265683D50022F31E /* ItemLikeListViewController.swift in Sources */,
 				84D2BDA12643C74200A3C7FD /* FMDatabasePool.m in Sources */,
 				84D2BD782643A2D900A3C7FD /* AppDelegate.swift in Sources */,
 				84D2BD7A2643A2D900A3C7FD /* SceneDelegate.swift in Sources */,
 				84FA37AF2650ADB900F37673 /* CommentListTableViewCell.swift in Sources */,
+				8461D2A126564BAD0022F31E /* MyPageEditViewController.swift in Sources */,
 				84D2BDA22643C74200A3C7FD /* FMDatabaseQueue.m in Sources */,
 				84D2BDA32643C74200A3C7FD /* FMDatabaseAdditions.m in Sources */,
 			);

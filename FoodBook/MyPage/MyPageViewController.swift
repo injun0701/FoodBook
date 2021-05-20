@@ -22,6 +22,8 @@ class MyPageViewController: UIViewController {
     
     //서버 통신을 위한 객체
     let req = URLRequest()
+    //SQLite 파일 urlpath
+    let directoryPath = SQLiteDocumentDirectoryPath()
     
     //테이블 뷰에 출력할 데이터 배열
     var itemList: [Item] = []
@@ -29,16 +31,37 @@ class MyPageViewController: UIViewController {
     //검색 결과 개수
     var searchItemCountAll = 0
     
-    let userId = UserDefaults.standard.value(forKey: UDkey().userid) as? String
-    let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
-    let userImgUrl = UserDefaults.standard.value(forKey: UDkey().userimgurl) as? String
+    //정보 수정으로 이동
+    @IBAction func btnToMyPageEditAction(_ sender: UIButton) {
+        let sb = UIStoryboard(name: "MyPage", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "MyPageEditViewController") as! MyPageEditViewController
+        navi.userImg = imgView.image!
+        navi.userId = lblUserId.text!
+        navi.userName = lblUserName.text!
+        navigationController?.pushViewController(navi, animated: true)
+    }
     
-    //내정보 버튼
+    //좋아요 누른 게시판으로 이동
+    @IBAction func btnToItemLikeAction(_ sender: UIButton) {
+        let sb = UIStoryboard(name: "MyPage", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "ItemLikeListViewController") as! ItemLikeListViewController
+        navigationController?.pushViewController(navi, animated: true)
+    }
+    
+    //로그아웃 버튼
     @IBAction func btnLogoutAction(_ sender: UIButton) {
-        //앲 삭제(UserDefault는 액삭제시 자동 날라감), 회원 탈퇴, 로그아웃, 핸드폰 변경, 로그인 등등
+        //앲 삭제(UserDefault는 액삭제시 자동 날라감), 회원 탈퇴, 로그아웃, 핸드폰 변경 등등
         UserDefaults.standard.removeObject(forKey: UDkey().userid)
         UserDefaults.standard.removeObject(forKey: UDkey().username)
         UserDefaults.standard.removeObject(forKey: UDkey().userimgurl)
+        //파일 핸들링하기 위한 객체 생성
+        let fileMgr = FileManager.default
+        //데이터베이스 팡리 경로를 생성
+        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
+        //기존 데이터를 지우고 새로 다운로드
+        try? fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
+        
         NSLog("로그아웃 상태")
         rootVC()
     }
@@ -58,6 +81,8 @@ class MyPageViewController: UIViewController {
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        //네비 세팅
+        navbarSetting(title: "내 정보")
         tableViewSetting()
     }
     
@@ -78,6 +103,7 @@ class MyPageViewController: UIViewController {
     
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
+        let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
         //뷰 세팅
         viewSetting()
         //데이터 세팅
@@ -86,6 +112,10 @@ class MyPageViewController: UIViewController {
     
     //뷰 세팅
     func viewSetting() {
+        
+        let userId = UserDefaults.standard.value(forKey: UDkey().userid) as? String
+        let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
+        
         lblUserId.text = userId
         lblUserName.text = userName
         //이미지 세팅
@@ -94,6 +124,7 @@ class MyPageViewController: UIViewController {
     
     //이미지 세팅
     func imgSetting() {
+        let userImgUrl = UserDefaults.standard.value(forKey: UDkey().userimgurl) as? String
         networkCheck() { [self] in
             //유저 이미지 출력
             req.getImg(imgurlName: userImgUrl!, defaultImgurlName: "userimg", toImg: imgView)
@@ -161,6 +192,7 @@ class MyPageViewController: UIViewController {
     
     //맨 위로 스크롤 시 refesh 기능
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
         //데이터 세팅
         dataSetting(count: 10, searchKeyWord: userName ?? "")
     }
@@ -184,12 +216,10 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         
         let item = itemList[indexPath.row]
         
-        cell.mylbl.text = item.username
-        
-        print(item.userimgurl!)
+        cell.lblUserName.text = item.username
         
         //유저 이미지 출력
-        req.getImg(imgurlName: item.userimgurl!, defaultImgurlName: "userimg", toImg: cell.myImgView)
+        req.getImg(imgurlName: item.userimgurl!, defaultImgurlName: "userimg", toImg: cell.imgViewUser)
         
         let itemDate = cutString(str: item.updatedate!, endIndex: 10, fromTheFront: true)
         cell.lblDate.text = itemDate
@@ -209,6 +239,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 networkCheck() {
                     itemLikeDelete(homePage: false, itemid: "\(item.itemid!)") {
                         let itemListCount = itemList.count
+                        let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
                         //데이터 세팅
                         dataSetting(count: itemListCount, searchKeyWord: userName ?? "")
                     }
@@ -222,6 +253,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 networkCheck() {
                     itemLikeInsert(homePage: false, itemid: "\(item.itemid!)") {
                         let itemListCount = itemList.count
+                        let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
                         //데이터 세팅
                         dataSetting(count: itemListCount, searchKeyWord: userName ?? "")
                     }
@@ -231,8 +263,8 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         
         //유저이미지 라운드 처리
         DispatchQueue.main.async {
-            cell.myImgView.layer.cornerRadius = cell.myImgView.frame.height/2
-            cell.myImgView.clipsToBounds = true
+            cell.imgViewUser.layer.cornerRadius = cell.imgViewUser.frame.height/2
+            cell.imgViewUser.clipsToBounds = true
         }
         
         //선택했을 때 회색 배경 없음 설정
@@ -260,7 +292,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         navi.itemDate = "\(itemDate)"
         navi.itemLikeCount = "\(item.likecount!)"
         navi.userImgUrl = item.userimgurl!
-        navi.userImg = currentCell.myImgView.image!
+        navi.userImg = currentCell.imgViewUser.image!
         navi.userName = item.username!
         self.navigationController?.pushViewController(navi, animated: true)
     }
@@ -277,6 +309,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             if searchItemCountAll > self.itemList.count {
                 //네트워크 사용 여부 확인
                 networkCheck() { [self] in
+                    let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
                     searchScrollItemAdd(page: page, itemList: self.itemList, searchKeyWord: userName ?? "") { itemList in
                         self.itemList = itemList
                         self.tableView.reloadData()

@@ -76,11 +76,10 @@ class CommentPostViewController: UIViewController {
     
     func insert() {
         let username = UserDefaults.standard.value(forKey: UDkey().username) as? String
-        let userimgurl = UserDefaults.standard.value(forKey: UDkey().userimgurl) as? String
         
         let comment = tvComment.text!
         //서버와 커뮤니케이션
-        self.req.apiCommentInsert(itemid: itemId, username: username ?? "", userimgurl: userimgurl ?? "", comment: comment) {
+        self.req.apiCommentInsert(itemid: itemId, username: username ?? "", comment: comment) {
             self.showAlertBtn1(title: "업로드 알림", message: "댓글 업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
                 self.navigationController?.popViewController(animated: true)
             }
@@ -111,10 +110,9 @@ class CommentPostViewController: UIViewController {
     func setting() {
         title = "댓글 작성"
         self.navigationController?.navigationBar.topItem?.title = ""
-        tvComment.layer.borderWidth = 0.3
-        tvComment.layer.borderColor = UIColor(displayP3Red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
-        tvComment.layer.masksToBounds = true
-        tvComment.layer.cornerRadius = 4
+        
+        //텍스트 뷰 디자인
+        textViewDesign(textView: tvComment)
         
         btnAdd.setTitle(mode, for: .normal)
         

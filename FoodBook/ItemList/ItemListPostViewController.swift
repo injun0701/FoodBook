@@ -47,7 +47,7 @@ class ItemListPostViewController: UIViewController {
     //이미지 변화 체크
     var imgChange = false
     
-    @IBAction func btnImgAction(_ sender: UIButton) {
+    @IBAction func btnImgAddAction(_ sender: UIButton) {
         //사진을 선택하기 위해 앨범 출력
         self.imagePickerController.sourceType = .photoLibrary
         self.present(self.imagePickerController, animated: true, completion: nil)
@@ -76,13 +76,14 @@ class ItemListPostViewController: UIViewController {
         let price = tfPrice.text!
         let description = tvDescription.text!
         let itemimgurl = itemImgUrl
-        let userimgurl = userImgUrl
         let username = userName
         let img = imgView.image!//이미지
         
         //서버에서 아이템 데이터 삽입
-        req.apiItemInsert(itemname: itemname, price: price, description: description, userimgurl: userimgurl, itemimgurl: itemimgurl, username: username, img: img) {
-            self.navigationController?.popToRootViewController(animated: true)
+        req.apiItemInsert(itemname: itemname, price: price, description: description, itemimgurl: itemimgurl, username: username, img: img) {
+            self.showAlertBtn1(title: "업로드 알림", message: "업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
+                self.navigationController?.popToRootViewController(animated: true)
+            }
         } fail: {
             self.showAlertBtn1(title: "업로드 오류", message: "업로드 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
@@ -122,7 +123,9 @@ class ItemListPostViewController: UIViewController {
         
         //서버에서 아이템 데이터 수정
         req.apiItemEdit(itemid: itemid, itemname: itemname, price: price, description: description, itemimgurl: itemimgurl, username: username, img: img!, imgChange: imgChange) {
-            self.navigationController?.popToRootViewController(animated: false)
+            self.showAlertBtn1(title: "업로드 알림", message: "업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
+                self.navigationController?.popToRootViewController(animated: true)
+            }
         } fail: {
             self.showAlertBtn1(title: "업로드 오류", message: "업로드 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
@@ -156,14 +159,12 @@ class ItemListPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
-        imageSetting()
+        imagePickerControllerSetting()
     }
     
     func setting() {
-        tvDescription.layer.borderWidth = 0.3
-        tvDescription.layer.borderColor = UIColor(displayP3Red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
-        tvDescription.layer.masksToBounds = true
-        tvDescription.layer.cornerRadius = 4
+        //텍스트뷰 디자인
+        textViewDesign(textView: tvDescription)
         
         if mode == "저장" {
             navbarSetting(title: "게시물 저장")
@@ -182,7 +183,7 @@ class ItemListPostViewController: UIViewController {
         }
     }
     
-    func imageSetting() {
+    func imagePickerControllerSetting() {
         imagePickerController.delegate = self
     }
 }

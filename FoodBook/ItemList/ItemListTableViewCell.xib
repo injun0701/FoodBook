@@ -123,14 +123,14 @@ asdasd</string>
             </tableViewCellContentView>
             <connections>
                 <outlet property="btnLike" destination="Oo2-it-C20" id="nHd-Hz-xS5"/>
+                <outlet property="imgViewUser" destination="r7o-Tr-rsB" id="2w5-3d-d7Y"/>
                 <outlet property="imgViewlist" destination="ghw-4K-HLq" id="Mr9-zj-J8j"/>
                 <outlet property="lblDate" destination="dvV-nk-scz" id="kKp-RF-BFJ"/>
                 <outlet property="lblLike" destination="HXl-ei-N1o" id="gWH-Vr-s97"/>
                 <outlet property="lblPrice" destination="ipx-GP-NSg" id="xN5-zT-dOi"/>
                 <outlet property="lblText" destination="mUZ-mV-9fw" id="mTz-Ne-s91"/>
                 <outlet property="lblTitle" destination="FSa-MX-bVV" id="PkZ-Pw-1js"/>
-                <outlet property="myImgView" destination="r7o-Tr-rsB" id="2w5-3d-d7Y"/>
-                <outlet property="mylbl" destination="upt-EG-z8T" id="qYQ-W8-mtl"/>
+                <outlet property="lblUserName" destination="upt-EG-z8T" id="qYQ-W8-mtl"/>
             </connections>
             <point key="canvasLocation" x="7" y="117"/>
         </tableViewCell>

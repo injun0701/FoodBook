@@ -12,7 +12,9 @@ struct FoodBookUrl {
     let signUpUserNameCheck = "http://192.168.0.4/user/usernamecheck?username"
     let signUp = "http://192.168.0.4/user/register"
     let login = "http://192.168.0.4/user/login"
+    let userUpdate = "http://192.168.0.4/user/update"
     let itemGet = "http://192.168.0.4/item/paging?pageno="
+    let itemLikeGet = "http://192.168.0.4/item/like/paging?pageno="
     let lastupdate = "http://192.168.0.4/item/lastupdatetime"
     let imgurl =  "http://192.168.0.4/img/"
     let itemInsert = "http://192.168.0.4/item/insert"
@@ -53,7 +55,15 @@ enum LoginStatusCode : Int {
     case success = 200
     case fail = 400
 }
-enum GetAllStatusCode : Int {
+enum UserUpdateStatusCode : Int {
+    case success = 200
+    case fail = 400
+}
+enum ItemGetStatusCode : Int {
+    case success = 200
+    case fail = 400
+}
+enum ItemLikeGetStatusCode : Int {
     case success = 200
     case fail = 400
 }

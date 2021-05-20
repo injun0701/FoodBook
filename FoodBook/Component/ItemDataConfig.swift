@@ -372,7 +372,6 @@ extension UIViewController {
         lastUpdateAddToLocal(updatePathName: lastUpdatePara.update, urlName: lastUpdatePara.lastupdate)
     }
     
-    
     //MARK: 댓글 업로드
     func commentAdd(page: Int, count: Int, itemId: String, success: @escaping ([Comment], Int) -> ()) {
         //서버 통신을 위한 객체
@@ -506,7 +505,52 @@ extension UIViewController {
         let req = URLRequest()
         
         //서버에서 아이템 데이터 받아오기
-        req.apiItemGet(page: page, count: 10, searchKeyWord: searchKeyWord) { [self] allcount, searchcount, list in
+        req.apiItemGet(page: page, count: 10, searchKeyWord: searchKeyWord) { allcount, searchcount, list in
+            print(list)
+            
+            var itemList: [Item] = itemList
+            
+            //페이지에서 가져온 데이터
+            if list.count != 0 {
+                //배열의 데이터 순회
+                for index in 0...(list.count - 1) {
+                        //배열에서 하나씩 가져오기
+                    let itemDict = list[index] as! [String: Any] //NSDictionary
+                    //하나의 DTO 객체를 생성
+                    var item = Item()
+                    //json 파싱해서 객체에 데이터 대입
+                    item.username = itemDict["username"] as? String
+                    item.userimgurl = itemDict["userimgurl"] as? String
+                    item.itemid = ((itemDict["itemid"] as! NSNumber).intValue)
+                    item.itemname = itemDict["itemname"] as? String
+                    item.price = ((itemDict["price"] as! NSNumber).intValue)
+                    item.commentcount = ((itemDict["commentcount"] as! NSNumber).intValue)
+                    item.likecount = ((itemDict["likecount"] as! NSNumber).intValue)
+                    item.useritemlike = ((itemDict["useritemlike"] as! NSNumber).intValue)
+                    item.description = itemDict["description"] as? String
+                    item.imgurl = itemDict["imgurl"] as? String
+                    item.updatedate = itemDict["updatedate"] as? String
+                    //배열에 추가
+                    itemList.append(item)
+                    itemList.sort(by: {$0.itemid! > $1.itemid!}) //순서 정렬
+                }//반복문 종료
+                success(itemList)
+            }
+        } fail: {
+            self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
+        }
+    }
+    
+    //MARK: 좋아요 누른 게시판 아래로 스크롤 시 아이템 업로드
+    func itemLikeScrollItemAdd(page: Int, itemList: [Item], success: @escaping ([Item]) -> ()) {
+        //이 메소드가 호출될때 마다 페이지 수 1씩 증가
+        let page = page + 1
+        
+        //서버 통신을 위한 객체
+        let req = URLRequest()
+        
+        //서버에서 아이템 데이터 받아오기
+        req.apiItemLikeGet(page: page, count: 10) { count, list in
             print(list)
             
             var itemList: [Item] = itemList

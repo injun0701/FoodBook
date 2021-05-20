@@ -87,6 +87,8 @@ class ItemListViewController: UIViewController {
     
     //MARK: 서버, 로컬 데이터 세팅
     func dataSetting() {
+        page = 1 //초기화
+        
         //파일 핸들링하기 위한 객체 생성
         let fileMgr = FileManager.default
         
@@ -135,16 +137,12 @@ class ItemListViewController: UIViewController {
                     self.tableView.reloadData()
                 }
             } updatetimeDifferent: {
-                var itemListCount = 10 //초기화
-                if self.itemList.count != 0 {
-                    itemListCount = self.itemList.count //메모리에 리스트가 있으면 리스트 만큼 출력
-                }
                 //기존 데이터를 지우고 새로 다운로드
                 try! fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
                 try! fileMgr.removeItem(atPath: updatePath) //업데이트 시간 파일 삭제
                 self.itemList.removeAll() //itemList 배열 초기화
                 //아이템 추가
-                self.itemAdd(page: 1, count: itemListCount) { itemList in
+                self.itemAdd(page: 1, count: 10) { itemList in
                     self.itemList = itemList
                     self.tableView.reloadData()
                 }
@@ -205,12 +203,10 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         
         let item = itemList[indexPath.row]
         
-        cell.mylbl.text = item.username
-        
-        print(item.userimgurl!)
+        cell.lblUserName.text = item.username
         
         //유저 이미지 출력
-        req.getImg(imgurlName: item.userimgurl!, defaultImgurlName: "userimg", toImg: cell.myImgView)
+        req.getImg(imgurlName: item.userimgurl!, defaultImgurlName: "userimg", toImg: cell.imgViewUser)
         
         let itemDate = cutString(str: item.updatedate!, endIndex: 10, fromTheFront: true)
         cell.lblDate.text = itemDate
@@ -260,8 +256,8 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         
         //유저이미지 라운드 처리
         DispatchQueue.main.async {
-            cell.myImgView.layer.cornerRadius = cell.myImgView.frame.height/2
-            cell.myImgView.clipsToBounds = true
+            cell.imgViewUser.layer.cornerRadius = cell.imgViewUser.frame.height/2
+            cell.imgViewUser.clipsToBounds = true
         }
         
         //선택했을 때 회색 배경 없음 설정
@@ -289,7 +285,7 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         navi.itemDate = "\(itemDate)"
         navi.itemLikeCount = "\(item.likecount!)"
         navi.userImgUrl = item.userimgurl!
-        navi.userImg = currentCell.myImgView.image!
+        navi.userImg = currentCell.imgViewUser.image!
         navi.userName = item.username!
         self.navigationController?.pushViewController(navi, animated: true)
     }

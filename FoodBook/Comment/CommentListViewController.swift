@@ -123,6 +123,8 @@ class CommentListViewController: UIViewController {
     
     //MARK: 서버, 로컬 데이터 세팅
     func dataSetting() {
+        page = 1 //초기화
+        
         //파일 핸들링하기 위한 객체 생성
         let fileMgr = FileManager.default
         
