@@ -22,8 +22,6 @@ class MyPageViewController: UIViewController {
     
     //서버 통신을 위한 객체
     let req = URLRequest()
-    //SQLite 파일 urlpath
-    let directoryPath = SQLiteDocumentDirectoryPath()
     
     //테이블 뷰에 출력할 데이터 배열
     var itemList: [Item] = []
@@ -52,20 +50,8 @@ class MyPageViewController: UIViewController {
     @IBAction func btnLogoutAction(_ sender: UIButton) {
         showAlertBtn2(title: "로그아웃 안내", message: "로그아웃 하시겠습니까?", btn1Title: "취소", btn2Title: "로그아웃") {
         } btn2Action: {
-            //앲 삭제(UserDefault는 액삭제시 자동 날라감), 회원 탈퇴, 로그아웃, 핸드폰 변경 등등
-            UserDefaults.standard.removeObject(forKey: UDkey().userid)
-            UserDefaults.standard.removeObject(forKey: UDkey().username)
-            UserDefaults.standard.removeObject(forKey: UDkey().userimgurl)
-            //파일 핸들링하기 위한 객체 생성
-            let fileMgr = FileManager.default
-            //데이터베이스 팡리 경로를 생성
-            let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let dbPath = docPathURL.appendingPathComponent(self.directoryPath.item).path
-            //기존 데이터를 지우고 새로 다운로드
-            try? fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
-            
-            NSLog("로그아웃 상태")
-            rootVC()
+            //로그아웃
+            self.logout()
         }
     }
     

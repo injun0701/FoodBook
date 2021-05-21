@@ -12,6 +12,7 @@ struct FoodBookUrl {
     let signUpUserNameCheck = "http://192.168.0.4/user/usernamecheck?username"
     let signUp = "http://192.168.0.4/user/register"
     let login = "http://192.168.0.4/user/login"
+    let loginlog = "http://192.168.0.4/user/loginlog/paging?pageno="
     let passwordcheck = "http://192.168.0.4/user/passwordcheck"
     let passwordupdate = "http://192.168.0.4/user/passwordupdate"
     let userUpdate = "http://192.168.0.4/user/update"
@@ -29,7 +30,7 @@ struct FoodBookUrl {
     let commentDelete = "http://192.168.0.4/item/comment/delete?commentid="
     let itemLikeInsert = "http://192.168.0.4/item/like/insert"
     let itemLikeDelete = "http://192.168.0.4/item/like/delete?itemid="
-    
+    let userDelete = "http://192.168.0.4/user/delete?userid="
 }
 
 struct UDkey {
@@ -60,6 +61,10 @@ enum SignUpStatusCode : Int {
     case fail = 400
 }
 enum LoginStatusCode : Int {
+    case success = 200
+    case fail = 400
+}
+enum LoginLogStatusCode : Int {
     case success = 200
     case fail = 400
 }
@@ -119,4 +124,9 @@ enum ItemLikeDeleteStatusCode : Int {
     case success = 200
     case fail = 400
 }
+enum UserDeleteStatusCode : Int {
+    case success = 200
+    case fail = 400
+}
+
 

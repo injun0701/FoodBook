@@ -11,10 +11,10 @@ import Nuke
 
 class URLRequest {
     
-    typealias voidToVoid = () -> ()
+    typealias VoidToVoid = () -> ()
     
     //MARK: 아이디 중복 체크
-    func apiSignUpUserIdCheck(userid: String, success: @escaping () -> Void, fail: @escaping voidToVoid)  {
+    func apiSignUpUserIdCheck(userid: String, success: @escaping () -> Void, fail: @escaping VoidToVoid)  {
         
         //한글일 경우를 대비하려면 인코딩 해야함
         let userIdEncoding = userid.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
@@ -60,7 +60,7 @@ class URLRequest {
     }
     
     //MARK: 유저네임 중복 체크
-    func apiSignUpUserNameCheck(username: String, success: @escaping () -> Void, fail: @escaping voidToVoid)  {
+    func apiSignUpUserNameCheck(username: String, success: @escaping () -> Void, fail: @escaping VoidToVoid)  {
         //url은 한글을 인코딩해야함
         
         //한글일 경우를 대비하려면 인코딩 해야함
@@ -107,7 +107,7 @@ class URLRequest {
     }
     
     //MARK: 회원가입
-    func apiSignUp(userid: String, username: String, passwd: String, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+    func apiSignUp(userid: String, username: String, passwd: String, success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
         //post 방식으로 전송할 파라미터
         let parameters = ["userid": userid, "username": username, "userpw": passwd]
         
@@ -151,7 +151,7 @@ class URLRequest {
     }
     
     //MARK: 로그인
-    func apiUserLogin(userid: String, passwd: String, success: @escaping (String, String, String) -> Void, fail: @escaping voidToVoid)  {
+    func apiUserLogin(userid: String, passwd: String, success: @escaping (String, String, String) -> Void, fail: @escaping VoidToVoid)  {
         
         //post 방식으로 전송할 파라미터
         let parameters = ["userid": userid, "userpw": passwd]
@@ -205,7 +205,7 @@ class URLRequest {
     }
     
     //MARK: 현재 비밀번호 체크
-    func apiUserPasswordCheck(passwd: String, success: @escaping () -> Void, fail: @escaping voidToVoid)  {
+    func apiUserPasswordCheck(passwd: String, success: @escaping () -> Void, fail: @escaping VoidToVoid)  {
         
         let userid = UserDefaults.standard.value(forKey: UDkey().userid) as? String ?? ""
         
@@ -253,7 +253,7 @@ class URLRequest {
     }
     
     //MARK: 비밀번호 변경
-    func apiUserPasswordUpdate(passwd: String, success: @escaping () -> Void, fail: @escaping voidToVoid)  {
+    func apiUserPasswordUpdate(passwd: String, success: @escaping () -> Void, fail: @escaping VoidToVoid)  {
         
         let userid = UserDefaults.standard.value(forKey: UDkey().userid) as? String ?? ""
         
@@ -301,7 +301,7 @@ class URLRequest {
     }
     
     //MARK: 유저 정보 수정
-    func apiUserEdit(userid: String, username: String, userimgurl: String, img: UIImage, imgChange: Bool, success: @escaping (String, String, String) -> Void, fail: @escaping voidToVoid)  {
+    func apiUserEdit(userid: String, username: String, userimgurl: String, img: UIImage, imgChange: Bool, success: @escaping (String, String, String) -> Void, fail: @escaping VoidToVoid)  {
         
         let userid = userid
         let username = username
@@ -369,7 +369,7 @@ class URLRequest {
     }
     
     //MARK: 리스트 받아오기
-    func apiItemGet(page: Int, count: Int, searchKeyWord: String?, success: @escaping (Int, Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
+    func apiItemGet(page: Int, count: Int, searchKeyWord: String?, success: @escaping (Int, Int, NSArray) -> Void, fail: @escaping VoidToVoid)  {
         //url은 한글을 인코딩해야함
         
         var searchKeyWord = searchKeyWord
@@ -427,7 +427,7 @@ class URLRequest {
     }
     
     //MARK: 좋아요 누른 리스트만 받아오기
-    func apiItemLikeGet(page: Int, count: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
+    func apiItemLikeGet(page: Int, count: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping VoidToVoid)  {
         //url은 한글을 인코딩해야함
         let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
         //한글일 경우를 대비하려면 인코딩 해야함
@@ -472,7 +472,7 @@ class URLRequest {
     }
     
     //MARK: 마지막 업데이트 시간 받아오기
-    func apiLastUpdate(url: String, success: @escaping (String) -> Void, fail: @escaping voidToVoid)  {
+    func apiLastUpdate(url: String, success: @escaping (String) -> Void, fail: @escaping VoidToVoid)  {
         
         //마지막 업데이트 시간 받아오기 - get 방식이고 파라미터 없고 결과는 json
         let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: [:])
@@ -522,7 +522,7 @@ class URLRequest {
     }
     
     //MARK: 아이템 삽입
-    func apiItemInsert(itemname: String, price: String, description: String, itemimgurl: String, username: String, img: UIImage, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+    func apiItemInsert(itemname: String, price: String, description: String, itemimgurl: String, username: String, img: UIImage, success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
         
         let itemname = itemname
         let price = price
@@ -583,7 +583,7 @@ class URLRequest {
     }
     
     //MARK: 아이템 수정
-    func apiItemEdit(itemid: String, itemname: String, price: String, description: String, itemimgurl: String, username: String, img: UIImage, imgChange: Bool, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+    func apiItemEdit(itemid: String, itemname: String, price: String, description: String, itemimgurl: String, username: String, img: UIImage, imgChange: Bool, success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
         
         let itemid = itemid
         let itemname = itemname
@@ -689,7 +689,7 @@ class URLRequest {
     }
     
     //MARK: 아이템 삭제
-    func apiItemDelete(itemid: String, success: @escaping (Int) -> (), fail: @escaping voidToVoid)  {
+    func apiItemDelete(itemid: String, success: @escaping (Int) -> (), fail: @escaping VoidToVoid)  {
         
         let url = "\(FoodBookUrl().itemDelete)\(itemid)"
         
@@ -726,7 +726,7 @@ class URLRequest {
     }
     
     //MARK: 댓글 리스트 받아오기
-    func apiCommentGet(itemid: String, page: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping voidToVoid)  {
+    func apiCommentGet(itemid: String, page: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping VoidToVoid)  {
         
         let url = "\(FoodBookUrl().commentGet)\(page)&count=3&itemid=\(itemid)"
         
@@ -767,7 +767,7 @@ class URLRequest {
     }
     
     //MARK: 댓글 삽입
-    func apiCommentInsert(itemid: String, username: String, comment: String, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+    func apiCommentInsert(itemid: String, username: String, comment: String, success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
         //post 방식으로 전송할 파라미터
         let parameters = ["itemid": itemid, "username": username, "comment": comment]
         
@@ -811,7 +811,7 @@ class URLRequest {
     }
     
     //MARK: 댓글 수정
-    func apiCommentEdit(commentid: String, comment: String, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+    func apiCommentEdit(commentid: String, comment: String, success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
         //post 방식으로 전송할 파라미터
         let parameters = ["commentid": commentid, "comment": comment]
         
@@ -855,7 +855,7 @@ class URLRequest {
     }
     
     //MARK: 댓글 삭제
-    func apiCommentDelete(commentid: String, itemid: String, success: @escaping (Int) -> (), fail: @escaping voidToVoid)  {
+    func apiCommentDelete(commentid: String, itemid: String, success: @escaping (Int) -> (), fail: @escaping VoidToVoid)  {
         
         let url = "\(FoodBookUrl().commentDelete)\(commentid)&itemid=\(itemid)"
         
@@ -892,7 +892,7 @@ class URLRequest {
     }
     
     //MARK: 좋아요 삽입
-    func apiItemLikeInsert(itemid: String, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+    func apiItemLikeInsert(itemid: String, success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
         
         let username = UserDefaults.standard.value(forKey: UDkey().username) as? String
         
@@ -939,7 +939,7 @@ class URLRequest {
     }
     
     //MARK: 좋아요 삭제
-    func apiItemLikeDelete(itemid: String, success: @escaping voidToVoid, fail: @escaping voidToVoid)  {
+    func apiItemLikeDelete(itemid: String, success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
         
         let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
         //한글일 경우를 대비하려면 인코딩 해야함
@@ -977,6 +977,103 @@ class URLRequest {
                     fail()
                 default:
                     NSLog("좋아요 삭제 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 유저 로그인 로그 받아오기
+    func apiUserLoginLog(page: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping VoidToVoid)  {
+        
+        let userid = UserDefaults.standard.value(forKey: UDkey().userid) as? String ?? ""
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let useridEncoding = userid.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().loginlog)\(page)&count=15&userid=\(useridEncoding!)"
+        
+        //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
+        let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
+        //요청을 전송하고 결과 사용하기
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+              
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case LoginLogStatusCode.success.rawValue:
+                    //전체 데이터를 NSDictionary로 받기
+                    if let jsonObject = value as? [String:Any] {
+                        NSLog("데이터 받아오기 성공")
+                        //데이터에서 전체 데이터 개수를 Int로 가져오기
+                        let count = jsonObject["count"] as! Int
+                        //데이터에서 list 키의 값을 배열로 가져오기
+                        let list = jsonObject["list"] as! NSArray
+                        success(count, list)
+                    }
+                case LoginLogStatusCode.fail.rawValue:
+                    NSLog("데이터 받아오기 실패")
+                    fail()
+                default:
+                    NSLog("데이터 받아오기 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 탈퇴하기
+    func apiUserDelete(success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
+        
+        let userid = UserDefaults.standard.value(forKey: UDkey().userid) as? String ?? ""
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let useridEncoding = userid.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let username = UserDefaults.standard.value(forKey: UDkey().username) as? String ?? ""
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let usernameEncoding = username.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().userDelete)\(useridEncoding!)&username=\(usernameEncoding!)"
+        
+        //데이터 삭제 - delete 방식이고 파라미터 없고 결과는 json
+        let request = AF.request(url, method: .delete, encoding: URLEncoding.httpBody, headers: nil)
+        //요청을 전송하고 결과 사용하기
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case UserDeleteStatusCode.success.rawValue:
+                    //전체 데이터를 NSDictionary로 변환
+                    if let jsonObject = value as? [String:Any] {
+                        let result = jsonObject["result"] as! Int32
+                        print("?? \(result)")
+                        if result == 1 {
+                            NSLog("탈퇴 성공")
+                            success()
+                        } else {
+                            NSLog("탈퇴 실패")
+                            fail()
+                        }
+                    }
+                case UserDeleteStatusCode.fail.rawValue:
+                    NSLog("탈퇴 실패")
+                    fail()
+                default:
+                    NSLog("탈퇴 실패")
                     fail()
                 }
                 

@@ -585,4 +585,40 @@ extension UIViewController {
             self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
     }
+    
+    //MARK: 로그인 로그 게시판 아래로 스크롤 시 아이템 업로드
+    func loginLogScrollItemAdd(page: Int, tableList: [LoginLog], success: @escaping ([LoginLog]) -> ()) {
+        //이 메소드가 호출될때 마다 페이지 수 1씩 증가
+        let page = page + 1
+        
+        //서버 통신을 위한 객체
+        let req = URLRequest()
+        
+        //서버에서 아이템 데이터 받아오기
+        req.apiUserLoginLog(page: page) { count, list in
+            print(list)
+            
+            var tableList: [LoginLog] = tableList
+            
+            //페이지에서 가져온 데이터
+            if list.count != 0 {
+                //배열의 데이터 순회
+                for index in 0...(list.count - 1) {
+                        //배열에서 하나씩 가져오기
+                    let list = list[index] as! [String: Any] //NSDictionary
+                    //하나의 DTO 객체를 생성
+                    var loginLog = LoginLog()
+                    //json 파싱해서 객체에 데이터 대입
+                    loginLog.userid = list["userid"] as? String
+                    loginLog.loginlogdate = list["loginlogdate"] as? String
+                    //배열에 추가
+                    tableList.append(loginLog)
+                    tableList.sort(by: {$0.userid! > $1.userid!}) //순서 정렬
+                }//반복문 종료
+                success(tableList)
+            }
+        } fail: {
+            self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
+        }
+    }
 }
