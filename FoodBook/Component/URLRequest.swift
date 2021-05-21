@@ -152,6 +152,7 @@ class URLRequest {
     
     //MARK: 로그인
     func apiUserLogin(userid: String, passwd: String, success: @escaping (String, String, String) -> Void, fail: @escaping voidToVoid)  {
+        
         //post 방식으로 전송할 파라미터
         let parameters = ["userid": userid, "userpw": passwd]
         
@@ -194,6 +195,102 @@ class URLRequest {
                     fail()
                 default:
                     NSLog("로그인 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 현재 비밀번호 체크
+    func apiUserPasswordCheck(passwd: String, success: @escaping () -> Void, fail: @escaping voidToVoid)  {
+        
+        let userid = UserDefaults.standard.value(forKey: UDkey().userid) as? String ?? ""
+        
+        //post 방식으로 전송할 파라미터
+        let parameters = ["userid": userid, "userpw": passwd]
+        
+        let url = FoodBookUrl().passwordcheck
+        
+        //현재 비밀번호 체크 - post 방식이고 파라미터 있고 결과는 json
+        let request = AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers: nil)
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+              
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case PasswordCheckStatusCode.success.rawValue:
+                    //전체 데이터를 NSDictionary로 변환
+                    if let jsonObject = value as? [String:Any] {
+                        //result 키의 데이터 가져오기
+                        let result = jsonObject["result"] as! Int32
+                        //조회 성공
+                        if result == 1 {
+                            success()
+                            NSLog("현재 비밀번호 조회 성공")
+                        } else { //현재 비밀번호 조회 실패
+                            fail()
+                        }
+                    }
+                case PasswordCheckStatusCode.fail.rawValue:
+                    NSLog("현재 비밀번호 조회 실패")
+                    fail()
+                default:
+                    NSLog("현재 비밀번호 조회 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 비밀번호 변경
+    func apiUserPasswordUpdate(passwd: String, success: @escaping () -> Void, fail: @escaping voidToVoid)  {
+        
+        let userid = UserDefaults.standard.value(forKey: UDkey().userid) as? String ?? ""
+        
+        //post 방식으로 전송할 파라미터
+        let parameters = ["userid": userid, "userpw": passwd]
+        print("userid\(userid), userpw\(passwd)")
+        let url = FoodBookUrl().passwordupdate
+        
+        //비밀번호 변경 - put 방식이고 파라미터 있고 결과는 json
+        let request = AF.request(url, method: .put, parameters: parameters, encoding: URLEncoding.httpBody, headers: nil)
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+              
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case PasswordUpdateStatusCode.success.rawValue:
+                    //전체 데이터를 NSDictionary로 변환
+                    if let jsonObject = value as? [String:Any] {
+                        //result 키의 데이터 가져오기
+                        let result = jsonObject["result"] as! Int32
+                        //로그인 성공
+                        if result == 1 {
+                            success()
+                            NSLog("비밀번호 변경 성공")
+                        } else { //비밀번호 변경 실패
+                            fail()
+                        }
+                    }
+                case PasswordUpdateStatusCode.fail.rawValue:
+                    NSLog("비밀번호 변경 실패")
+                    fail()
+                default:
+                    NSLog("비밀번호 변경 실패")
                     fail()
                 }
                 

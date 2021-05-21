@@ -12,6 +12,8 @@ struct FoodBookUrl {
     let signUpUserNameCheck = "http://192.168.0.4/user/usernamecheck?username"
     let signUp = "http://192.168.0.4/user/register"
     let login = "http://192.168.0.4/user/login"
+    let passwordcheck = "http://192.168.0.4/user/passwordcheck"
+    let passwordupdate = "http://192.168.0.4/user/passwordupdate"
     let userUpdate = "http://192.168.0.4/user/update"
     let itemGet = "http://192.168.0.4/item/paging?pageno="
     let itemLikeGet = "http://192.168.0.4/item/like/paging?pageno="
@@ -38,6 +40,12 @@ struct UDkey {
     let commentcount = "commentcount"
 }
 
+struct AESkey {
+    let defaultKey : String = "abcdefghijklmnopqrstuvwxyz123456" // default key 32
+    //Default iv는 0123456789101112
+    //AES.swift 파일에서 iv 확인 가능
+}
+
 //enumutation(열거형): 나만의 타입을 만듬
 enum SignUpUserIdCheckStatusCode : Int {
     case success = 200
@@ -52,6 +60,14 @@ enum SignUpStatusCode : Int {
     case fail = 400
 }
 enum LoginStatusCode : Int {
+    case success = 200
+    case fail = 400
+}
+enum PasswordCheckStatusCode : Int {
+    case success = 200
+    case fail = 400
+}
+enum PasswordUpdateStatusCode : Int {
     case success = 200
     case fail = 400
 }

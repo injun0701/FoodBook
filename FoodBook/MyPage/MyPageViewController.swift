@@ -50,20 +50,23 @@ class MyPageViewController: UIViewController {
     
     //로그아웃 버튼
     @IBAction func btnLogoutAction(_ sender: UIButton) {
-        //앲 삭제(UserDefault는 액삭제시 자동 날라감), 회원 탈퇴, 로그아웃, 핸드폰 변경 등등
-        UserDefaults.standard.removeObject(forKey: UDkey().userid)
-        UserDefaults.standard.removeObject(forKey: UDkey().username)
-        UserDefaults.standard.removeObject(forKey: UDkey().userimgurl)
-        //파일 핸들링하기 위한 객체 생성
-        let fileMgr = FileManager.default
-        //데이터베이스 팡리 경로를 생성
-        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
-        //기존 데이터를 지우고 새로 다운로드
-        try? fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
-        
-        NSLog("로그아웃 상태")
-        rootVC()
+        showAlertBtn2(title: "로그아웃 안내", message: "로그아웃 하시겠습니까?", btn1Title: "취소", btn2Title: "로그아웃") {
+        } btn2Action: {
+            //앲 삭제(UserDefault는 액삭제시 자동 날라감), 회원 탈퇴, 로그아웃, 핸드폰 변경 등등
+            UserDefaults.standard.removeObject(forKey: UDkey().userid)
+            UserDefaults.standard.removeObject(forKey: UDkey().username)
+            UserDefaults.standard.removeObject(forKey: UDkey().userimgurl)
+            //파일 핸들링하기 위한 객체 생성
+            let fileMgr = FileManager.default
+            //데이터베이스 팡리 경로를 생성
+            let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let dbPath = docPathURL.appendingPathComponent(self.directoryPath.item).path
+            //기존 데이터를 지우고 새로 다운로드
+            try? fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
+            
+            NSLog("로그아웃 상태")
+            rootVC()
+        }
     }
     
     //글쓰기 버튼
@@ -82,8 +85,24 @@ class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //네비 세팅
-        navbarSetting(title: "내 정보")
+        naviSetting()
         tableViewSetting()
+    }
+    
+    //네비 세팅
+    func naviSetting() {
+        navbarSetting(title: "내 정보")
+        
+        //네비게이션 오른쪽 버튼 - Search 뷰로 이동 버튼
+        let btnSearch = UIBarButtonItem(image: UIImage(named: "config"), style: .plain, target: self, action: #selector(btnConfigAction))
+        navigationItem.rightBarButtonItems = [btnSearch]
+    }
+    
+    //Search 뷰로 이동
+    @objc func btnConfigAction() {
+        let sb = UIStoryboard(name: "SettingPage", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "SettingPageViewController") as! SettingPageViewController
+        navigationController?.pushViewController(navi, animated: true)
     }
     
     //테이블뷰 세팅
@@ -112,7 +131,6 @@ class MyPageViewController: UIViewController {
     
     //뷰 세팅
     func viewSetting() {
-        
         let userId = UserDefaults.standard.value(forKey: UDkey().userid) as? String
         let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
         

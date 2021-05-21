@@ -44,8 +44,8 @@ class MyPageEditViewController: UIViewController {
     @IBAction func tfUserName(_ sender: UITextField) {
         //유효성 검사
         let senderText = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines) //공백 제거
-        if senderText?.count ?? 0 < 2 {
-            lblUserName.text = "유저네임은 최소 2자 이상 입니다."
+        if senderText?.count ?? 0 < 2 || senderText?.count ?? 0 > 12 {
+            lblUserName.text = "유저네임은 2~12자로 작성해야 합니다."
             lblUserName.textColor = UIColor.orange
         } else {
             if senderText == userName {

@@ -54,7 +54,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
-                                    <action selector="tfPassWdAgainAction:" destination="Y6W-OH-hqX" eventType="editingDidEnd" id="CNg-S0-eeG"/>
+                                    <action selector="tfPasswdAgainAction:" destination="Y6W-OH-hqX" eventType="editingDidEnd" id="CNg-S0-eeG"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호를 입력하세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="J2Q-lQ-jgk">
@@ -65,7 +65,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
-                                    <action selector="tfPassWdAction:" destination="Y6W-OH-hqX" eventType="editingDidEnd" id="NW1-7o-rYw"/>
+                                    <action selector="tfPasswdAction:" destination="Y6W-OH-hqX" eventType="editingDidEnd" id="NW1-7o-rYw"/>
                                 </connections>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dSr-9T-szg">
@@ -86,19 +86,19 @@
                                     <constraint firstAttribute="height" constant="60" id="0oH-nL-Eaf"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아이디는 최소 3자 이상 입니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rty-2m-UQb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아이디는 3~12자로 작성해야 합니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rty-2m-UQb">
                                 <rect key="frame" x="20" y="180" width="374" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="유저네임은 최소 2자 이상입니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OcK-ll-hSs">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="유저네임은 2~12자로 작성해야 합니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OcK-ll-hSs">
                                 <rect key="frame" x="20" y="309" width="374" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="비밀번호는 알파벳, 특수문자를 포함, 6자 이상 작성해야합니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3He-k7-fNw">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="비밀번호는 알파벳, 특수문자를 포함, 6~12자로 작성해야 합니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3He-k7-fNw">
                                 <rect key="frame" x="20" y="502" width="374" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -166,11 +166,11 @@
                     </view>
                     <connections>
                         <outlet property="btnSignUp" destination="cW4-kN-Yqc" id="VBt-hS-fLe"/>
-                        <outlet property="lblPassWd" destination="3He-k7-fNw" id="Sj4-J4-8cv"/>
+                        <outlet property="lblPasswd" destination="3He-k7-fNw" id="Sj4-J4-8cv"/>
                         <outlet property="lblUserId" destination="Rty-2m-UQb" id="c6L-YH-MO8"/>
                         <outlet property="lblUserName" destination="OcK-ll-hSs" id="qmC-wg-e30"/>
-                        <outlet property="tfPassWd" destination="J2Q-lQ-jgk" id="s3r-ci-U6l"/>
-                        <outlet property="tfPassWdAgain" destination="W6H-5z-cjU" id="26R-Xk-Obr"/>
+                        <outlet property="tfPasswd" destination="J2Q-lQ-jgk" id="s3r-ci-U6l"/>
+                        <outlet property="tfPasswdAgain" destination="W6H-5z-cjU" id="26R-Xk-Obr"/>
                         <outlet property="tfUserId" destination="hEl-Br-wSp" id="tBc-UZ-wGx"/>
                         <outlet property="tfUserName" destination="My3-z7-Tai" id="S1q-iG-vK0"/>
                     </connections>

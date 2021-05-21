@@ -11,7 +11,7 @@ import Alamofire
 class LoginViewController: UIViewController {
 
     @IBOutlet var tfUserId: UITextField!
-    @IBOutlet var tfPassWd: UITextField!
+    @IBOutlet var tfPasswd: UITextField!
     
     //서버 통신을 위한 객체
     let req = URLRequest()
@@ -28,19 +28,19 @@ class LoginViewController: UIViewController {
     //유효성 검사
     func validateField(success: @escaping () -> ()) {
         let id = tfUserId.text!.trimmingCharacters(in: .whitespacesAndNewlines) //공백 제거
-        let pw = tfPassWd.text!.trimmingCharacters(in: .whitespacesAndNewlines) //공백 제거
+        let pw = tfPasswd.text!.trimmingCharacters(in: .whitespacesAndNewlines) //공백 제거
         let alertTitle = "로그인 오류"
         if id == "" {
             showAlertBtn1(title: alertTitle, message: "아이디을 입력해 주세요.", btnTitle: "확인") {}
         } else {
-            if id.count < 3 {
-                showAlertBtn1(title: alertTitle, message: "아이디는 3글자 이상입니다.", btnTitle: "확인") {}
+            if id.count < 3 || id.count > 12 {
+                showAlertBtn1(title: alertTitle, message: "아이디는 3~12자로 작성해야 합니다.", btnTitle: "확인") {}
             } else {
                 if pw == "" {
                     showAlertBtn1(title: alertTitle, message: "비밀번호를 입력해 주세요.", btnTitle: "확인") {}
                 } else {
-                    if pw.count < 5 {
-                        self.showAlertBtn1(title: alertTitle, message: "비밀번호는 5글자 이상입니다.", btnTitle: "확인") {}
+                    if pw.count < 6 || pw.count > 12 {
+                        self.showAlertBtn1(title: alertTitle, message: "비밀번호는 6~12자로 작성해야 합니다.", btnTitle: "확인") {}
                     } else {
                         success()
                     }
@@ -52,9 +52,11 @@ class LoginViewController: UIViewController {
     //로그인 처리
     func login() {
         let userid = tfUserId.text!
-        let passwd = tfPassWd.text!
+        let passwd = tfPasswd.text!
+        //AES.swift에 있는 기능 이용, 사용자가 입력한 텍스트를 암호화한다.
+        let encryptPassword = AES256CBC.encryptString(passwd, password: AESkey().defaultKey)!
         networkCheck {
-            self.req.apiUserLogin(userid: userid, passwd: passwd) { userid, username, userimgurl in
+            self.req.apiUserLogin(userid: userid, passwd: encryptPassword) { userid, username, userimgurl in
                 print("userid:\(userid), username:\(username), userimgurl\(userimgurl)")
                 UserDefaults.standard.set(userid, forKey: UDkey().userid)
                 UserDefaults.standard.set(username, forKey: UDkey().username)

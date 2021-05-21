@@ -87,7 +87,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="tfPassWd" destination="gB3-hl-WsZ" id="2mI-jD-3Ks"/>
+                        <outlet property="tfPasswd" destination="gB3-hl-WsZ" id="2mI-jD-3Ks"/>
                         <outlet property="tfUserId" destination="pfv-Z3-lRh" id="C4e-DU-H13"/>
                     </connections>
                 </viewController>
