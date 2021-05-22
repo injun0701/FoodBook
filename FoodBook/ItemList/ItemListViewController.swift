@@ -146,11 +146,12 @@ class ItemListViewController: UIViewController {
         NSLog("데이터가 없어서 다운받아 출력")
         networkCheck {
             //아이템 추가
-            self.itemAdd(page: 1, count: 10) { itemList in
+            self.itemAdd(page: 1, count: 10) { itemList, noticheck in
                 self.itemList = []
                 
                 self.itemList = itemList
                 self.tableView.reloadData()
+                self.notiCheck(noticheck: noticheck)
             }
             //마지막 업데이트 시간을  로컬 데이터베이스에 기록
             self.lastUpdateAddToLocal(updatePathName: self.lastUpdatePara.update, urlName: self.lastUpdatePara.lastupdate)
@@ -181,9 +182,10 @@ class ItemListViewController: UIViewController {
                 try! fileMgr.removeItem(atPath: updatePath) //업데이트 시간 파일 삭제
                 self.itemList.removeAll() //itemList 배열 초기화
                 //아이템 추가
-                self.itemAdd(page: 1, count: 10) { itemList in
+                self.itemAdd(page: 1, count: 10) { itemList, noticheck in
                     self.itemList = itemList
                     self.tableView.reloadData()
+                    self.notiCheck(noticheck: noticheck)
                 }
             }
         } fail: { //네트워크가 연결이 안돼서 로컬 데이터 출력
@@ -198,14 +200,14 @@ class ItemListViewController: UIViewController {
     }
     
     //알람이 왔는지 체크
-    func notiCheck() {
-        req.apiUserNotiCheck {
+    func notiCheck(noticheck: Int) {
+        if noticheck == 1 {
             self.btnNoti(imgName: "noti_true")
-        } fail: {
+        } else {
             self.btnNoti(imgName: "noti_false")
         }
     }
-    
+        
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         //네비게이션 세팅
@@ -276,9 +278,10 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
                         let itemListCount = itemList.count
                         self.itemList.removeAll() //itemList 배열 초기화
                         //아이템 추가
-                        self.itemAdd(page: 1, count: itemListCount) { itemList in
+                        self.itemAdd(page: 1, count: itemListCount) { itemList, noticheck in
                             self.itemList = itemList
                             self.tableView.reloadData()
+                            self.notiCheck(noticheck: noticheck)
                         }
                     } fail: {
                         self.fileExistsFalse()
@@ -295,9 +298,10 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
                         let itemListCount = itemList.count
                         self.itemList.removeAll() //itemList 배열 초기화
                         //아이템 추가
-                        self.itemAdd(page: 1, count: itemListCount) { itemList in
+                        self.itemAdd(page: 1, count: itemListCount) { itemList, noticheck in
                             self.itemList = itemList
                             self.tableView.reloadData()
+                            self.notiCheck(noticheck: noticheck)
                         }
                     } fail: {
                         self.fileExistsFalse()

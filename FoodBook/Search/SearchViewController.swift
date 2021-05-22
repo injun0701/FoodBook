@@ -68,7 +68,7 @@ class SearchViewController: UIViewController {
     //데이터 세팅
     func dataSetting(count: Int, searchKeyWord: String) {
         //서버에서 아이템 데이터 받아오기
-        req.apiItemGet(page: 1, count: count, searchKeyWord: searchKeyWord) { [self] allcount, searchcount, list in
+        req.apiItemGet(page: 1, count: count, searchKeyWord: searchKeyWord) { [self] noticheck, allcount, searchcount, list in
             print(list)
             
             itemList = [] //초기화

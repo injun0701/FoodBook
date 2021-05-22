@@ -369,7 +369,7 @@ class URLRequest {
     }
     
     //MARK: 리스트 받아오기
-    func apiItemGet(page: Int, count: Int, searchKeyWord: String?, success: @escaping (Int, Int, NSArray) -> Void, fail: @escaping VoidToVoid)  {
+    func apiItemGet(page: Int, count: Int, searchKeyWord: String?, success: @escaping (Int, Int, Int, NSArray) -> Void, fail: @escaping VoidToVoid)  {
         //url은 한글을 인코딩해야함
         
         var searchKeyWord = searchKeyWord
@@ -404,13 +404,14 @@ class URLRequest {
                     //전체 데이터를 NSDictionary로 받기
                     if let jsonObject = value as? [String:Any] {
                         NSLog("아이템 리스트 데이터 받아오기 성공")
+                        let noticheck = jsonObject["noticheck"] as! Int
                         //데이터에서 전체 데이터 개수를 Int로 가져오기
                         let allcount = jsonObject["allcount"] as! Int
                         //데이터에서 서치한 데이터 전체 개수를 Int로 가져오기
                         let searchcount = jsonObject["searchcount"] as! Int
                         //데이터에서 list 키의 값을 배열로 가져오기
                         let list = jsonObject["list"] as! NSArray
-                        success(allcount, searchcount, list)
+                        success(noticheck, allcount, searchcount, list)
                     }
                 case ItemGetStatusCode.fail.rawValue:
                     NSLog("아이템 리스트 데이터 받아오기 실패")

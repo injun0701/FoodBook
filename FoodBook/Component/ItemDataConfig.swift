@@ -10,7 +10,7 @@ import UIKit
 extension UIViewController {
     
     //MARK: 아이템 리스트 - 아이템 업로드
-    func itemAdd(page: Int, count: Int, success: @escaping ([Item]) -> ()) {
+    func itemAdd(page: Int, count: Int, success: @escaping ([Item], Int) -> ()) {
         //서버 통신을 위한 객체
         let req = URLRequest()
         //SQLite 파일 urlpath
@@ -24,7 +24,7 @@ extension UIViewController {
         let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
         
         //서버에서 아이템 데이터 받아오기
-        req.apiItemGet(page: page, count: count, searchKeyWord: nil) { allcount, searchcount, list in
+        req.apiItemGet(page: page, count: count, searchKeyWord: nil) { noticheck, allcount, searchcount, list in
             print(list)
             
             //데이터베이스 파일 생성
@@ -83,7 +83,7 @@ extension UIViewController {
             //전체 데이터의 개수
             UserDefaults.standard.set(allcount, forKey: UDkey().itemcount)
             
-            success(itemList)
+            success(itemList, noticheck)
             itemDB.close()
             NSLog("데이터 베이스 생성 성공")
         } fail: {
@@ -248,7 +248,7 @@ extension UIViewController {
         let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
         
         //서버에서 아이템 데이터 받아오기
-        req.apiItemGet(page: page, count: count, searchKeyWord: nil) { allcount, searchcount, list in
+        req.apiItemGet(page: page, count: count, searchKeyWord: nil) { noticheck, allcount, searchcount, list in
             print(list)
             
             //데이터베이스 파일 생성
@@ -509,7 +509,7 @@ extension UIViewController {
         let req = URLRequest()
         
         //서버에서 아이템 데이터 받아오기
-        req.apiItemGet(page: page, count: 10, searchKeyWord: searchKeyWord) { allcount, searchcount, list in
+        req.apiItemGet(page: page, count: 10, searchKeyWord: searchKeyWord) { noticheck, allcount, searchcount, list in
             print(list)
             
             var itemList: [Item] = itemList
