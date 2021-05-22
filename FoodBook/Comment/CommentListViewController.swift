@@ -20,6 +20,7 @@ class CommentListViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var btnItemEdit: UIButton!
     
+    var fromNoti = false
     var userName = "" //셀의 유저네임
     var userImg = UIImage() //유저 이미지
     var userImgUrl = "" //유저 이미지 url
@@ -75,10 +76,29 @@ class CommentListViewController: UIViewController {
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleSetting()
+        naviSetting()
         imgViewSetting()
         tableViewSetting()
         setting()
+    }
+    
+    //네비게이션 세팅
+    func naviSetting() {
+        titleSetting()
+        //네비게이션 오른쪽 버튼 - 햄버거 메뉴 생성
+        let btnSideMenu: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        btnSideMenu.setImage(UIImage(named: "menu"), for: [])
+        btnSideMenu.addTarget(self, action: #selector(btnSideMenuAction), for: UIControl.Event.touchUpInside)
+        btnSideMenu.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let btnSideMenuItem = UIBarButtonItem(customView: btnSideMenu)
+        
+        navigationItem.rightBarButtonItem = btnSideMenuItem
+
+    }
+    
+    //사이드 메뉴 호출
+    @objc func btnSideMenuAction() {
+        presentSideMenu()
     }
     
     func titleSetting() {
@@ -107,9 +127,7 @@ class CommentListViewController: UIViewController {
     }
     
     func setting() {
-        imgViewUser.image = userImg
         lblUserName.text = userName
-        imgViewContents.image = itemImg
         lblItemName.text = itemName
         lblDescription.text = itemDescription
         lblDate.text = itemDate
@@ -118,6 +136,17 @@ class CommentListViewController: UIViewController {
         
         if userName != UserDefaults.standard.value(forKey: UDkey().username) as? String {
             btnItemEdit.isHidden = true
+        }
+        
+        print("\(itemImgUrl)????")
+        
+        if fromNoti == false {
+            imgViewUser.image = userImg
+            imgViewContents.image = itemImg
+            print("ddd")
+        } else {
+            req.getImg(imgurlName: userImgUrl, defaultImgurlName: "userimg", toImg: imgViewUser)
+            req.getImg(imgurlName: itemImgUrl, defaultImgurlName: "gray", toImg: imgViewContents)
         }
     }
     

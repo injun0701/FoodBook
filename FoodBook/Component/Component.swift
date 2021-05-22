@@ -9,14 +9,19 @@ import Foundation
 
 struct FoodBookUrl {
     let signUpUserIdCheck = "http://192.168.0.4/user/idcheck?userid="
-    let signUpUserNameCheck = "http://192.168.0.4/user/usernamecheck?username"
+    let signUpUserNameCheck = "http://192.168.0.4/user/usernamecheck?username="
     let signUp = "http://192.168.0.4/user/register"
     let login = "http://192.168.0.4/user/login"
     let loginlog = "http://192.168.0.4/user/loginlog/paging?pageno="
+    let noti = "http://192.168.0.4/user/noti/paging?pageno="
+    let notidelete = "http://192.168.0.4/user/noti/delete?username="
+    let noticheck = "http://192.168.0.4/user/noticheck?username="
+    let noticheckdelete = "http://192.168.0.4/user/noticheck/delete?username="
     let passwordcheck = "http://192.168.0.4/user/passwordcheck"
     let passwordupdate = "http://192.168.0.4/user/passwordupdate"
     let userUpdate = "http://192.168.0.4/user/update"
     let itemGet = "http://192.168.0.4/item/paging?pageno="
+    let itemGetDetail = "http://192.168.0.4/item/getitem/"
     let itemLikeGet = "http://192.168.0.4/item/like/paging?pageno="
     let lastupdate = "http://192.168.0.4/item/lastupdatetime"
     let imgurl =  "http://192.168.0.4/img/"
@@ -65,6 +70,10 @@ enum LoginStatusCode : Int {
     case fail = 400
 }
 enum LoginLogStatusCode : Int {
+    case success = 200
+    case fail = 400
+}
+enum NotiStatusCode : Int {
     case success = 200
     case fail = 400
 }

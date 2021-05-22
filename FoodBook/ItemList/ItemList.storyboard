@@ -37,7 +37,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4kf-CS-CP0">
                                         <rect key="frame" x="207" y="0.0" width="207" height="60"/>
-                                        <color key="backgroundColor" name="MainColor"/>
+                                        <color key="backgroundColor" name="mainColor"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="글 작성"/>
@@ -101,7 +101,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avk-wK-ZGP">
                                 <rect key="frame" x="364" y="234" width="50" height="50"/>
-                                <color key="backgroundColor" name="MainColor"/>
+                                <color key="backgroundColor" name="mainColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="MHi-iz-jFC"/>
                                     <constraint firstAttribute="width" constant="50" id="Shx-e2-1Tg"/>
@@ -155,7 +155,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ShV-8b-X0d">
                                         <rect key="frame" x="207" y="0.0" width="207" height="60"/>
-                                        <color key="backgroundColor" name="MainColor"/>
+                                        <color key="backgroundColor" name="mainColor"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="저장"/>
@@ -219,7 +219,7 @@
     <resources>
         <image name="gray" width="274" height="137"/>
         <image name="plus" width="50" height="50"/>
-        <namedColor name="MainColor">
+        <namedColor name="mainColor">
             <color red="0.29019607843137257" green="0.68627450980392157" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">

@@ -75,20 +75,36 @@ class MyPageViewController: UIViewController {
         tableViewSetting()
     }
     
-    //네비 세팅
+    //네비게이션 세팅
     func naviSetting() {
         navbarSetting(title: "내 정보")
-        
         //네비게이션 오른쪽 버튼 - Search 뷰로 이동 버튼
-        let btnSearch = UIBarButtonItem(image: UIImage(named: "config"), style: .plain, target: self, action: #selector(btnConfigAction))
-        navigationItem.rightBarButtonItems = [btnSearch]
+        let btnConfig: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        btnConfig.setImage(UIImage(named: "config"), for: [])
+        btnConfig.addTarget(self, action: #selector(btnConfigAction), for: UIControl.Event.touchUpInside)
+        btnConfig.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let btnConfigItem = UIBarButtonItem(customView: btnConfig)
+        //네비게이션 오른쪽 버튼 - 햄버거 메뉴 생성
+        let btnSideMenu: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        btnSideMenu.setImage(UIImage(named: "menu"), for: [])
+        btnSideMenu.addTarget(self, action: #selector(btnSideMenuAction), for: UIControl.Event.touchUpInside)
+        btnSideMenu.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let btnSideMenuItem = UIBarButtonItem(customView: btnSideMenu)
+        
+        navigationItem.rightBarButtonItems = [btnSideMenuItem, btnConfigItem]
+
     }
     
-    //Search 뷰로 이동
+    //설정 페이지로 이동
     @objc func btnConfigAction() {
         let sb = UIStoryboard(name: "SettingPage", bundle: nil)
         let navi = sb.instantiateViewController(withIdentifier: "SettingPageViewController") as! SettingPageViewController
         navigationController?.pushViewController(navi, animated: true)
+    }
+    
+    //사이드 메뉴 호출
+    @objc func btnSideMenuAction() {
+        presentSideMenu()
     }
     
     //테이블뷰 세팅
@@ -246,6 +262,11 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                         let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
                         //데이터 세팅
                         dataSetting(count: itemListCount, searchKeyWord: userName ?? "")
+                    } fail: {
+                        let itemListCount = itemList.count
+                        let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
+                        //데이터 세팅
+                        dataSetting(count: itemListCount, searchKeyWord: userName ?? "")
                     }
                 }
             }
@@ -256,6 +277,11 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 //네트워크 사용 여부 확인
                 networkCheck() {
                     itemLikeInsert(homePage: false, itemid: "\(item.itemid!)") {
+                        let itemListCount = itemList.count
+                        let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
+                        //데이터 세팅
+                        dataSetting(count: itemListCount, searchKeyWord: userName ?? "")
+                    } fail: {
                         let itemListCount = itemList.count
                         let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
                         //데이터 세팅

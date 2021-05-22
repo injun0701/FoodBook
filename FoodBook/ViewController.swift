@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import SideMenu
 
 class ViewController: UIViewController {
 
@@ -72,5 +73,25 @@ class ViewController: UIViewController {
         return .lightContent //상태바 글자 검정
     }
 
+}
+
+// MARK: - UISideMenuNavigationControllerDelegate
+extension ViewController : SideMenuNavigationControllerDelegate {
+    
+    func sideMenuWillAppear(menu: SideMenuNavigationController, animated: Bool) {
+        print("SideMenu Appearing! (animated: \(animated))")
+    }
+    
+    func sideMenuDidAppear(menu: SideMenuNavigationController, animated: Bool) {
+        print("SideMenu Appeared! (animated: \(animated))")
+    }
+    
+    func sideMenuWillDisappear(menu: SideMenuNavigationController, animated: Bool) {
+        print("SideMenu Disappearing! (animated: \(animated))")
+    }
+    
+    func sideMenuDidDisappear(menu: SideMenuNavigationController, animated: Bool) {
+        print("SideMenu Disappeared! (animated: \(animated))")
+    }
 }
 

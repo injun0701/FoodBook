@@ -339,7 +339,7 @@ class URLRequest {
                         if let jsonObject = value as? [String:Any] {
                             let result = jsonObject["result"] as! Int32
                             if result == 1 {
-                                NSLog("수정 성공")
+                                NSLog("유저 정보 수정 성공")
                                 //user키의 값을 가져오기
                                 let user = jsonObject["user"] as! NSDictionary
                                 //username 가져오기
@@ -350,15 +350,15 @@ class URLRequest {
                                 let userimgurl = user["userimgurl"] as! String
                                 success(userid, username, userimgurl)
                             } else {
-                                NSLog("수정 실패")
+                                NSLog("유저 정보 수정 실패")
                                 fail()
                             }
                         }
                     case UserUpdateStatusCode.fail.rawValue:
-                        NSLog("수정 실패")
+                        NSLog("유저 정보 수정 실패")
                         fail()
                     default:
-                        NSLog("수정 실패")
+                        NSLog("유저 정보 수정 실패")
                         fail()
                     }
                 case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
@@ -403,7 +403,7 @@ class URLRequest {
                     
                     //전체 데이터를 NSDictionary로 받기
                     if let jsonObject = value as? [String:Any] {
-                        NSLog("데이터 받아오기 성공")
+                        NSLog("아이템 리스트 데이터 받아오기 성공")
                         //데이터에서 전체 데이터 개수를 Int로 가져오기
                         let allcount = jsonObject["allcount"] as! Int
                         //데이터에서 서치한 데이터 전체 개수를 Int로 가져오기
@@ -413,10 +413,54 @@ class URLRequest {
                         success(allcount, searchcount, list)
                     }
                 case ItemGetStatusCode.fail.rawValue:
-                    NSLog("데이터 받아오기 실패")
+                    NSLog("아이템 리스트 데이터 받아오기 실패")
                     fail()
                 default:
-                    NSLog("데이터 받아오기 실패")
+                    NSLog("아이템 리스트 데이터 받아오기 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 상세 페이지 받아오기
+    func apiItemGetDetail(itemid: String, success: @escaping (NSArray) -> Void, fail: @escaping VoidToVoid)  {
+        
+        let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let userNameEncoding = userName?.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().itemGetDetail)\(itemid)&username=\(userNameEncoding!)"
+        
+        //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
+        let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
+        //요청을 전송하고 결과 사용하기
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+              
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case ItemGetStatusCode.success.rawValue:
+                    //전체 데이터를 NSDictionary로 받기
+                    if let jsonObject = value as? [String:Any] {
+                        NSLog("아이템 상세 데이터 받아오기 성공")
+                        //데이터에서 list 키의 값을 배열로 가져오기
+                        print(jsonObject)
+                        let item = jsonObject["item"] as! NSArray
+                        success(item)
+                    }
+                case ItemGetStatusCode.fail.rawValue:
+                    NSLog("아이템 상세 데이터 받아오기 실패")
+                    fail()
+                default:
+                    NSLog("아이템 상세 데이터 받아오기 실패")
                     fail()
                 }
                 
@@ -450,7 +494,7 @@ class URLRequest {
                 case ItemLikeGetStatusCode.success.rawValue:
                     //전체 데이터를 NSDictionary로 받기
                     if let jsonObject = value as? [String:Any] {
-                        NSLog("데이터 받아오기 성공")
+                        NSLog("좋아요 게시물 리스트 데이터 받아오기 성공")
                         //데이터에서 서치한 데이터 전체 개수를 Int로 가져오기
                         let count = jsonObject["count"] as! Int
                         //데이터에서 list 키의 값을 배열로 가져오기
@@ -458,10 +502,10 @@ class URLRequest {
                         success(count, list)
                     }
                 case ItemLikeGetStatusCode.fail.rawValue:
-                    NSLog("데이터 받아오기 실패")
+                    NSLog("좋아요 게시물 리스트 데이터 받아오기 실패")
                     fail()
                 default:
-                    NSLog("데이터 받아오기 실패")
+                    NSLog("좋아요 게시물 리스트 데이터 받아오기 실패")
                     fail()
                 }
                 
@@ -564,15 +608,15 @@ class URLRequest {
                                 NSLog("삽입 성공")
                                 success()
                             } else {
-                                NSLog("삽입 실패")
+                                NSLog("아이템 삽입 실패")
                                 fail()
                             }
                         }
                     case ItemInsertStatusCode.fail.rawValue:
-                        NSLog("삽입 실패")
+                        NSLog("아이템 삽입 실패")
                         fail()
                     default:
-                        NSLog("삽입 실패")
+                        NSLog("아이템 삽입 실패")
                         fail()
                     }
                 case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
@@ -627,18 +671,18 @@ class URLRequest {
                         if let jsonObject = value as? [String:Any] {
                             let result = jsonObject["result"] as! Int32
                             if result == 1 {
-                                NSLog("수정 성공")
+                                NSLog("아이템 수정 성공")
                                 success()
                             } else {
-                                NSLog("수정 실패")
+                                NSLog("아이템 수정 실패")
                                 fail()
                             }
                         }
                     case ItemUpdateStatusCode.fail.rawValue:
-                        NSLog("수정 실패")
+                        NSLog("아이템 수정 실패")
                         fail()
                     default:
-                        NSLog("수정 실패")
+                        NSLog("아이템 수정 실패")
                         fail()
                     }
                 case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
@@ -709,13 +753,13 @@ class URLRequest {
                     if let jsonObject = value as? [String:Any] {
                         let result = jsonObject["result"] as! Int
                         success(result)
-                        NSLog("데이터 삭제 성공")
+                        NSLog("아이템 데이터 삭제 성공")
                     }
                 case ItemDeleteStatusCode.fail.rawValue:
-                    NSLog("데이터 삭제 실패")
+                    NSLog("아이템 데이터 삭제 실패")
                     fail()
                 default:
-                    NSLog("데이터 삭제 실패")
+                    NSLog("아이템 데이터 삭제 실패")
                     fail()
                 }
                 
@@ -745,7 +789,7 @@ class URLRequest {
                 case ItemGetStatusCode.success.rawValue:
                     //전체 데이터를 NSDictionary로 받기
                     if let jsonObject = value as? [String:Any] {
-                        NSLog("데이터 받아오기 성공")
+                        NSLog("댓글 데이터 받아오기 성공")
                         //데이터에서 전체 데이터 개수를 Int로 가져오기
                         let count = jsonObject["count"] as! Int
                         //데이터에서 list 키의 값을 배열로 가져오기
@@ -753,10 +797,10 @@ class URLRequest {
                         success(count, list)
                     }
                 case ItemGetStatusCode.fail.rawValue:
-                    NSLog("데이터 받아오기 실패")
+                    NSLog("댓글 데이터 받아오기 실패")
                     fail()
                 default:
-                    NSLog("데이터 받아오기 실패")
+                    NSLog("댓글 데이터 받아오기 실패")
                     fail()
                 }
                 
@@ -875,13 +919,13 @@ class URLRequest {
                     if let jsonObject = value as? [String:Any] {
                         let result = jsonObject["result"] as! Int
                         success(result)
-                        NSLog("데이터 삭제 성공")
+                        NSLog("댓글 삭제 성공")
                     }
                 case CommentDeleteStatusCode.fail.rawValue:
-                    NSLog("데이터 삭제 실패")
+                    NSLog("댓글 삭제 실패")
                     fail()
                 default:
-                    NSLog("데이터 삭제 실패")
+                    NSLog("댓글 삭제 실패")
                     fail()
                 }
                 
@@ -1010,7 +1054,7 @@ class URLRequest {
                 case LoginLogStatusCode.success.rawValue:
                     //전체 데이터를 NSDictionary로 받기
                     if let jsonObject = value as? [String:Any] {
-                        NSLog("데이터 받아오기 성공")
+                        NSLog("로그인 로그 데이터 받아오기 성공")
                         //데이터에서 전체 데이터 개수를 Int로 가져오기
                         let count = jsonObject["count"] as! Int
                         //데이터에서 list 키의 값을 배열로 가져오기
@@ -1018,10 +1062,10 @@ class URLRequest {
                         success(count, list)
                     }
                 case LoginLogStatusCode.fail.rawValue:
-                    NSLog("데이터 받아오기 실패")
+                    NSLog("로그인 로그 데이터 받아오기 실패")
                     fail()
                 default:
-                    NSLog("데이터 받아오기 실패")
+                    NSLog("로그인 로그 데이터 받아오기 실패")
                     fail()
                 }
                 
@@ -1060,7 +1104,6 @@ class URLRequest {
                     //전체 데이터를 NSDictionary로 변환
                     if let jsonObject = value as? [String:Any] {
                         let result = jsonObject["result"] as! Int32
-                        print("?? \(result)")
                         if result == 1 {
                             NSLog("탈퇴 성공")
                             success()
@@ -1083,4 +1126,188 @@ class URLRequest {
         }
     }
     
+    //MARK: 유저 알림 받아오기
+    func apiUserNoti(page: Int, success: @escaping (Int, NSArray) -> Void, fail: @escaping VoidToVoid)  {
+        
+        let username = UserDefaults.standard.value(forKey: UDkey().username) as? String ?? ""
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let usernameEncoding = username.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().noti)\(page)&count=15&username=\(usernameEncoding!)"
+        
+        //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
+        let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
+        //요청을 전송하고 결과 사용하기
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+              
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case NotiStatusCode.success.rawValue:
+                    //전체 데이터를 NSDictionary로 받기
+                    if let jsonObject = value as? [String:Any] {
+                        NSLog("알림 리스트 받아오기 성공")
+                        //데이터에서 전체 데이터 개수를 Int로 가져오기
+                        let count = jsonObject["count"] as! Int
+                        //데이터에서 list 키의 값을 배열로 가져오기
+                        let list = jsonObject["list"] as! NSArray
+                        success(count, list)
+                    }
+                case NotiStatusCode.fail.rawValue:
+                    NSLog("알림 리스트 받아오기 실패")
+                    fail()
+                default:
+                    NSLog("알림 리스트 받아오기 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 알람 삭제
+    func apiUserNotiDelete(success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
+        
+        let username = UserDefaults.standard.value(forKey: UDkey().username) as? String ?? ""
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let usernameEncoding = username.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().notidelete)\(usernameEncoding!)"
+        
+        //데이터 삭제 - delete 방식이고 파라미터 없고 결과는 json
+        let request = AF.request(url, method: .delete, encoding: URLEncoding.httpBody, headers: nil)
+        //요청을 전송하고 결과 사용하기
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case NotiStatusCode.success.rawValue:
+                    if let jsonObject = value as? [String:Any] {
+                        let result = jsonObject["result"] as! Int32
+                        if result == 1 {
+                            NSLog("알림 삭제 성공")
+                            success()
+                        } else {
+                            NSLog("알림 삭제 실패")
+                            fail()
+                        }
+                    }
+                case NotiStatusCode.fail.rawValue:
+                    NSLog("알림 삭제 실패")
+                    fail()
+                default:
+                    NSLog("알림 삭제 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 유저 알림체크 받아오기
+    func apiUserNotiCheck(success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
+        
+        let username = UserDefaults.standard.value(forKey: UDkey().username) as? String ?? ""
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let usernameEncoding = username.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        print(username)
+        let url = "\(FoodBookUrl().noticheck)\(usernameEncoding!)"
+        
+        //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
+        let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
+        //요청을 전송하고 결과 사용하기
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+              
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case NotiStatusCode.success.rawValue:
+                    //전체 데이터를 NSDictionary로 받기
+                    if let jsonObject = value as? [String:Any] {
+                        let result = jsonObject["result"] as! Int32
+                        if result == 1 {
+                            NSLog("알림 체크 받아오기 성공")
+                            success()
+                        } else {
+                            NSLog("알림 체크 받아오기 실패")
+                            fail()
+                        }
+                    }
+                case NotiStatusCode.fail.rawValue:
+                    NSLog("알림 체크 받아오기 실패")
+                    fail()
+                default:
+                    NSLog("알림 체크 받아오기 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
+    
+    //MARK: 알람체크 삭제
+    func apiUserNotiCheckDelete(success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
+        
+        let username = UserDefaults.standard.value(forKey: UDkey().username) as? String ?? ""
+        //한글일 경우를 대비하려면 인코딩 해야함
+        let usernameEncoding = username.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
+        
+        let url = "\(FoodBookUrl().noticheckdelete)\(usernameEncoding!)"
+        
+        //데이터 삭제 - delete 방식이고 파라미터 없고 결과는 json
+        let request = AF.request(url, method: .delete, encoding: URLEncoding.httpBody, headers: nil)
+        //요청을 전송하고 결과 사용하기
+        request.validate(statusCode: 200...500).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                
+                //응답받은 statusCode
+                let statusCode = response.response?.statusCode ?? 404
+                
+                //성공 실패 케이스 나누기
+                switch statusCode {
+                case NotiStatusCode.success.rawValue:
+                    if let jsonObject = value as? [String:Any] {
+                        let result = jsonObject["result"] as! Int32
+                        if result == 1 {
+                            NSLog("알림 체크 삭제 성공")
+                            success()
+                        } else {
+                            NSLog("알림 체크 삭제 실패")
+                            fail()
+                        }
+                    }
+                case NotiStatusCode.fail.rawValue:
+                    NSLog("알림 체크 삭제 실패")
+                    fail()
+                default:
+                    NSLog("알림 체크 삭제 실패")
+                    fail()
+                }
+                
+            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
+                print(error)
+            }
+        }
+    }
 }

@@ -43,7 +43,7 @@
                                     <constraint firstAttribute="width" constant="70" id="s7z-a2-F2b"/>
                                 </constraints>
                                 <state key="normal" title="정보 수정">
-                                    <color key="titleColor" name="MainColor"/>
+                                    <color key="titleColor" name="mainColor"/>
                                 </state>
                                 <connections>
                                     <action selector="btnToMyPageEditAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="j6P-cj-598"/>
@@ -70,7 +70,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIt-Mc-4XZ">
                                 <rect key="frame" x="282" y="190" width="112" height="30"/>
                                 <state key="normal" title="좋아요 누른 게시물">
-                                    <color key="titleColor" name="MainColor"/>
+                                    <color key="titleColor" name="mainColor"/>
                                 </state>
                                 <connections>
                                     <action selector="btnToItemLikeAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="PzR-gz-A2s"/>
@@ -95,7 +95,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HaH-gL-7Ei">
                                         <rect key="frame" x="207" y="0.0" width="207" height="60"/>
-                                        <color key="backgroundColor" name="MainColor"/>
+                                        <color key="backgroundColor" name="mainColor"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="글 작성"/>
@@ -128,7 +128,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qqk-i5-aI9">
                                         <rect key="frame" x="16" y="0.0" width="9.5" height="17"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                        <color key="textColor" name="MainColor"/>
+                                        <color key="textColor" name="mainColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="개" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UsI-ao-f4j">
@@ -204,7 +204,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbd-KR-1RE">
                                 <rect key="frame" x="222" y="174" width="50" height="50"/>
-                                <color key="backgroundColor" name="MainColor"/>
+                                <color key="backgroundColor" name="mainColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="IaH-in-9ef"/>
                                     <constraint firstAttribute="width" constant="50" id="chV-mH-2Pc"/>
@@ -243,7 +243,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDB-cL-phn" customClass="DisabledBtn" customModule="FoodBook" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
-                                        <color key="backgroundColor" name="MainColor"/>
+                                        <color key="backgroundColor" name="mainColor"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="저장"/>
@@ -398,6 +398,9 @@
         <image name="gray" width="274" height="137"/>
         <image name="plus" width="50" height="50"/>
         <namedColor name="MainColor">
+            <color red="0.29019607843137257" green="0.68627450980392157" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="mainColor">
             <color red="0.29019607843137257" green="0.68627450980392157" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">

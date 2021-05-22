@@ -67,7 +67,7 @@ asdasd</string>
                             <constraint firstAttribute="width" constant="30" id="81R-vv-F5p"/>
                             <constraint firstAttribute="height" constant="30" id="Wop-2e-Hn2"/>
                         </constraints>
-                        <color key="tintColor" name="MainColor"/>
+                        <color key="tintColor" name="mainColor"/>
                         <state key="normal" image="like"/>
                         <state key="selected" image="heart.fill" catalog="system"/>
                         <connections>
@@ -139,7 +139,7 @@ asdasd</string>
         <image name="gray" width="274" height="137"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="like" width="30" height="30"/>
-        <namedColor name="MainColor">
+        <namedColor name="mainColor">
             <color red="0.29019607843137257" green="0.68627450980392157" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>

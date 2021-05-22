@@ -169,6 +169,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                         let itemListCount = itemList.count
                         //검색어로 데이터 세팅
                         searchDataSetting(count: itemListCount)
+                    } fail: {
+                        let itemListCount = itemList.count
+                        //검색어로 데이터 세팅
+                        searchDataSetting(count: itemListCount)
                     }
                 }
             }
@@ -179,6 +183,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 //네트워크 사용 여부 확인
                 networkCheck() {
                     itemLikeInsert(homePage: flag, itemid: "\(item.itemid!)") {
+                        let itemListCount = itemList.count
+                        //검색어로 데이터 세팅
+                        searchDataSetting(count: itemListCount)
+                    } fail: {
                         let itemListCount = itemList.count
                         //검색어로 데이터 세팅
                         searchDataSetting(count: itemListCount)

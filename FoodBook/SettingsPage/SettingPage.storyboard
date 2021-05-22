@@ -33,7 +33,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FhI-iE-YpC">
                                 <rect key="frame" x="20" y="188" width="374" height="30"/>
                                 <state key="normal" title="로그인 로그 확인">
-                                    <color key="titleColor" name="MainColor"/>
+                                    <color key="titleColor" name="mainColor"/>
                                 </state>
                                 <connections>
                                     <action selector="btnToLoginLogAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="RpW-fM-YIc"/>
@@ -54,7 +54,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EgK-Qv-eWU">
                                 <rect key="frame" x="20" y="238" width="374" height="30"/>
                                 <state key="normal" title="비밀번호 변경">
-                                    <color key="titleColor" name="MainColor"/>
+                                    <color key="titleColor" name="mainColor"/>
                                 </state>
                                 <connections>
                                     <action selector="btnToUserPasswdUpdateAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="lN3-6p-wgd"/>
@@ -131,7 +131,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qtk-nc-x4w">
                                         <rect key="frame" x="68.5" y="0.0" width="9.5" height="17"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                        <color key="textColor" name="MainColor"/>
+                                        <color key="textColor" name="mainColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="건" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVh-NQ-fpE">
@@ -233,7 +233,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pdw-5R-OKH" customClass="DisabledBtn" customModule="FoodBook" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
-                                        <color key="backgroundColor" name="MainColor"/>
+                                        <color key="backgroundColor" name="mainColor"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="저장"/>
@@ -291,7 +291,7 @@
         </scene>
     </scenes>
     <resources>
-        <namedColor name="MainColor">
+        <namedColor name="mainColor">
             <color red="0.29019607843137257" green="0.68627450980392157" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">

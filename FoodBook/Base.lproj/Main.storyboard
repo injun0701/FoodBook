@@ -31,7 +31,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="QeU-h3-52y"/>
                                 </constraints>
-                                <color key="tintColor" name="MainColor"/>
+                                <color key="tintColor" name="mainColor"/>
                                 <state key="normal" title="회원가입"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -51,7 +51,7 @@
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" name="MainColor"/>
+                        <color key="backgroundColor" name="mainColor"/>
                         <constraints>
                             <constraint firstItem="6Ff-Kt-GRy" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-130" id="189-a0-Cyb"/>
                             <constraint firstItem="KiL-zg-RxG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="9XU-6r-hds"/>
@@ -90,7 +90,7 @@
     </scenes>
     <resources>
         <image name="foodbooklogo" width="100" height="100"/>
-        <namedColor name="MainColor">
+        <namedColor name="mainColor">
             <color red="0.29019607843137257" green="0.68627450980392157" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>

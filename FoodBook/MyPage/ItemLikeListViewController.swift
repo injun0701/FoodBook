@@ -155,7 +155,11 @@ extension ItemLikeListViewController: UITableViewDelegate, UITableViewDataSource
                         itemList.remove(at: indexPath.row)
                         itemLikeCountAll = itemLikeCountAll - 1
                         lblItemCount.text = "\(itemLikeCountAll)"
+                        dataSetting(count: itemList.count)
                         tableView.reloadData()
+                    } fail: {
+                        //좋아요 누른 게시물 데이터 세팅
+                        dataSetting(count: 10)
                     }
                 }
             }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SideMenu
 
 extension UIViewController {
     
@@ -119,6 +120,44 @@ extension UIViewController {
         rootVC()
     }
     
+    //사이드 메뉴 세팅
+    func setUpSideMenu() {
+        // 1. Side Menu ViewController 만들기
+        let sideMenu = SideMenuViewController(nibName: "SideMenuViewController", bundle: nil)
+        // 2. UISideMenuNavigationController 생성시키기.
+        let sideNavigation = SideMenuNaviController(rootViewController: sideMenu)
+        // 3. 셋팅하기.
+        SideMenuManager.default.rightMenuNavigationController = sideNavigation
+        
+        // 4. 스와이프 열고 닫기 켜기
+//        SideMenuManager.default.addPanGestureToPresent(toView: self.view)
+//        SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: self.view)
+    }
+    
+    func presentSideMenu() {
+        // 강제 열림 액션.
+        present(SideMenuManager.default.rightMenuNavigationController!, animated: true, completion: nil)
+    }
+    
+    
+    //사이드 메뉴 세팅
+    func setUpNoti() {
+        // 1. Side Menu ViewController 만들기
+        let noti = NotiViewController(nibName: "NotiViewController", bundle: nil)
+        // 2. UISideMenuNavigationController 생성시키기.
+        let notiNavi = NotiNaviController(rootViewController: noti)
+        // 3. 셋팅하기.
+        SideMenuManager.default.leftMenuNavigationController = notiNavi
+        
+        // 4. 스와이프 열고 닫기 켜기
+//        SideMenuManager.default.addPanGestureToPresent(toView: self.view)
+//        SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: self.view)
+    }
+    
+    func presentNoti() {
+        // 강제 열림 액션.
+        present(SideMenuManager.default.leftMenuNavigationController!, animated: true, completion: nil)
+    }
 }
 
 extension String {
@@ -172,6 +211,9 @@ func rootVC() {
 //MARK: 유아이_컬러 extension
 extension UIColor {
     var mainColor : UIColor {
-        return UIColor(named: "MainColor")!
+        return UIColor(named: "mainColor")!
+    }
+    var color666666 : UIColor {
+        return UIColor(named: "color666666")!
     }
 }

@@ -314,22 +314,24 @@ extension UIViewController {
     }
     
     //좋아요 삭제 메소드
-    func itemLikeDelete(homePage: Bool, itemid: String, success: @escaping () -> ()) {
+    func itemLikeDelete(homePage: Bool, itemid: String, success: @escaping () -> (), fail: @escaping () -> ()) {
         //서버 통신을 위한 객체
         let req = URLRequest()
         req.apiItemLikeDelete(itemid: itemid) {
-            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 삭제가 성공적으로 완료되었습니다.", btnTitle: "확인") {
+            self.showAlertBtn1(title: "업로드 알림", message: "좋아요가 삭제되었습니다.", btnTitle: "확인") {
                 self.itemLike(homePage: homePage) {
                     success()
                 }
             }
         } fail: {
-            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 업로드를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
+            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 업로드를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {
+                fail()
+            }
         }
     }
     
     //좋아요 업로드 메소드
-    func itemLikeInsert(homePage: Bool, itemid: String, success: @escaping () -> ()) {
+    func itemLikeInsert(homePage: Bool, itemid: String, success: @escaping () -> (), fail: @escaping () -> ()) {
         //서버 통신을 위한 객체
         let req = URLRequest()
         req.apiItemLikeInsert(itemid: itemid) {
@@ -339,7 +341,9 @@ extension UIViewController {
                 }
             }
         } fail: {
-            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 업로드를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
+            self.showAlertBtn1(title: "업로드 알림", message: "좋아요 업로드를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {
+                fail()
+            }
         }
     }
     
@@ -541,7 +545,7 @@ extension UIViewController {
         }
     }
     
-    //MARK: 좋아요 누른 게시판 아래로 스크롤 시 아이템 업로드
+    //MARK: 좋아요 누른 게시물 아래로 스크롤 시 아이템 업로드
     func itemLikeScrollItemAdd(page: Int, itemList: [Item], success: @escaping ([Item]) -> ()) {
         //이 메소드가 호출될때 마다 페이지 수 1씩 증가
         let page = page + 1
@@ -586,7 +590,7 @@ extension UIViewController {
         }
     }
     
-    //MARK: 로그인 로그 게시판 아래로 스크롤 시 아이템 업로드
+    //MARK: 로그인 로그 게시물 아래로 스크롤 시 아이템 업로드
     func loginLogScrollItemAdd(page: Int, tableList: [LoginLog], success: @escaping ([LoginLog]) -> ()) {
         //이 메소드가 호출될때 마다 페이지 수 1씩 증가
         let page = page + 1
@@ -614,6 +618,45 @@ extension UIViewController {
                     //배열에 추가
                     tableList.append(loginLog)
                     tableList.sort(by: {$0.userid! > $1.userid!}) //순서 정렬
+                }//반복문 종료
+                success(tableList)
+            }
+        } fail: {
+            self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
+        }
+    }
+    
+    //MARK: 알림 게시물 아래로 스크롤 시 아이템 업로드
+    func notiScrollItemAdd(page: Int, tableList: [Noti], success: @escaping ([Noti]) -> ()) {
+        //이 메소드가 호출될때 마다 페이지 수 1씩 증가
+        let page = page + 1
+        
+        //서버 통신을 위한 객체
+        let req = URLRequest()
+        
+        //서버에서 아이템 데이터 받아오기
+        req.apiUserNoti(page: page) { count, list in
+            print(list)
+            
+            var tableList: [Noti] = tableList
+            
+            //페이지에서 가져온 데이터
+            if list.count != 0 {
+                //배열의 데이터 순회
+                for index in 0...(list.count - 1) {
+                        //배열에서 하나씩 가져오기
+                    let list = list[index] as! [String: Any] //NSDictionary
+                    //하나의 DTO 객체를 생성
+                    var noti = Noti()
+                    //json 파싱해서 객체에 데이터 대입
+                    noti.username = list["username"] as? String
+                    noti.userimgurl = list["userimgurl"] as? String
+                    noti.commentture = list["commenttrue"] as? Bool
+                    noti.itemid = "\((list["itemid"] as! NSNumber).intValue)"
+                    noti.postdate = list["postdate"] as? String
+                    //배열에 추가
+                    tableList.append(noti)
+                    tableList.sort(by: {$0.postdate! > $1.postdate!}) //순서 정렬
                 }//반복문 종료
                 success(tableList)
             }

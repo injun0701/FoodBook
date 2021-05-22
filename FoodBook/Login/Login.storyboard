@@ -42,7 +42,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LhL-i8-157">
                                 <rect key="frame" x="20" y="390" width="374" height="30"/>
-                                <color key="tintColor" name="MainColor"/>
+                                <color key="tintColor" name="mainColor"/>
                                 <state key="normal" title="회원가입"/>
                                 <connections>
                                     <action selector="btnToSignUpViewAction:" destination="SKq-qk-8ag" eventType="touchUpInside" id="RM8-vI-O28"/>
@@ -50,7 +50,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fOO-rj-EeA">
                                 <rect key="frame" x="20" y="316" width="374" height="54"/>
-                                <color key="backgroundColor" name="MainColor"/>
+                                <color key="backgroundColor" name="mainColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="hNA-I4-FWa"/>
                                 </constraints>
@@ -97,7 +97,7 @@
         </scene>
     </scenes>
     <resources>
-        <namedColor name="MainColor">
+        <namedColor name="mainColor">
             <color red="0.29019607843137257" green="0.68627450980392157" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">

@@ -54,6 +54,7 @@ class ItemListViewController: UIViewController {
         super.viewDidLoad()
         tableViewSetting()
         naviSetting()
+        setUpSideMenu()
     }
     
     //테이블뷰 세팅
@@ -74,8 +75,33 @@ class ItemListViewController: UIViewController {
     //네비게이션 세팅
     func naviSetting() {
         //네비게이션 오른쪽 버튼 - Search 뷰로 이동 버튼
-        let btnSearch = UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(btnSearchAction))
-        navigationItem.rightBarButtonItems = [btnSearch]
+        let btnSearch: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        btnSearch.setImage(UIImage(named: "search"), for: [])
+        btnSearch.addTarget(self, action: #selector(btnSearchAction), for: UIControl.Event.touchUpInside)
+        btnSearch.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let btnSearchItem = UIBarButtonItem(customView: btnSearch)
+        //네비게이션 오른쪽 버튼 - 사이드 메뉴 생성
+        let btnSideMenu: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        btnSideMenu.setImage(UIImage(named: "menu"), for: [])
+        btnSideMenu.addTarget(self, action: #selector(btnSideMenuAction), for: UIControl.Event.touchUpInside)
+        btnSideMenu.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let btnSideMenuItem = UIBarButtonItem(customView: btnSideMenu)
+        
+        navigationItem.rightBarButtonItems = [btnSideMenuItem, btnSearchItem]
+        
+        btnNoti(imgName: "noti_false")
+    }
+    
+    func btnNoti(imgName: String) {
+        //네비게이션 왼쪽 버튼 - 알림 생성
+        let btnNoti: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        btnNoti.setImage(UIImage(named: imgName), for: [])
+        btnNoti.addTarget(self, action: #selector(btnNotiAction), for: UIControl.Event.touchUpInside)
+        btnNoti.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let btnNotiItem = UIBarButtonItem(customView: btnNoti)
+        
+        setUpNoti()
+        navigationItem.leftBarButtonItem = btnNotiItem
     }
     
     //Search 뷰로 이동
@@ -83,6 +109,17 @@ class ItemListViewController: UIViewController {
         let sb = UIStoryboard(name: "Search", bundle: nil)
         let navi = sb.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
         navigationController?.pushViewController(navi, animated: true)
+    }
+    
+    //사이드 메뉴 호출
+    @objc func btnSideMenuAction() {
+        presentSideMenu()
+    }
+    
+    //알림 호출
+    @objc func btnNotiAction() {
+        btnNoti(imgName: "noti_false")
+        presentNoti()
     }
     
     //MARK: 서버, 로컬 데이터 세팅
@@ -110,6 +147,8 @@ class ItemListViewController: UIViewController {
         networkCheck {
             //아이템 추가
             self.itemAdd(page: 1, count: 10) { itemList in
+                self.itemList = []
+                
                 self.itemList = itemList
                 self.tableView.reloadData()
             }
@@ -155,6 +194,15 @@ class ItemListViewController: UIViewController {
                 self.itemList = result
                 self.tableView.reloadData()
             }
+        }
+    }
+    
+    //알람이 왔는지 체크
+    func notiCheck() {
+        req.apiUserNotiCheck {
+            self.btnNoti(imgName: "noti_true")
+        } fail: {
+            self.btnNoti(imgName: "noti_false")
         }
     }
     
@@ -232,6 +280,8 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
                             self.itemList = itemList
                             self.tableView.reloadData()
                         }
+                    } fail: {
+                        self.fileExistsFalse()
                     }
                 }
             }
@@ -249,6 +299,8 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
                             self.itemList = itemList
                             self.tableView.reloadData()
                         }
+                    } fail: {
+                        self.fileExistsFalse()
                     }
                 }
             }
