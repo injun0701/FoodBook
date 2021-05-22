@@ -94,7 +94,7 @@ class SideMenuViewController: UIViewController {
         tableList = [
             SideMenu(title: home, imgname: "home"),
             SideMenu(title: search, imgname: "search"),
-            SideMenu(title: like, imgname: "like"),
+            SideMenu(title: like, imgname: "like_gray"),
             SideMenu(title: config, imgname: "config")
        ]
     }

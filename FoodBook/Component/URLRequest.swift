@@ -1211,55 +1211,6 @@ class URLRequest {
                     NSLog("알림 삭제 실패")
                     fail()
                 }
-                
-            case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
-                print(error)
-            }
-        }
-    }
-    
-    //MARK: 유저 알림체크 받아오기
-    func apiUserNotiCheck(success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
-        
-        let username = UserDefaults.standard.value(forKey: UDkey().username) as? String ?? ""
-        //한글일 경우를 대비하려면 인코딩 해야함
-        let usernameEncoding = username.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
-        
-        print(username)
-        let url = "\(FoodBookUrl().noticheck)\(usernameEncoding!)"
-        
-        //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
-        let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
-        //요청을 전송하고 결과 사용하기
-        request.validate(statusCode: 200...500).responseJSON { response in
-            switch response.result {
-            case .success(let value):
-              
-                //응답받은 statusCode
-                let statusCode = response.response?.statusCode ?? 404
-                
-                //성공 실패 케이스 나누기
-                switch statusCode {
-                case NotiStatusCode.success.rawValue:
-                    //전체 데이터를 NSDictionary로 받기
-                    if let jsonObject = value as? [String:Any] {
-                        let result = jsonObject["result"] as! Int32
-                        if result == 1 {
-                            NSLog("알림 체크 받아오기 성공")
-                            success()
-                        } else {
-                            NSLog("알림 체크 받아오기 실패")
-                            fail()
-                        }
-                    }
-                case NotiStatusCode.fail.rawValue:
-                    NSLog("알림 체크 받아오기 실패")
-                    fail()
-                default:
-                    NSLog("알림 체크 받아오기 실패")
-                    fail()
-                }
-                
             case .failure(let error): //서버와 통신을 못할 때의 실패 케이스 ex)비행기 모드
                 print(error)
             }
