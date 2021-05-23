@@ -157,6 +157,7 @@ class ItemListViewController: UIViewController {
                 self.notiCheck(noticheck: noticheck)
                 LoadingHUD.hide()
             }
+            LoadingHUD.hide()
             //마지막 업데이트 시간을  로컬 데이터베이스에 기록
             self.lastUpdateAddToLocal(updatePathName: self.lastUpdatePara.update, urlName: self.lastUpdatePara.lastupdate)
         }
@@ -181,6 +182,7 @@ class ItemListViewController: UIViewController {
                     self.tableView.reloadData()
                     LoadingHUD.hide()
                 }
+                LoadingHUD.hide()
             } updatetimeDifferent: {
                 //기존 데이터를 지우고 새로 다운로드
                 try! fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
@@ -193,7 +195,9 @@ class ItemListViewController: UIViewController {
                     self.notiCheck(noticheck: noticheck)
                     LoadingHUD.hide()
                 }
+                LoadingHUD.hide()
             }
+            LoadingHUD.hide()
         } fail: { //네트워크가 연결이 안돼서 로컬 데이터 출력
             NSLog("네트워크가 연결이 안돼서 로컬 데이터 출력")
             self.itemList.removeAll() //itemList 배열 초기화
@@ -203,7 +207,9 @@ class ItemListViewController: UIViewController {
                 self.tableView.reloadData()
                 LoadingHUD.hide()
             }
+            LoadingHUD.hide()
         }
+        LoadingHUD.hide()
     }
     
     //알람이 왔는지 체크

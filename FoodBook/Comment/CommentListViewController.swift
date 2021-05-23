@@ -216,6 +216,7 @@ class CommentListViewController: UIViewController {
                     self.lblCommentCount.text = "댓글 개수: \(count)"
                     LoadingHUD.hide()
                 }
+                LoadingHUD.hide()
             } updatetimeDifferent: {
                 //기존 데이터를 지우고 새로 다운로드
                 try! fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
@@ -229,8 +230,9 @@ class CommentListViewController: UIViewController {
                     self.lblCommentCount.text = "댓글 개수: \(count)"
                     LoadingHUD.hide()
                 }
+                LoadingHUD.hide()
             }
-
+            LoadingHUD.hide()
         } fail: { //네트워크가 연결이 안돼서 로컬 데이터 출력
             NSLog("네트워크가 연결이 안돼서 로컬 데이터 출력")
             self.tableList.removeAll() //tableList 배열 초기화
@@ -241,7 +243,9 @@ class CommentListViewController: UIViewController {
                 self.lblCommentCount.text = "댓글 개수: \(count)"
                 LoadingHUD.hide()
             }
+            LoadingHUD.hide()
         }
+        LoadingHUD.hide()
     }
     
     //MARK: viewWillAppear
@@ -321,6 +325,7 @@ class CommentListViewController: UIViewController {
             LoadingHUD.hide()
             self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
+        LoadingHUD.hide()
     }
 
     //refreshControl 객체 생성

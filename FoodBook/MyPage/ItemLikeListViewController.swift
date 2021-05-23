@@ -99,6 +99,7 @@ class ItemLikeListViewController: UIViewController {
             LoadingHUD.hide()
             self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
+        LoadingHUD.hide()
     }
     
     //refreshControl 객체 생성

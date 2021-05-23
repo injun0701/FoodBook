@@ -386,6 +386,7 @@ class URLRequest {
         let searchKeyWordEncoding = searchKeyWord?.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted)
         
         let url = "\(FoodBookUrl().itemGet)\(page)&count=\(count)&username=\(userNameEncoding!)&searchkeyword=\(searchKeyWordEncoding!)"
+        print(url)
         
         //데이터 받아오기 - get 방식이고 파라미터 없고 결과는 json
         let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)

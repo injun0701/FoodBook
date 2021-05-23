@@ -42,7 +42,7 @@ class NotiViewController: UIViewController {
                 LoadingHUD.hide()
                 self.showAlertBtn1(title: "알림", message: "알림 삭제를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
             }
-
+            LoadingHUD.hide()
         }
     }
     
@@ -146,6 +146,7 @@ class NotiViewController: UIViewController {
             LoadingHUD.hide()
             self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
+        LoadingHUD.hide()
     }
     
     //알림체크 삭제
@@ -253,6 +254,7 @@ extension NotiViewController: UITableViewDelegate, UITableViewDataSource {
                 LoadingHUD.hide()
                 showAlertBtn1(title: "데이터 알림", message: "데이터를 가져올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
             }
+            LoadingHUD.hide()
         }
     }
     
