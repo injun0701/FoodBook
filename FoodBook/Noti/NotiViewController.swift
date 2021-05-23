@@ -31,12 +31,15 @@ class NotiViewController: UIViewController {
     @IBAction func btnNotiDeleteAction(_ sender: UIButton) {
         //네트워크 체크
         networkCheck {
+            LoadingHUD.show()
             self.req.apiUserNotiDelete {
+                LoadingHUD.hide()
                 self.showAlertBtn1(title: "알림", message: "알림을 모두 삭제했습니다.", btnTitle: "확인") {
                     //로그인 로그 게시물 데이터 세팅
                     self.dataSetting(count: 10)
                 }
             } fail: {
+                LoadingHUD.hide()
                 self.showAlertBtn1(title: "알림", message: "알림 삭제를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
             }
 
@@ -97,6 +100,7 @@ class NotiViewController: UIViewController {
     
     //데이터 세팅
     func dataSetting(count: Int) {
+        LoadingHUD.show()
         page = 1
         //서버에서 아이템 데이터 받아오기
         req.apiUserNoti(page: 1) { [self] count, list in
@@ -136,8 +140,10 @@ class NotiViewController: UIViewController {
                 tableView.reloadData()
                 btnNotiDelete.isOn = .Off
             }
+            LoadingHUD.hide()
             NSLog("데이터 베이스 생성 성공")
         } fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
     }
@@ -220,6 +226,7 @@ extension NotiViewController: UITableViewDelegate, UITableViewDataSource {
         
         //네트워크 사용 여부 확인
         networkCheck() { [self] in
+            LoadingHUD.show()
             req.apiItemGetDetail(itemid: list.itemid!) { list in
                 //페이지에서 가져온 데이터
                 if list.count != 0 {
@@ -239,9 +246,11 @@ extension NotiViewController: UITableViewDelegate, UITableViewDataSource {
                     navi.userName = list["username"] as? String ?? ""
                     
                     navi.fromNoti = true
+                    LoadingHUD.hide()
                     self.navigationController?.pushViewController(navi, animated: true)
                 }
             } fail: {
+                LoadingHUD.hide()
                 showAlertBtn1(title: "데이터 알림", message: "데이터를 가져올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
             }
         }
@@ -259,10 +268,13 @@ extension NotiViewController: UITableViewDelegate, UITableViewDataSource {
             if listCountAll > self.tableList.count {
                 //네트워크 사용 여부 확인
                 networkCheck() { [self] in
+                    LoadingHUD.show()
                     notiScrollItemAdd(page: page, tableList: self.tableList) { tableList in
                         self.tableList = tableList
                         self.tableView.reloadData()
+                        LoadingHUD.hide()
                     }
+                    LoadingHUD.hide()
                     page = page + 1
                     flag = false
                 }

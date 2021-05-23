@@ -27,6 +27,7 @@
 		844EAE5F2655004F00F1C3EC /* MyPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844EAE5E2655004F00F1C3EC /* MyPage.storyboard */; };
 		8461D2A126564BAD0022F31E /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461D2A026564BAD0022F31E /* MyPageEditViewController.swift */; };
 		8461D2A3265683D50022F31E /* ItemLikeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461D2A2265683D50022F31E /* ItemLikeListViewController.swift */; };
+		84719879265A0CF9002BA054 /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84719878265A0CF8002BA054 /* LoadingHUD.swift */; };
 		8482E99C2644EE8000BAA7FE /* ItemListPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */; };
 		8482E99F26450ACE00BAA7FE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8482E99E26450ACE00BAA7FE /* Login.storyboard */; };
 		8482E9A126450ADC00BAA7FE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E9A026450ADC00BAA7FE /* LoginViewController.swift */; };
@@ -88,6 +89,7 @@
 		844EAE5E2655004F00F1C3EC /* MyPage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyPage.storyboard; sourceTree = "<group>"; };
 		8461D2A026564BAD0022F31E /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
 		8461D2A2265683D50022F31E /* ItemLikeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemLikeListViewController.swift; sourceTree = "<group>"; };
+		84719878265A0CF8002BA054 /* LoadingHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingHUD.swift; sourceTree = "<group>"; };
 		8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListPostViewController.swift; sourceTree = "<group>"; };
 		8482E99E26450ACE00BAA7FE /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8482E9A026450ADC00BAA7FE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				84D2BD922643C71800A3C7FD /* Fmdb */,
+				84719878265A0CF8002BA054 /* LoadingHUD.swift */,
 				84AE85592657B4D300F27CCC /* AES256CBC.swift */,
 				84D2BDA82643E0A600A3C7FD /* Reachability.swift */,
 				843831B7264EC36D00FD31DF /* URLRequest.swift */,
@@ -481,6 +484,7 @@
 				8482E9A126450ADC00BAA7FE /* LoginViewController.swift in Sources */,
 				842C65E9264FC751009AFEFF /* ItemVO.swift in Sources */,
 				84D2BD7C2643A2D900A3C7FD /* ViewController.swift in Sources */,
+				84719879265A0CF9002BA054 /* LoadingHUD.swift in Sources */,
 				84D2BD8D2643BDC100A3C7FD /* ItemListViewController.swift in Sources */,
 				84D2BDAA2643E0A600A3C7FD /* Reachability.swift in Sources */,
 				843831B8264EC36E00FD31DF /* Component.swift in Sources */,

@@ -123,16 +123,19 @@ class SignUpViewController: UIViewController {
     
     //회원가입 메소드
     func SignUp() {
+        LoadingHUD.show()
         let userid = tfUserId.text!.trimmingCharacters(in: .whitespacesAndNewlines) //공백 제거
         let username = tfUserName.text!.trimmingCharacters(in: .whitespacesAndNewlines) //공백 제거
         let passwd = tfPasswd.text!.trimmingCharacters(in: .whitespacesAndNewlines) //공백 제거
         //AES.swift에 있는 기능 이용, 사용자가 입력한 텍스트를 암호화한다.
         let encryptPassword = AES256CBC.encryptString(passwd, password: AESkey().defaultKey)!
         req.apiSignUp(userid: userid, username: username, passwd: encryptPassword) {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "회원가입 알림", message: "회원가입을 성공적으로 완료했습니다.", btnTitle: "확인") {
                 self.navigationController?.popToRootViewController(animated: true)
             }
         } fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "회원가입 오류", message: "회원가입을 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
     }

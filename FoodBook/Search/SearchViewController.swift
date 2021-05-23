@@ -60,13 +60,16 @@ class SearchViewController: UIViewController {
         let searchKeyWord = tfSearch.text ?? ""
         
         if tfSearch.text != "" {
-            //데이터 세팅
-            dataSetting(count: count, searchKeyWord: searchKeyWord)
+            networkCheck { [self] in
+                //데이터 세팅
+                dataSetting(count: count, searchKeyWord: searchKeyWord)
+            }
         }
     }
     
     //데이터 세팅
     func dataSetting(count: Int, searchKeyWord: String) {
+        LoadingHUD.show()
         //서버에서 아이템 데이터 받아오기
         req.apiItemGet(page: 1, count: count, searchKeyWord: searchKeyWord) { [self] noticheck, allcount, searchcount, list in
             print(list)
@@ -101,12 +104,13 @@ class SearchViewController: UIViewController {
                 searchItemCountAll = searchcount
                 lblItemCount.text = "\(searchcount)"
                 tableView.reloadData()
-                
                 //refreshControl 제거
                 refreshControl.endRefreshing()
             }
+            LoadingHUD.hide()
             NSLog("데이터 베이스 생성 성공")
         } fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
     }
@@ -213,7 +217,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         //현재 셀 불러오기
         guard let currentCell = tableView.cellForRow(at: cellIndexPath!) as? ItemListTableViewCell else { return }
         let item = itemList[indexPath.row]
-        
+        LoadingHUD.show()
         let sb = UIStoryboard(name: "Comment", bundle: nil)
         let navi = sb.instantiateViewController(withIdentifier: "CommentListViewController") as! CommentListViewController
         navi.itemId = "\(item.itemid!)"
@@ -228,6 +232,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         navi.userImgUrl = item.userimgurl!
         navi.userImg = currentCell.imgViewUser.image!
         navi.userName = item.username!
+        LoadingHUD.hide()
         self.navigationController?.pushViewController(navi, animated: true)
     }
     
@@ -243,13 +248,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             if searchItemCountAll > self.itemList.count {
                 //네트워크 사용 여부 확인
                 networkCheck() { [self] in
+                    LoadingHUD.show()
                     let searchKeyWord = tfSearch.text ?? ""
                     
                     if tfSearch.text != "" {
                         searchScrollItemAdd(page: page, itemList: self.itemList, searchKeyWord: searchKeyWord) { itemList in
                             self.itemList = itemList
                             self.tableView.reloadData()
+                            LoadingHUD.hide()
                         }
+                        LoadingHUD.hide()
                         page = page + 1
                         flag = false
                     }

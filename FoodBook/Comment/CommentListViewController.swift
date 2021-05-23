@@ -51,6 +51,7 @@ class CommentListViewController: UIViewController {
     var tableList : [Comment] = []
     
     @IBAction func btnItemEditAction(_ sender: UIButton) {
+        LoadingHUD.show()
         let sb = UIStoryboard(name: "ItemList", bundle: nil)
         let navi = sb.instantiateViewController(withIdentifier: "ItemListPostViewController") as! ItemListPostViewController
         navi.itemId = itemId
@@ -62,6 +63,7 @@ class CommentListViewController: UIViewController {
         navi.userImgUrl = userImgUrl
         navi.userName = userName
         navi.mode = "수정"
+        LoadingHUD.hide()
         self.navigationController?.pushViewController(navi, animated: true)
     }
     
@@ -80,6 +82,7 @@ class CommentListViewController: UIViewController {
         imgViewSetting()
         tableViewSetting()
         setting()
+        LoadingHUD.hide()
     }
     
     //네비게이션 세팅
@@ -152,6 +155,7 @@ class CommentListViewController: UIViewController {
     
     //MARK: 서버, 로컬 데이터 세팅
     func dataSetting() {
+        LoadingHUD.show()
         page = 1 //초기화
         
         //파일 핸들링하기 위한 객체 생성
@@ -182,7 +186,9 @@ class CommentListViewController: UIViewController {
                 self.tableView.reloadData()
                 UserDefaults.standard.set(count, forKey: UDkey().commentcount)
                 self.lblCommentCount.text = "댓글 개수: \(count)"
+                LoadingHUD.hide()
             }
+            LoadingHUD.hide()
             //마지막 업데이트 시간을  로컬 데이터베이스에 기록
             self.lastUpdateAddToLocal(updatePathName: self.lastUpdatePara.commentupdate, urlName: self.lastUpdatePara.commentlastupdate)
         }
@@ -208,6 +214,7 @@ class CommentListViewController: UIViewController {
                     self.tableList = commentList
                     self.tableView.reloadData()
                     self.lblCommentCount.text = "댓글 개수: \(count)"
+                    LoadingHUD.hide()
                 }
             } updatetimeDifferent: {
                 //기존 데이터를 지우고 새로 다운로드
@@ -220,6 +227,7 @@ class CommentListViewController: UIViewController {
                     self.tableView.reloadData()
                     UserDefaults.standard.set(count, forKey: UDkey().commentcount)
                     self.lblCommentCount.text = "댓글 개수: \(count)"
+                    LoadingHUD.hide()
                 }
             }
 
@@ -231,6 +239,7 @@ class CommentListViewController: UIViewController {
                 self.tableList = commentList
                 self.tableView.reloadData()
                 self.lblCommentCount.text = "댓글 개수: \(count)"
+                LoadingHUD.hide()
             }
         }
     }
@@ -245,6 +254,7 @@ class CommentListViewController: UIViewController {
     
     //MARK: 아래로 스크롤 시 댓글 업로드
     func scrollItemAdd() {
+        LoadingHUD.show()
         //이 메소드가 호출될때 마다 페이지 수 1씩 증가
         page = page + 1
         
@@ -305,8 +315,10 @@ class CommentListViewController: UIViewController {
             //데이터 가져와서 파싱하는 문장 종료
             self.tableView.reloadData()
             itemDB.close()
+            LoadingHUD.hide()
             NSLog("데이터 베이스 생성 성공")
         } fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
     }

@@ -32,12 +32,15 @@ class SettingPageViewController: UIViewController {
         } btn2Action: {
             self.showAlertBtn2(title: "탈퇴 안내", message: "탈퇴하시면 기존의 정보가 모두 삭제됩니다. 그래도 탈퇴하시겠습니까?", btn1Title: "취소", btn2Title: "탈퇴") {
             } btn2Action: {
+                LoadingHUD.show()
                 self.req.apiUserDelete {
                     self.showAlertBtn1(title: "탈퇴 안내", message: "탈퇴를 성공했습니다.", btnTitle: "확인") {
+                        LoadingHUD.hide()
                         //로그아웃
                         self.logout()
                     }
                 } fail: {
+                    LoadingHUD.hide()
                     self.showAlertBtn1(title: "탈퇴 안내", message: "탈퇴를 실패했습니다.", btnTitle: "확인") {}
                 }
 

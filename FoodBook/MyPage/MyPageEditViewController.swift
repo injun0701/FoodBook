@@ -77,6 +77,7 @@ class MyPageEditViewController: UIViewController {
     }
     
     func userUpdate() {
+        LoadingHUD.show()
         let userId = userId
         let userImgUrl = userImgUrl!
         let username = tfUserName.text!
@@ -92,9 +93,10 @@ class MyPageEditViewController: UIViewController {
             UserDefaults.standard.set(userid, forKey: UDkey().userid)
             UserDefaults.standard.set(username, forKey: UDkey().username)
             UserDefaults.standard.set(userimgurl, forKey: UDkey().userimgurl)
-            
+            LoadingHUD.hide()
             self.navigationController?.popViewController(animated: true)
         }, fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "업로드 오류", message: "업로드 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         })
     }

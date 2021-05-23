@@ -59,14 +59,20 @@ class UserPasswordUpdateViewController: UIViewController {
     
     //텍스트필드 입력을 마쳤을때 수행
     @IBAction func tfNewPasswdAction(_ sender: UITextField) {
-        //비밀번호 유효성 검사
-        isNewPasswordValid()
+        //네트워크 체크
+        networkCheck { [self] in
+            //비밀번호 유효성 검사
+            isNewPasswordValid()
+        }
     }
     
     //텍스트필드 입력을 마쳤을때 수행
     @IBAction func tfNewPasswdAgainAction(_ sender: UITextField) {
-        //비밀번호 유효성 검사
-        isNewPasswordValid()
+        //네트워크 체크
+        networkCheck { [self] in
+            //비밀번호 유효성 검사
+            isNewPasswordValid()
+        }
     }
     
     //비밀번호 유효성 검사 - 비밀번호 글자 체크, 일치 체크
@@ -112,15 +118,18 @@ class UserPasswordUpdateViewController: UIViewController {
     }
     
     func passwdUpdate() {
+        LoadingHUD.show()
         guard let cleanedPassword = tfNewPasswd.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
 //        //AES.swift에 있는 기능 이용, 사용자가 입력한 텍스트를 암호화한다.
         let encryptPassword = AES256CBC.encryptString(cleanedPassword, password: AESkey().defaultKey)!
         //비밀번호 수정
         req.apiUserPasswordUpdate(passwd: encryptPassword) {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "비밀번호 변경", message: "비밀번호 변경이 성공적으로 완료되었습니다.", btnTitle: "확인") {
                 self.navigationController?.popViewController(animated: true)
             }
         } fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "비밀번호 변경", message: "비밀번호 변경을 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {
             }
         }

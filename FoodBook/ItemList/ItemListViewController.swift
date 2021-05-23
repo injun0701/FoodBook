@@ -38,6 +38,7 @@ class ItemListViewController: UIViewController {
     
     //글쓰기 버튼
     @IBAction func btnAddAction(_ sender: UIButton) {
+        LoadingHUD.show()
         let sb = UIStoryboard(name: "ItemList", bundle: nil)
         let navi = sb.instantiateViewController(withIdentifier: "ItemListPostViewController") as! ItemListPostViewController
         
@@ -46,6 +47,7 @@ class ItemListViewController: UIViewController {
         navi.userImgUrl = userImgUrl as! String
         navi.userName = userName as! String
         navi.mode = "저장"
+        LoadingHUD.hide()
         self.navigationController?.pushViewController(navi, animated: true)
     }
     
@@ -124,6 +126,7 @@ class ItemListViewController: UIViewController {
     
     //MARK: 서버, 로컬 데이터 세팅
     func dataSetting() {
+        LoadingHUD.show()
         page = 1 //초기화
         
         //파일 핸들링하기 위한 객체 생성
@@ -152,6 +155,7 @@ class ItemListViewController: UIViewController {
                 self.itemList = itemList
                 self.tableView.reloadData()
                 self.notiCheck(noticheck: noticheck)
+                LoadingHUD.hide()
             }
             //마지막 업데이트 시간을  로컬 데이터베이스에 기록
             self.lastUpdateAddToLocal(updatePathName: self.lastUpdatePara.update, urlName: self.lastUpdatePara.lastupdate)
@@ -175,6 +179,7 @@ class ItemListViewController: UIViewController {
                 self.itemLocalData() { result in
                     self.itemList = result
                     self.tableView.reloadData()
+                    LoadingHUD.hide()
                 }
             } updatetimeDifferent: {
                 //기존 데이터를 지우고 새로 다운로드
@@ -186,6 +191,7 @@ class ItemListViewController: UIViewController {
                     self.itemList = itemList
                     self.tableView.reloadData()
                     self.notiCheck(noticheck: noticheck)
+                    LoadingHUD.hide()
                 }
             }
         } fail: { //네트워크가 연결이 안돼서 로컬 데이터 출력
@@ -195,6 +201,7 @@ class ItemListViewController: UIViewController {
             self.itemLocalData() { result in
                 self.itemList = result
                 self.tableView.reloadData()
+                LoadingHUD.hide()
             }
         }
     }
@@ -275,6 +282,7 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
                 //네트워크 사용 여부 확인
                 networkCheck() {
                     itemLikeDelete(homePage: true, itemid: "\(item.itemid!)") {
+                        LoadingHUD.show()
                         let itemListCount = itemList.count
                         self.itemList.removeAll() //itemList 배열 초기화
                         //아이템 추가
@@ -282,8 +290,10 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
                             self.itemList = itemList
                             self.tableView.reloadData()
                             self.notiCheck(noticheck: noticheck)
+                            LoadingHUD.hide()
                         }
                     } fail: {
+                        LoadingHUD.hide()
                         self.fileExistsFalse()
                     }
                 }
@@ -295,6 +305,7 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
                 //네트워크 사용 여부 확인
                 networkCheck() {
                     itemLikeInsert(homePage: true, itemid: "\(item.itemid!)") {
+                        LoadingHUD.show()
                         let itemListCount = itemList.count
                         self.itemList.removeAll() //itemList 배열 초기화
                         //아이템 추가
@@ -302,8 +313,10 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
                             self.itemList = itemList
                             self.tableView.reloadData()
                             self.notiCheck(noticheck: noticheck)
+                            LoadingHUD.hide()
                         }
                     } fail: {
+                        LoadingHUD.hide()
                         self.fileExistsFalse()
                     }
                 }
@@ -343,6 +356,7 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
         navi.userImgUrl = item.userimgurl!
         navi.userImg = currentCell.imgViewUser.image!
         navi.userName = item.username!
+        LoadingHUD.hide()
         self.navigationController?.pushViewController(navi, animated: true)
     }
     
@@ -356,14 +370,17 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
             print("\(itemCountAll), \(itemList.count)")
             //api db의 전체 데이터 갯수가 리스트 배열의 개수보다 크면 실행
             if itemCountAll > self.itemList.count {
-                //이 메소드가 호출될때 마다 페이지 수 1씩 증가
-                page = page + 1
                 //네트워크 사용 여부 확인
                 networkCheck() { [self] in
+                    //이 메소드가 호출될때 마다 페이지 수 1씩 증가
+                    page = page + 1
+                    LoadingHUD.show()
                     scrollItemAdd(page: page, count: 10, itemList: self.itemList) { itemList in
                         self.itemList = itemList
                         self.tableView.reloadData()
+                        LoadingHUD.hide()
                     }
+                    LoadingHUD.hide()
                     flag = false
                 }
             }

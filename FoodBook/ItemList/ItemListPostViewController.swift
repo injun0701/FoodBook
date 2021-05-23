@@ -72,6 +72,7 @@ class ItemListPostViewController: UIViewController {
     
     //아이템 삽입
     func itemAdd() {
+        LoadingHUD.show()
         let itemname = tfTitle.text!
         let price = tfPrice.text!
         let description = tvDescription.text!
@@ -82,9 +83,11 @@ class ItemListPostViewController: UIViewController {
         //서버에서 아이템 데이터 삽입
         req.apiItemInsert(itemname: itemname, price: price, description: description, itemimgurl: itemimgurl, username: username, img: img) {
             self.showAlertBtn1(title: "업로드 알림", message: "업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
+                LoadingHUD.hide()
                 self.navigationController?.popToRootViewController(animated: true)
             }
         } fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "업로드 오류", message: "업로드 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
     }
@@ -109,6 +112,7 @@ class ItemListPostViewController: UIViewController {
     
     //아이템 수정
     func itemEdit() {
+        LoadingHUD.show()
         let itemid = itemId
         let itemname = tfTitle.text!
         let price = tfPrice.text!
@@ -124,9 +128,11 @@ class ItemListPostViewController: UIViewController {
         //서버에서 아이템 데이터 수정
         req.apiItemEdit(itemid: itemid, itemname: itemname, price: price, description: description, itemimgurl: itemimgurl, username: username, img: img!, imgChange: imgChange) {
             self.showAlertBtn1(title: "업로드 알림", message: "업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
+                LoadingHUD.hide()
                 self.navigationController?.popToRootViewController(animated: true)
             }
         } fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "업로드 오류", message: "업로드 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
 
@@ -135,6 +141,7 @@ class ItemListPostViewController: UIViewController {
     //삭제 버튼
     @IBAction func btnDeleteAction(_ sender: UIButton) {
         showAlertBtn2(title: "아이템 삭제", message: "아이템을 삭제하시겠습니까?", btn1Title: "취소", btn2Title: "삭제") {} btn2Action: { [self] in
+            LoadingHUD.show()
             //서버에서 아이템 데이터 삭제
             req.apiItemDelete(itemid: itemId) { result in
                 
@@ -144,10 +151,12 @@ class ItemListPostViewController: UIViewController {
                 } else {
                     msg = "아이템 삭제 실패"
                 }
+                LoadingHUD.hide()
                 showAlertBtn1(title: "아이템 삭제", message: "\(msg)했습니다.", btnTitle: "확인") {
                     navigationController?.popToRootViewController(animated: true)
                 }
             } fail: {
+                LoadingHUD.hide()
                 showAlertBtn1(title: "아이템 삭제", message: "삭제를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {
                     navigationController?.popViewController(animated: true)
                 }

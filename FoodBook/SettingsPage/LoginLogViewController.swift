@@ -32,8 +32,10 @@ class LoginLogViewController: UIViewController {
         tableViewSetting()
         //네비 세팅
         navbarSetting(title: "로그인 로그")
-        //로그인 로그 게시물 데이터 세팅
-        dataSetting(count: 10)
+        networkCheck { [self] in
+            //로그인 로그 게시물 데이터 세팅
+            dataSetting(count: 10)
+        }
     }
     
     //테이블뷰 세팅
@@ -51,6 +53,7 @@ class LoginLogViewController: UIViewController {
     
     //데이터 세팅
     func dataSetting(count: Int) {
+        LoadingHUD.show()
         //서버에서 아이템 데이터 받아오기
         req.apiUserLoginLog(page: 1) { [self] count, list in
             print(list)
@@ -76,12 +79,13 @@ class LoginLogViewController: UIViewController {
                 listCountAll = count
                 lblLoginLogCount.text = "\(count)"
                 tableView.reloadData()
-                
                 //refreshControl 제거
                 refreshControl.endRefreshing()
             }
+            LoadingHUD.hide()
             NSLog("데이터 베이스 생성 성공")
         } fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
 
@@ -97,8 +101,10 @@ class LoginLogViewController: UIViewController {
     
     //맨 위로 스크롤 시 refesh 기능
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        //로그인 로그 게시물 데이터 세팅
-        dataSetting(count: 15)
+        networkCheck { [self] in
+            //로그인 로그 게시물 데이터 세팅
+            dataSetting(count: 15)
+        }
     }
     
 }
@@ -140,10 +146,13 @@ extension LoginLogViewController: UITableViewDelegate, UITableViewDataSource {
             if listCountAll > self.tableList.count {
                 //네트워크 사용 여부 확인
                 networkCheck() { [self] in
+                    LoadingHUD.show()
                     loginLogScrollItemAdd(page: page, tableList: self.tableList) { tableList in
                         self.tableList = tableList
                         self.tableView.reloadData()
+                        LoadingHUD.hide()
                     }
+                    LoadingHUD.hide()
                     page = page + 1
                     flag = false
                 }

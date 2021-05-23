@@ -56,6 +56,7 @@ class CommentPostViewController: UIViewController {
     
     func delete() {
         showAlertBtn2(title: "아이템 삭제", message: "아이템을 삭제하시겠습니까?", btn1Title: "취소", btn2Title: "삭제") {} btn2Action: { [self] in
+            LoadingHUD.show()
             let commentid = "\(commentId)"
             //서버와 커뮤니케이션
             req.apiCommentDelete(commentid: commentid, itemid: itemId) { result in
@@ -65,39 +66,47 @@ class CommentPostViewController: UIViewController {
                 } else {
                     msg = "댓글 삭제 실패"
                 }
+                LoadingHUD.hide()
                 showAlertBtn1(title: "업로드 알림", message: "\(msg)했습니다.", btnTitle: "확인") {
                     navigationController?.popViewController(animated: true)
                 }
             } fail: {
+                LoadingHUD.hide()
                 showAlertBtn1(title: "업로드 오류", message: "댓글 삭제를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
             }
         }
     }
     
     func insert() {
+        LoadingHUD.show()
         let username = UserDefaults.standard.value(forKey: UDkey().username) as? String
         
         let comment = tvComment.text!
         //서버와 커뮤니케이션
         self.req.apiCommentInsert(itemid: itemId, username: username ?? "", comment: comment) {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "업로드 알림", message: "댓글 업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
                 self.navigationController?.popViewController(animated: true)
             }
         } fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "업로드 오류", message: "댓글 업로드를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
     }
     
     func edit() {
+        LoadingHUD.show()
         let comment = tvComment.text!
         let commentid = "\(commentId)"
         //서버와 커뮤니케이션
         self.req.apiCommentEdit(commentid: commentid, comment: comment) {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "업로드 알림", message: "댓글 업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
                 self.navigationController?.popViewController(animated: true)
             }
 
         } fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "업로드 오류", message: "댓글 업로드를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
     }

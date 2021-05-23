@@ -57,6 +57,7 @@ class MyPageViewController: UIViewController {
     
     //글쓰기 버튼
     @IBAction func btnAddAction(_ sender: UIButton) {
+        LoadingHUD.show()
         let sb = UIStoryboard(name: "ItemList", bundle: nil)
         let navi = sb.instantiateViewController(withIdentifier: "ItemListPostViewController") as! ItemListPostViewController
         
@@ -65,6 +66,7 @@ class MyPageViewController: UIViewController {
         navi.userImgUrl = userImgUrl as! String
         navi.userName = userName as! String
         navi.mode = "저장"
+        LoadingHUD.hide()
         self.navigationController?.pushViewController(navi, animated: true)
     }
     //MARK: viewDidLoad
@@ -127,8 +129,10 @@ class MyPageViewController: UIViewController {
         let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
         //뷰 세팅
         viewSetting()
-        //데이터 세팅
-        dataSetting(count: 10, searchKeyWord: userName ?? "")
+        networkCheck { [self] in
+            //데이터 세팅
+            dataSetting(count: 10, searchKeyWord: userName ?? "")
+        }
     }
     
     //뷰 세팅
@@ -158,6 +162,7 @@ class MyPageViewController: UIViewController {
     
     //데이터 세팅
     func dataSetting(count: Int, searchKeyWord: String) {
+        LoadingHUD.show()
         //서버에서 아이템 데이터 받아오기
         req.apiItemGet(page: 1, count: count, searchKeyWord: searchKeyWord) { [self] noticheck, allcount, searchcount, list in
             print(list)
@@ -196,8 +201,10 @@ class MyPageViewController: UIViewController {
                 //refreshControl 제거
                 refreshControl.endRefreshing()
             }
+            LoadingHUD.hide()
             NSLog("데이터 베이스 생성 성공")
         } fail: {
+            LoadingHUD.hide()
             self.showAlertBtn1(title: "데이터 오류", message: "데이터를 불러올 수 없습니다. 다시 시도해주세요.", btnTitle: "확인") {}
         }
     }
@@ -213,8 +220,10 @@ class MyPageViewController: UIViewController {
     //맨 위로 스크롤 시 refesh 기능
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
-        //데이터 세팅
-        dataSetting(count: 10, searchKeyWord: userName ?? "")
+        networkCheck { [self] in
+            //데이터 세팅
+            dataSetting(count: 10, searchKeyWord: userName ?? "")
+        }
     }
     
 }
@@ -309,7 +318,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         //현재 셀 불러오기
         guard let currentCell = tableView.cellForRow(at: cellIndexPath!) as? ItemListTableViewCell else { return }
         let item = itemList[indexPath.row]
-        
+        LoadingHUD.show()
         let sb = UIStoryboard(name: "Comment", bundle: nil)
         let navi = sb.instantiateViewController(withIdentifier: "CommentListViewController") as! CommentListViewController
         navi.itemId = "\(item.itemid!)"
@@ -324,6 +333,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         navi.userImgUrl = item.userimgurl!
         navi.userImg = currentCell.imgViewUser.image!
         navi.userName = item.username!
+        LoadingHUD.hide()
         self.navigationController?.pushViewController(navi, animated: true)
     }
     
@@ -339,11 +349,14 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             if searchItemCountAll > self.itemList.count {
                 //네트워크 사용 여부 확인
                 networkCheck() { [self] in
+                    LoadingHUD.show()
                     let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
                     searchScrollItemAdd(page: page, itemList: self.itemList, searchKeyWord: userName ?? "") { itemList in
                         self.itemList = itemList
                         self.tableView.reloadData()
+                        LoadingHUD.hide()
                     }
+                    LoadingHUD.hide()
                     page = page + 1
                     flag = false
                 }

@@ -56,15 +56,17 @@ class LoginViewController: UIViewController {
         //AES.swift에 있는 기능 이용, 사용자가 입력한 텍스트를 암호화한다.
         let encryptPassword = AES256CBC.encryptString(passwd, password: AESkey().defaultKey)!
         networkCheck {
+            LoadingHUD.show()
             self.req.apiUserLogin(userid: userid, passwd: encryptPassword) { userid, username, userimgurl in
                 print("userid:\(userid), username:\(username), userimgurl\(userimgurl)")
                 UserDefaults.standard.set(userid, forKey: UDkey().userid)
                 UserDefaults.standard.set(username, forKey: UDkey().username)
                 UserDefaults.standard.set(userimgurl, forKey: UDkey().userimgurl)
-                
+                LoadingHUD.hide()
                 // 최상의 rootview 갱신
                 rootVC()
             } fail: {
+                LoadingHUD.hide()
                 self.showAlertBtn1(title: "로그인 오류", message: "로그인 정보가 맞지 않습니다.", btnTitle: "확인") {}
             }
         }
