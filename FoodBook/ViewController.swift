@@ -28,26 +28,17 @@ class ViewController: UIViewController {
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        //MARK: (실제 기기 테스트를 위한)임시 로컬 허용 얼럿 - 실제 url로 바뀌면 꼭 삭제하자!!!
-        testAF()
-    }
-    
-    //MARK: (실제 기기 테스트를 위한)임시 로컬 허용 얼럿 - 실제 url로 바뀌면 꼭 삭제하자!!!
-    func testAF() {
-        //데이터를 다운로드 받을 URL
-        let url = "http://192.168.0.4/item/getall"
-        networkCheck {
-            //데이터 다운로드 - get 방식이고 파라미터 없고 결과는 json
-            let request = AF.request(url, method: .get, encoding: JSONEncoding.default, headers: nil)
-            request.responseJSON { response in
-               
-            }
-        }
     }
     
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         naviDesignSetting()
+        
+        //앱의 첫 실행이면 인트로 화면으로 이동
+        if UserDefaults.standard.value(forKey: UDkey().firststart) == nil {
+            UserDefaults.standard.set("y", forKey: UDkey().firststart)
+            toIntroPage()
+        }
     }
     
     //네비게이션 세팅
@@ -67,6 +58,13 @@ class ViewController: UIViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         
         navigationController?.navigationBar.barStyle = .black //상태바 글자 흰색으로 설정하기위해 네비바 barStyle를 black
+    }
+    
+    //인트로 화면으로 이동
+    func toIntroPage() {
+        let sb = UIStoryboard(name: "Intro", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "IntroViewController") as! IntroViewController
+        navigationController?.pushViewController(navi, animated: false)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

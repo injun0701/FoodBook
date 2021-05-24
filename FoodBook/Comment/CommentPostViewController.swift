@@ -19,6 +19,8 @@ class CommentPostViewController: UIViewController {
     
     //게시물 id
     var itemId = ""
+    //게시물 user
+    var itemUserName = ""
     //댓글 id
     var commentId = 0
     //댓글 글
@@ -83,7 +85,7 @@ class CommentPostViewController: UIViewController {
         
         let comment = tvComment.text!
         //서버와 커뮤니케이션
-        self.req.apiCommentInsert(itemid: itemId, username: username ?? "", comment: comment) {
+        self.req.apiCommentInsert(itemid: itemId, username: username ?? "", comment: comment, tousername: itemUserName) {
             LoadingHUD.hide()
             self.showAlertBtn1(title: "업로드 알림", message: "댓글 업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
                 self.navigationController?.popViewController(animated: true)

@@ -331,10 +331,10 @@ extension UIViewController {
     }
     
     //좋아요 업로드 메소드
-    func itemLikeInsert(homePage: Bool, itemid: String, success: @escaping () -> (), fail: @escaping () -> ()) {
+    func itemLikeInsert(homePage: Bool, itemid: String, itemUserName: String, success: @escaping () -> (), fail: @escaping () -> ()) {
         //서버 통신을 위한 객체
         let req = URLRequest()
-        req.apiItemLikeInsert(itemid: itemid) {
+        req.apiItemLikeInsert(itemid: itemid, tousername: itemUserName) {
             self.showAlertBtn1(title: "업로드 알림", message: "좋아요 업로드가 성공적으로 완료되었습니다.", btnTitle: "확인") {
                 self.itemLike(homePage: homePage) {
                     success()
@@ -427,7 +427,6 @@ extension UIViewController {
                     item.updatedate = itemDict["updatedate"] as? String
                     //배열에 추가
                     commentList.append(item)
-                    commentList.sort(by: {$0.commentid! > $1.commentid!}) //순서 정렬
                     
                     //데이터를 삽입할 SQL 생성
                     let sql = SQLiteSql().insertIntoComment

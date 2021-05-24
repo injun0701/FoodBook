@@ -73,6 +73,7 @@ struct UDkey {
     let userimgurl = "userimgurl"
     let itemcount = "itemcount"
     let commentcount = "commentcount"
+    let firststart = "firststart"
 }
 
 struct AESkey {

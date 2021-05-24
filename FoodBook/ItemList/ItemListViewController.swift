@@ -310,7 +310,7 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.btnLikeTapHandler = { [self] in
                 //네트워크 사용 여부 확인
                 networkCheck() {
-                    itemLikeInsert(homePage: true, itemid: "\(item.itemid!)") {
+                    itemLikeInsert(homePage: true, itemid: "\(item.itemid!)", itemUserName: item.username!) {
                         LoadingHUD.show()
                         let itemListCount = itemList.count
                         self.itemList.removeAll() //itemList 배열 초기화

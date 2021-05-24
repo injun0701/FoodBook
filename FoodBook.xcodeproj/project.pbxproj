@@ -28,6 +28,12 @@
 		8461D2A126564BAD0022F31E /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461D2A026564BAD0022F31E /* MyPageEditViewController.swift */; };
 		8461D2A3265683D50022F31E /* ItemLikeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461D2A2265683D50022F31E /* ItemLikeListViewController.swift */; };
 		84719879265A0CF9002BA054 /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84719878265A0CF8002BA054 /* LoadingHUD.swift */; };
+		8477F722265B7CD400C70C88 /* Intro.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8477F720265B7CD400C70C88 /* Intro.storyboard */; };
+		8477F723265B7CD400C70C88 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477F721265B7CD400C70C88 /* IntroViewController.swift */; };
+		8477F728265B7D4A00C70C88 /* IntroCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477F724265B7D4A00C70C88 /* IntroCollectionViewCell.swift */; };
+		8477F729265B7D4A00C70C88 /* BannerDotCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8477F725265B7D4A00C70C88 /* BannerDotCollectionViewCell.xib */; };
+		8477F72A265B7D4A00C70C88 /* BannerDotCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477F726265B7D4A00C70C88 /* BannerDotCollectionViewCell.swift */; };
+		8477F72B265B7D4A00C70C88 /* IntroCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8477F727265B7D4A00C70C88 /* IntroCollectionViewCell.xib */; };
 		8482E99C2644EE8000BAA7FE /* ItemListPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */; };
 		8482E99F26450ACE00BAA7FE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8482E99E26450ACE00BAA7FE /* Login.storyboard */; };
 		8482E9A126450ADC00BAA7FE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E9A026450ADC00BAA7FE /* LoginViewController.swift */; };
@@ -90,6 +96,12 @@
 		8461D2A026564BAD0022F31E /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
 		8461D2A2265683D50022F31E /* ItemLikeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemLikeListViewController.swift; sourceTree = "<group>"; };
 		84719878265A0CF8002BA054 /* LoadingHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingHUD.swift; sourceTree = "<group>"; };
+		8477F720265B7CD400C70C88 /* Intro.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Intro.storyboard; sourceTree = "<group>"; };
+		8477F721265B7CD400C70C88 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		8477F724265B7D4A00C70C88 /* IntroCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroCollectionViewCell.swift; sourceTree = "<group>"; };
+		8477F725265B7D4A00C70C88 /* BannerDotCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BannerDotCollectionViewCell.xib; sourceTree = "<group>"; };
+		8477F726265B7D4A00C70C88 /* BannerDotCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerDotCollectionViewCell.swift; sourceTree = "<group>"; };
+		8477F727265B7D4A00C70C88 /* IntroCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroCollectionViewCell.xib; sourceTree = "<group>"; };
 		8482E99B2644EE8000BAA7FE /* ItemListPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListPostViewController.swift; sourceTree = "<group>"; };
 		8482E99E26450ACE00BAA7FE /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8482E9A026450ADC00BAA7FE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +231,19 @@
 			path = MyPage;
 			sourceTree = "<group>";
 		};
+		8477F71F265B7CA700C70C88 /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				8477F720265B7CD400C70C88 /* Intro.storyboard */,
+				8477F721265B7CD400C70C88 /* IntroViewController.swift */,
+				8477F726265B7D4A00C70C88 /* BannerDotCollectionViewCell.swift */,
+				8477F725265B7D4A00C70C88 /* BannerDotCollectionViewCell.xib */,
+				8477F724265B7D4A00C70C88 /* IntroCollectionViewCell.swift */,
+				8477F727265B7D4A00C70C88 /* IntroCollectionViewCell.xib */,
+			);
+			path = Intro;
+			sourceTree = "<group>";
+		};
 		8482E99D26450ABA00BAA7FE /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +297,7 @@
 			children = (
 				843831B5264EC2F100FD31DF /* Component */,
 				84D2BDA62643E08400A3C7FD /* Extension */,
+				8477F71F265B7CA700C70C88 /* Intro */,
 				844757DA2658E3B600391E26 /* Noti */,
 				84C0BAF2265899C90078EF25 /* SideMenu */,
 				84AE8550265782AC00F27CCC /* SettingsPage */,
@@ -416,9 +442,11 @@
 				84A20A2C2648B9F0005DDCC3 /* ItemListTableViewCell.xib in Resources */,
 				84FA37AC2650AD8900F37673 /* Comment.storyboard in Resources */,
 				844757E02658FB0300391E26 /* NotiTableViewCell.xib in Resources */,
+				8477F722265B7CD400C70C88 /* Intro.storyboard in Resources */,
 				840FC15B265357DF00E4DB40 /* SignUp.storyboard in Resources */,
 				84D2BD842643A2DA00A3C7FD /* LaunchScreen.storyboard in Resources */,
 				844A7BD52653EEE70079FC29 /* Search.storyboard in Resources */,
+				8477F729265B7D4A00C70C88 /* BannerDotCollectionViewCell.xib in Resources */,
 				84D2BD8F2643BDD000A3C7FD /* ItemList.storyboard in Resources */,
 				844EAE5F2655004F00F1C3EC /* MyPage.storyboard in Resources */,
 				84D2BD812643A2DA00A3C7FD /* Assets.xcassets in Resources */,
@@ -428,6 +456,7 @@
 				84D2BD7F2643A2D900A3C7FD /* Main.storyboard in Resources */,
 				84C0BB062658A8970078EF25 /* SideMenuViewController.xib in Resources */,
 				84FA37B02650ADB900F37673 /* CommentListTableViewCell.xib in Resources */,
+				8477F72B265B7D4A00C70C88 /* IntroCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,7 +517,9 @@
 				84D2BD8D2643BDC100A3C7FD /* ItemListViewController.swift in Sources */,
 				84D2BDAA2643E0A600A3C7FD /* Reachability.swift in Sources */,
 				843831B8264EC36E00FD31DF /* Component.swift in Sources */,
+				8477F728265B7D4A00C70C88 /* IntroCollectionViewCell.swift in Sources */,
 				840FC1592653574A00E4DB40 /* SignUpViewController.swift in Sources */,
+				8477F723265B7CD400C70C88 /* IntroViewController.swift in Sources */,
 				8412622E264FA28B00966DF9 /* SQLiteComponent.swift in Sources */,
 				84ED865F2657E571004A872A /* LoginLogVO.swift in Sources */,
 				84D2BDA02643C74200A3C7FD /* FMResultSet.m in Sources */,
@@ -498,6 +529,7 @@
 				8482E99C2644EE8000BAA7FE /* ItemListPostViewController.swift in Sources */,
 				84AE855A2657B4D300F27CCC /* AES256CBC.swift in Sources */,
 				84FA37B62650B68600F37673 /* CommentPostViewController.swift in Sources */,
+				8477F72A265B7D4A00C70C88 /* BannerDotCollectionViewCell.swift in Sources */,
 				843831B9264EC36E00FD31DF /* URLRequest.swift in Sources */,
 				844A7BDB265400F80079FC29 /* ItemDataConfig.swift in Sources */,
 				84C0BB052658A8970078EF25 /* SideMenuViewController.swift in Sources */,

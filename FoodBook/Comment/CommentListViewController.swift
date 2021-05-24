@@ -299,7 +299,6 @@ class CommentListViewController: UIViewController {
                     item.updatedate = itemDict["updatedate"] as? String
                     //배열에 추가
                     self.tableList.append(item)
-                    self.tableList.sort(by: {$0.commentid! > $1.commentid!}) //순서 정렬
 
                     //데이터를 삽입할 SQL 생성
                     let sql = self.sql.insertIntoComment
@@ -389,6 +388,7 @@ extension CommentListViewController: UITableViewDelegate, UITableViewDataSource 
                     let sb = UIStoryboard(name: "Comment", bundle: nil)
                     let navi = sb.instantiateViewController(withIdentifier: "CommentPostViewController") as! CommentPostViewController
                     navi.itemId = self.itemId
+                    navi.itemUserName = self.userName
                     navi.commentId = list.commentid!
                     navi.commentText = list.comment!
                     navi.mode = "수정"

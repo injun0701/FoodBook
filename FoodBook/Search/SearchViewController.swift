@@ -187,7 +187,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             cell.btnLikeTapHandler = { [self] in
                 //네트워크 사용 여부 확인
                 networkCheck() {
-                    itemLikeInsert(homePage: flag, itemid: "\(item.itemid!)") {
+                    itemLikeInsert(homePage: flag, itemid: "\(item.itemid!)", itemUserName: item.username!) {
                         let itemListCount = itemList.count
                         //검색어로 데이터 세팅
                         searchDataSetting(count: itemListCount)

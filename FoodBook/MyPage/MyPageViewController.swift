@@ -285,7 +285,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             cell.btnLikeTapHandler = { [self] in
                 //네트워크 사용 여부 확인
                 networkCheck() {
-                    itemLikeInsert(homePage: false, itemid: "\(item.itemid!)") {
+                    itemLikeInsert(homePage: false, itemid: "\(item.itemid!)", itemUserName: item.username!) {
                         let itemListCount = itemList.count
                         let userName = UserDefaults.standard.value(forKey: UDkey().username) as? String
                         //데이터 세팅

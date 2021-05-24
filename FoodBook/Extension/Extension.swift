@@ -216,4 +216,7 @@ extension UIColor {
     var color666666 : UIColor {
         return UIColor(named: "color666666")!
     }
+    var colorEEEEEE : UIColor {
+        return UIColor(named: "colorEEEEEE")!
+    }
 }

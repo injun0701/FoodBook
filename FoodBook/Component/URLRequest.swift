@@ -813,9 +813,9 @@ class URLRequest {
     }
     
     //MARK: 댓글 삽입
-    func apiCommentInsert(itemid: String, username: String, comment: String, success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
+    func apiCommentInsert(itemid: String, username: String, comment: String, tousername: String, success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
         //post 방식으로 전송할 파라미터
-        let parameters = ["itemid": itemid, "username": username, "comment": comment]
+        let parameters = ["itemid": itemid, "username": username, "comment": comment, "tousername": tousername]
         
         let url = FoodBookUrl().commentInsert
         
@@ -938,12 +938,12 @@ class URLRequest {
     }
     
     //MARK: 좋아요 삽입
-    func apiItemLikeInsert(itemid: String, success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
+    func apiItemLikeInsert(itemid: String, tousername: String , success: @escaping VoidToVoid, fail: @escaping VoidToVoid)  {
         
         let username = UserDefaults.standard.value(forKey: UDkey().username) as? String
         
         //post 방식으로 전송할 파라미터
-        let parameters = ["itemid": itemid, "username": username ?? ""]
+        let parameters = ["itemid": itemid, "username": username ?? "", "tousername": tousername]
         
         let url = FoodBookUrl().itemLikeInsert
         
