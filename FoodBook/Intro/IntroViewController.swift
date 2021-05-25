@@ -53,6 +53,12 @@ class IntroViewController: UIViewController {
         view.layoutIfNeeded()
     }
  
+    //약관동의 화면으로 이동
+    func toTos() {
+        let sb = UIStoryboard(name: "Tos", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "TosViewController") as! TosViewController
+        navigationController?.pushViewController(navi, animated: true)
+    }
 }
 
 //MARK: 콜렉션뷰 구현
@@ -76,7 +82,8 @@ extension IntroViewController: UICollectionViewDataSource, UICollectionViewDeleg
                 cell.btn.setTitle("시작하기", for: UIControl.State.normal)
                 //btn02TapHandler 작성
                 cell.btnTapHandler = {
-                    rootVC()
+                    //약관동의 화면으로 이동
+                    self.toTos()
                 }
             } else if indexPath.row == 0 {
                 cell.imgViewToLeft.isHidden = true

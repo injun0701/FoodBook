@@ -20,6 +20,8 @@
 		844757DC2658EF0B00391E26 /* NotiVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844757DB2658EF0B00391E26 /* NotiVO.swift */; };
 		844757DF2658FB0300391E26 /* NotiTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844757DD2658FB0300391E26 /* NotiTableViewCell.swift */; };
 		844757E02658FB0300391E26 /* NotiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844757DE2658FB0300391E26 /* NotiTableViewCell.xib */; };
+		84487B57265D4291000EA7B9 /* TosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84487B56265D4291000EA7B9 /* TosViewController.swift */; };
+		84487B59265D42A7000EA7B9 /* Tos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84487B58265D42A7000EA7B9 /* Tos.storyboard */; };
 		844A7BD52653EEE70079FC29 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844A7BD42653EEE70079FC29 /* Search.storyboard */; };
 		844A7BD72653EEF30079FC29 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A7BD62653EEF30079FC29 /* SearchViewController.swift */; };
 		844A7BDB265400F80079FC29 /* ItemDataConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844A7BDA265400F80079FC29 /* ItemDataConfig.swift */; };
@@ -88,6 +90,8 @@
 		844757DB2658EF0B00391E26 /* NotiVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiVO.swift; sourceTree = "<group>"; };
 		844757DD2658FB0300391E26 /* NotiTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiTableViewCell.swift; sourceTree = "<group>"; };
 		844757DE2658FB0300391E26 /* NotiTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotiTableViewCell.xib; sourceTree = "<group>"; };
+		84487B56265D4291000EA7B9 /* TosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TosViewController.swift; sourceTree = "<group>"; };
+		84487B58265D42A7000EA7B9 /* Tos.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tos.storyboard; sourceTree = "<group>"; };
 		844A7BD42653EEE70079FC29 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		844A7BD62653EEF30079FC29 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		844A7BDA265400F80079FC29 /* ItemDataConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDataConfig.swift; sourceTree = "<group>"; };
@@ -211,6 +215,15 @@
 			path = Noti;
 			sourceTree = "<group>";
 		};
+		84487B51265D4223000EA7B9 /* TOS */ = {
+			isa = PBXGroup;
+			children = (
+				84487B56265D4291000EA7B9 /* TosViewController.swift */,
+				84487B58265D42A7000EA7B9 /* Tos.storyboard */,
+			);
+			path = TOS;
+			sourceTree = "<group>";
+		};
 		844A7BD32653EED90079FC29 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +310,7 @@
 			children = (
 				843831B5264EC2F100FD31DF /* Component */,
 				84D2BDA62643E08400A3C7FD /* Extension */,
+				84487B51265D4223000EA7B9 /* TOS */,
 				8477F71F265B7CA700C70C88 /* Intro */,
 				844757DA2658E3B600391E26 /* Noti */,
 				84C0BAF2265899C90078EF25 /* SideMenu */,
@@ -454,6 +468,7 @@
 				8482E99F26450ACE00BAA7FE /* Login.storyboard in Resources */,
 				844757D72658D48A00391E26 /* NotiViewController.xib in Resources */,
 				84D2BD7F2643A2D900A3C7FD /* Main.storyboard in Resources */,
+				84487B59265D42A7000EA7B9 /* Tos.storyboard in Resources */,
 				84C0BB062658A8970078EF25 /* SideMenuViewController.xib in Resources */,
 				84FA37B02650ADB900F37673 /* CommentListTableViewCell.xib in Resources */,
 				8477F72B265B7D4A00C70C88 /* IntroCollectionViewCell.xib in Resources */,
@@ -530,6 +545,7 @@
 				84AE855A2657B4D300F27CCC /* AES256CBC.swift in Sources */,
 				84FA37B62650B68600F37673 /* CommentPostViewController.swift in Sources */,
 				8477F72A265B7D4A00C70C88 /* BannerDotCollectionViewCell.swift in Sources */,
+				84487B57265D4291000EA7B9 /* TosViewController.swift in Sources */,
 				843831B9264EC36E00FD31DF /* URLRequest.swift in Sources */,
 				844A7BDB265400F80079FC29 /* ItemDataConfig.swift in Sources */,
 				84C0BB052658A8970078EF25 /* SideMenuViewController.swift in Sources */,
@@ -702,6 +718,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = FWT45ZL3HF;
 				INFOPLIST_FILE = FoodBook/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -726,6 +743,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = FWT45ZL3HF;
 				INFOPLIST_FILE = FoodBook/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;

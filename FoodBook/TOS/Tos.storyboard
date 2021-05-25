@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tos View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="TosViewController" id="Y6W-OH-hqX" customClass="TosViewController" customModule="FoodBook" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QqG-2g-yPY">
+                                <rect key="frame" x="20" y="64" width="374" height="703"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <mutableString key="text">Foodbook은 추억을 자유롭게 표현하는 서비스입니다.
+
+저희는 서로 자유롭게 소통하는 공간이 되어야 한다는 점의 중요성을 인식하고 있으며, Foodbook 서비스를 악용하는 사례를 막기 위한 저희의 역할을 매우 중요하게 생각하고 있습니다.
+
+표현의 자유에 대한 자유는 있으나 온라인상에서 악용 사례가 새롭게 발생하고 증가하는 것이 사실입니다. 따라서, Foodbook은 다음과 같은 가치와 관련된 경우에 한정해 표현을 제한합니다.
+
+안전: 저희는 Foodbook은 안전한 공간으로 만들기 위해 최선을 다합니다. 사람들을 위협하는 표현은 겁을 주거나 다른 사람을 배제하거나 다른 사람의 표현을 억압할 가능성이 있으므로 Foodbook은 에서 허용되지 않습니다.
+
+존엄성: Foodbook은 모든 사람의 존엄성과 권리가 동등하다고 생각합니다. 따라서 사람들이 다른 사람의 존엄성을 존중하고 다른 사람을 괴롭히거나 모욕하지 않기를 기대합니다.
+
+폭력성: Foodbook은 참여를 저해하는 환경을 조성할 수 있다는 점을 고려하여 폭력이나 다른 사람의 고통 또는 굴욕을 즐기는 콘텐츠를 삭제합니다.
+
+악의성이 없어 보이는 콘텐츠라도 다른 정책 위반으로 인해 삭제될 수 있습니다. Foodbook은 지역 커뮤니티나 언어 또는 배경에 따라 글의 의미가 달라지거나 다르게 영향을 미칠 수 있음을 알고 있기에, 이 미묘한 차이를 고려하면서 Foodbook은 정책을 사람들과 사람들의 표현에 일관성 있고 공정하게 적용하기 위해 최선을 다하고 있습니다. 이러한 규정 시행은 Foodbook은 이용할 수 있는 정보를 기반으로 합니다. 경우에 따라 이는 Foodbook은 이러한 규정을 위반하는 콘텐츠 및 행위를 감지하지 못할 수 있음을 의미하며, 그 외의 경우에는 추가 정보 및 컨텍스트가 제공된 상황으로 시행이 제한될 수 있습니다.
+
+사람들은 위반 소지가 있는 콘텐츠를 신고할 수 있습니다. 또한 다른 사람과 게시물을 차단하거나 유저 자체를 차단하여 제어할 수 있습니다.
+
+커뮤니티 규정 위반 여부에 대한 최종 결정은 위반 정도의 경중과 해당 사용자의 플랫폼 사용 이력에 따라 달라질 수 있습니다. 예를 들어 커뮤니티 규정을 처음으로 위반한 경우에는 경고로 그칠 수 있지만, 계속해서 정책을 위반한다면 Foodbook 게시 권한을 제한하거나 유저를 삭제할 수 있습니다. Foodbook은 타인에 대한 신체적 위해 또는 공공의 안전에 대한 직접적인 위협이 존재한다고 의심되는 경우 사법당국에 통보할 수 있습니다.
+
+Foodbook은 이용하시는 모든 분께 해당 내용을 준수해주실 것을 요청하는 바입니다.</mutableString>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6CC-zQ-vxt">
+                                <rect key="frame" x="0.0" y="802" width="414" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="km2-Hx-oJ2">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                        <color key="backgroundColor" name="mainColor"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="동의"/>
+                                        <connections>
+                                            <action selector="btnTosAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="9hN-q4-EVl"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="JFJ-6t-9s2"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="6CC-zQ-vxt" secondAttribute="bottom" id="5h2-lN-IkA"/>
+                            <constraint firstItem="QqG-2g-yPY" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="20" id="Kya-RZ-aVB"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="6CC-zQ-vxt" secondAttribute="trailing" id="RSe-mW-8VJ"/>
+                            <constraint firstItem="6CC-zQ-vxt" firstAttribute="top" secondItem="QqG-2g-yPY" secondAttribute="bottom" constant="35" id="S0V-tU-OIW"/>
+                            <constraint firstItem="6CC-zQ-vxt" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="hQl-be-pVF"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="QqG-2g-yPY" secondAttribute="trailing" constant="20" id="uZR-yn-6hY"/>
+                            <constraint firstItem="QqG-2g-yPY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="uyy-RI-UP1"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="102.89855072463769" y="28.794642857142854"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="mainColor">
+            <color red="0.29019607843137257" green="0.68627450980392157" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
