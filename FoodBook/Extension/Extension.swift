@@ -191,15 +191,12 @@ extension UIViewController {
         UserDefaults.standard.removeObject(forKey: UDkey().username)
         UserDefaults.standard.removeObject(forKey: UDkey().userimgurl)
         //파일 핸들링하기 위한 객체 생성
-//        let fileMgr = FileManager.default
-//        //데이터베이스 팡리 경로를 생성
-//        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-//        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
-//        let dbPath2 = docPathURL.appendingPathComponent(directoryPath.comment).path
-//        //기존 데이터를 지우고 새로 다운로드
-//        try? fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
-//        try? fileMgr.removeItem(atPath: dbPath2) //데이터베이스 파일 삭제
-        
+        let fileMgr = FileManager.default
+        //데이터베이스 팡리 경로를 생성
+        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
+        //기존 데이터를 지우고 새로 다운로드
+        try? fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
         
         NSLog("로그아웃 상태")
         rootVC()
