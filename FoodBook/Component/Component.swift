@@ -36,6 +36,11 @@ struct FoodBookUrl {
 //    let itemLikeInsert = "http://192.168.0.4/item/like/insert"
 //    let itemLikeDelete = "http://192.168.0.4/item/like/delete?itemid="
 //    let userDelete = "http://192.168.0.4/user/delete?userid="
+//    let declarationGetAll = "http://192.168.0.4/declaration/getall"
+//    let declaration = "http://192.168.0.4/declaration"
+//    let declarationDelete = "http://192.168.0.4/declaration/delete?itemid="
+//    let itemVisible = "http://192.168.0.4/item/visible"
+//    let userBlocking = "http://192.168.0.4/user/blocking"
     
     //서버 url
     let signUpUserIdCheck = "http://foodbook.cafe24app.com/user/idcheck?userid="
@@ -65,6 +70,11 @@ struct FoodBookUrl {
     let itemLikeInsert = "http://foodbook.cafe24app.com/item/like/insert"
     let itemLikeDelete = "http://foodbook.cafe24app.com/item/like/delete?itemid="
     let userDelete = "http://foodbook.cafe24app.com/user/delete?userid="
+    let declarationGetAll = "http://foodbook.cafe24app.com/declaration/getall"
+    let declaration = "http://foodbook.cafe24app.com/declaration"
+    let declarationDelete = "http://foodbook.cafe24app.com/declaration/delete?itemid="
+    let itemVisible = "http://foodbook.cafe24app.com/item/visible"
+    let userBlocking = "http://foodbook.cafe24app.com/user/blocking"
 }
 
 struct UDkey {
@@ -167,5 +177,16 @@ enum UserDeleteStatusCode : Int {
     case success = 200
     case fail = 400
 }
+enum ItemVisibleStatusCode : Int {
+    case success = 200
+    case fail = 400
+}
+enum UserBlockingStatusCode : Int {
+    case success = 200
+    case fail = 400
+}
+
+
+
 
 

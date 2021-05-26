@@ -38,7 +38,7 @@ class CommentListViewController: UIViewController {
     //SQLite sql 명령어 객체
     let sql = SQLiteSql()
     //SQLite 파일 urlpath
-    let DirectoryPath = SQLiteDocumentDirectoryPath()
+    let directoryPath = SQLiteDocumentDirectoryPath()
     //마지막 업데이트 함수 파라미터 이름
     let lastUpdatePara = LastUpdateParameterName()
     
@@ -163,7 +163,7 @@ class CommentListViewController: UIViewController {
         
         //데이터베이스 팡리 경로를 생성
         let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let DirectoryPath = "\(DirectoryPath.comment)\(itemId)\(DirectoryPath.sqlite)"
+        let DirectoryPath = "\(directoryPath.comment)\(itemId)\(directoryPath.sqlite)"
         let dbPath = docPathURL.appendingPathComponent(DirectoryPath).path
         
         //데이터베이스 파일이 없으면 다운로드 받아서 저장한 후 출력
@@ -201,9 +201,9 @@ class CommentListViewController: UIViewController {
         
         //데이터베이스 팡리 경로를 생성
         let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let DirectoryPath = "\(DirectoryPath.comment)\(itemId)\(DirectoryPath.sqlite)"
+        let DirectoryPath = "\(directoryPath.comment)\(itemId)\(directoryPath.sqlite)"
         let dbPath = docPathURL.appendingPathComponent(DirectoryPath).path
-        let updatePath = docPathURL.appendingPathComponent(self.DirectoryPath.commentupdate).path
+        let updatePath = docPathURL.appendingPathComponent(self.directoryPath.commentupdate).path
         
         networkCheckSuccessAndFaile {
             //마지막 업데이트 시간 체크해서 시간이 같으면 로컬 데이터 출력, 다르면 서버 데이터 출력
@@ -267,7 +267,7 @@ class CommentListViewController: UIViewController {
         
         //데이터베이스 팡리 경로를 생성
         let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let commentDirectoryPath = "\(DirectoryPath.comment)\(itemId)\(DirectoryPath.sqlite)"
+        let commentDirectoryPath = "\(directoryPath.comment)\(itemId)\(directoryPath.sqlite)"
         let dbPath = docPathURL.appendingPathComponent(commentDirectoryPath).path
         
         //서버에서 아이템 데이터 받아오기
@@ -396,6 +396,25 @@ extension CommentListViewController: UITableViewDelegate, UITableViewDataSource 
                 }
             } else {
                 cell.btnEdit.isHidden = true
+            }
+            
+            cell.btnEtcHandler = { [self] in
+                btnCommentEtcActionSheet { //신고하기
+                    let sb = UIStoryboard(name: "Declaration", bundle: nil)
+                    let navi = sb.instantiateViewController(withIdentifier: "DeclarationViewController") as! DeclarationViewController
+                    navi.itemId = "\(list.itemid!)"
+                    navi.commentId = "\(list.commentid!)"
+                    self.navigationController?.pushViewController(navi, animated: true)
+                } btn2Action: { //유저 차단하기
+                    req.apiUserBlocking(tousername: list.username!) {
+                        showAlertBtn1(title: "유저 차단 안내", message: "유저 차단 조치가 완료되었습니다.", btnTitle: "확인") {
+                            dataSetting()
+                        }
+                    } fail: {
+                        showAlertBtn1(title: "유저 차단 안내", message: "유저 차단 조치가 샐패했습니다. 다시 시도해주세요", btnTitle: "확인") {
+                        }
+                    }
+                }
             }
             
             DispatchQueue.main.async {

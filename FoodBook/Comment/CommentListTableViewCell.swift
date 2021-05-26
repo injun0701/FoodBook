@@ -15,7 +15,12 @@ class CommentListTableViewCell: UITableViewCell {
     @IBOutlet var lblPostDate: UILabel!
     @IBOutlet var btnEdit: UIButton!
     
+    var btnEtcHandler: (() -> Void)?
     var editHandler: (() -> Void)?
+    
+    @IBAction func btnEtcAction(_ sender: UIButton) {
+        self.btnEtcHandler?()
+    }
     
     @IBAction func btnEditAction(_ sender: UIButton) {
         self.editHandler?()

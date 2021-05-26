@@ -80,6 +80,88 @@ extension UIViewController {
         }
     }
     
+    //버튼 세개 알럿
+    func showAlertBtn3(title: String, message: String, btn1Title: String, btn2Title: String, btn3Title: String, btn1Action: @escaping () -> Void, btn2Action: @escaping () -> Void, btn3Action: @escaping () -> Void)  {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let btn1 = UIAlertAction(title: btn1Title, style: .default) { (_) in
+            print("버튼1 클릭함")
+            btn1Action()
+        }
+        alert.addAction(btn1)
+        
+        let btn2 = UIAlertAction(title: btn2Title, style: .default) { (_) in
+            print("버튼2 클릭함")
+            btn2Action()
+        }
+        alert.addAction(btn2)
+        
+        let btn3 = UIAlertAction(title: btn3Title, style: .default) { (_) in
+            print("버튼2 클릭함")
+            btn3Action()
+        }
+        alert.addAction(btn3)
+        
+        present(alert, animated: true) {
+            print("Alert이 잘 작동됨")
+        }
+    }
+    
+    func btnEtcActionSheet(btn1Action: @escaping () -> Void, btn2Action: @escaping () -> Void, btn3Action: @escaping () -> Void) {
+        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let btn1 = UIAlertAction(title: "해당 콘텐츠 보지 않기", style: .default) { (_) in
+            print("버튼1 클릭함")
+            btn1Action()
+        }
+        actionSheet.addAction(btn1)
+        
+        let btn2 = UIAlertAction(title: "신고하기", style: .default) { (_) in
+            print("버튼2 클릭함")
+            btn2Action()
+        }
+        actionSheet.addAction(btn2)
+        let btn3 = UIAlertAction(title: "유저 차단하기", style: .default) { (_) in
+            print("버튼3 클릭함")
+            btn3Action()
+        }
+        actionSheet.addAction(btn3)
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { (_) in
+            print("버튼2 클릭함")
+        }
+        
+        actionSheet.addAction(cancel)
+        
+        present(actionSheet, animated: true) {
+            print("actionSheet이 잘 작동됨")
+        }
+    }
+    func btnCommentEtcActionSheet(btn1Action: @escaping () -> Void, btn2Action: @escaping () -> Void) {
+        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let btn1 = UIAlertAction(title: "신고하기", style: .default) { (_) in
+            print("버튼2 클릭함")
+            btn1Action()
+        }
+        actionSheet.addAction(btn1)
+        let btn2 = UIAlertAction(title: "유저 차단하기", style: .default) { (_) in
+            print("버튼3 클릭함")
+            btn2Action()
+        }
+        actionSheet.addAction(btn2)
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { (_) in
+            print("버튼2 클릭함")
+        }
+        
+        actionSheet.addAction(cancel)
+        
+        present(actionSheet, animated: true) {
+            print("actionSheet이 잘 작동됨")
+        }
+    }
     //문자열 자르기
     func cutString(str: String, endIndex: Int, fromTheFront: Bool) -> String {
         if fromTheFront == true {
@@ -109,12 +191,15 @@ extension UIViewController {
         UserDefaults.standard.removeObject(forKey: UDkey().username)
         UserDefaults.standard.removeObject(forKey: UDkey().userimgurl)
         //파일 핸들링하기 위한 객체 생성
-        let fileMgr = FileManager.default
-        //데이터베이스 팡리 경로를 생성
-        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
-        //기존 데이터를 지우고 새로 다운로드
-        try? fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
+//        let fileMgr = FileManager.default
+//        //데이터베이스 팡리 경로를 생성
+//        let docPathURL = fileMgr.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        let dbPath = docPathURL.appendingPathComponent(directoryPath.item).path
+//        let dbPath2 = docPathURL.appendingPathComponent(directoryPath.comment).path
+//        //기존 데이터를 지우고 새로 다운로드
+//        try? fileMgr.removeItem(atPath: dbPath) //데이터베이스 파일 삭제
+//        try? fileMgr.removeItem(atPath: dbPath2) //데이터베이스 파일 삭제
+        
         
         NSLog("로그아웃 상태")
         rootVC()

@@ -13,10 +13,11 @@ struct SQLiteSql {
     let selectFromItem = "select * from item order by itemid desc"
     let createTableComment = "create table if not exists comment(commentid INTEGER not null primary key, itemid INTEGER, username text, userimgurl text, comment text, updatedate text)"
     let insertIntoComment = "insert into comment(commentid, itemid, username, userimgurl, comment, updatedate) values(:commentid, :itemid, :username, :userimgurl, :comment, :updatedate)"
-    let selectFromComment = "select * from comment order by commentid desc"
+    let selectFromComment = "select * from comment order by commentid asc"
 }
 
 struct SQLiteDocumentDirectoryPath {
+    let directory = "directory"
     let item = "item.sqlite"
     let update = "update.txt"
     let comment = "comment"

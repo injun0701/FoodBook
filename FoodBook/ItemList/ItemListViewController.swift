@@ -329,6 +329,32 @@ extension ItemListViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
+        cell.btnEtcTapHandler = { [self] in
+            btnEtcActionSheet {//해당 콘텐츠 보지 않기
+                req.apiItemVisible(itemid: "\(item.itemid!)") {
+                    showAlertBtn1(title: "게시물 안내", message: "해당 게시물 보지 않게 조치되었습니다.", btnTitle: "확인") {
+                        dataSetting()
+                    }
+                } fail: {
+                    showAlertBtn1(title: "게시물 안내", message: "게시물 보지 않게 하는 조치를 실패했습니다. 다시 시도해주세요.", btnTitle: "확인") {}
+                }
+            } btn2Action: { //신고하기
+                let sb = UIStoryboard(name: "Declaration", bundle: nil)
+                let navi = sb.instantiateViewController(withIdentifier: "DeclarationViewController") as! DeclarationViewController
+                navi.itemId = "\(item.itemid!)"
+                self.navigationController?.pushViewController(navi, animated: true)
+            } btn3Action: { //유저 차단하기
+                req.apiUserBlocking(tousername: item.username!) {
+                    showAlertBtn1(title: "유저 차단 안내", message: "유저 차단 조치가 완료되었습니다.", btnTitle: "확인") {
+                        dataSetting()
+                    }
+                } fail: {
+                    showAlertBtn1(title: "유저 차단 안내", message: "유저 차단 조치가 샐패했습니다. 다시 시도해주세요", btnTitle: "확인") {
+                    }
+                }
+            }
+        }
+        
         //유저이미지 라운드 처리
         DispatchQueue.main.async {
             cell.imgViewUser.layer.cornerRadius = cell.imgViewUser.frame.height/2

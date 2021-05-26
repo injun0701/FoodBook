@@ -81,7 +81,7 @@ extension UIViewController {
             }//반복문 종료
             
             //전체 데이터의 개수
-            UserDefaults.standard.set(allcount, forKey: UDkey().itemcount)
+            UserDefaults.standard.set(searchcount, forKey: UDkey().itemcount)
             
             success(itemList, noticheck)
             itemDB.close()
@@ -257,7 +257,7 @@ extension UIViewController {
             itemDB.open()
             
             //전체 데이터의 개수
-            UserDefaults.standard.set(allcount, forKey: UDkey().itemcount)
+            UserDefaults.standard.set(searchcount, forKey: UDkey().itemcount)
             
             var itemList: [Item] = itemList
             

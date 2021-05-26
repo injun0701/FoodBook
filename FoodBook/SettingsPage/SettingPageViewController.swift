@@ -9,6 +9,8 @@ import UIKit
 
 class SettingPageViewController: UIViewController {
     
+    @IBOutlet var btnDeclaraion: UIButton!
+    
     //서버 통신을 위한 객체
     let req = URLRequest()
     
@@ -50,9 +52,21 @@ class SettingPageViewController: UIViewController {
 
     }
     
+    @IBAction func btnDeclaraionAction(_ sender: UIButton) {
+        let sb = UIStoryboard(name: "SettingPage", bundle: nil)
+        let navi = sb.instantiateViewController(withIdentifier: "DeclarationListViewController") as! DeclarationListViewController
+        navigationController?.pushViewController(navi, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navbarSetting(title: "설정 페이지")
+        viewSetting()
     }
-    
+    func viewSetting() {
+        btnDeclaraion.isHidden = true
+        if UserDefaults.standard.value(forKey: UDkey().userid) as! String == "admin" {
+            btnDeclaraion.isHidden = false
+        }
+    }
 }

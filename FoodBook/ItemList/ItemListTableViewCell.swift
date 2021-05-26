@@ -16,9 +16,15 @@ class ItemListTableViewCell: UITableViewCell {
     @IBOutlet var lblText: UILabel!
     @IBOutlet var lblPrice: UILabel!
     @IBOutlet var lblLike: UILabel!
+    @IBOutlet var btnEtc: UIButton!
     @IBOutlet var btnLike: UIButton!
     
+    var btnEtcTapHandler: (() -> Void)?
     var btnLikeTapHandler: (() -> Void)?
+    
+    @IBAction func btnEtcAction(_ sender: UIButton) {
+        btnEtcTapHandler?()
+    }
     
     @IBAction func btnLikeAction(_ sender: UIButton) {
         btnLikeTapHandler?()
