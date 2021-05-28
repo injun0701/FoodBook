@@ -87,6 +87,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="btnEdit" destination="HP5-ao-w6t" id="O5x-Ll-iq6"/>
+                <outlet property="btnEtc" destination="beG-9c-o9U" id="Kv5-lQ-Iqz"/>
                 <outlet property="imgViewUser" destination="Pc7-po-j65" id="lT5-yN-r03"/>
                 <outlet property="lblComment" destination="Ik5-CY-uAY" id="IC1-Uf-63D"/>
                 <outlet property="lblPostDate" destination="8dU-NQ-OF4" id="565-NJ-Or4"/>

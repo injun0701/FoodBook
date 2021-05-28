@@ -13,6 +13,7 @@ class CommentListTableViewCell: UITableViewCell {
     @IBOutlet var lblUserName: UILabel!
     @IBOutlet var lblComment: UILabel!
     @IBOutlet var lblPostDate: UILabel!
+    @IBOutlet var btnEtc: UIButton!
     @IBOutlet var btnEdit: UIButton!
     
     var btnEtcHandler: (() -> Void)?

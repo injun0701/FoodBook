@@ -365,6 +365,7 @@ extension CommentListViewController: UITableViewDelegate, UITableViewDataSource 
         if tableList.count == 0 {
             cell.imgViewUser.isHidden = true
             cell.btnEdit.isHidden = true
+            cell.btnEtc.isHidden = true
             cell.lblUserName.text = ""
             cell.lblComment.text = "댓글이 없습니다."
             cell.lblComment.textColor = UIColor.lightGray
@@ -378,6 +379,7 @@ extension CommentListViewController: UITableViewDelegate, UITableViewDataSource 
             cell.lblComment.text = list.comment
             cell.lblPostDate.text = list.updatedate
             cell.imgViewUser.isHidden = false
+            cell.btnEtc.isHidden = false
 
             //유저 이미지 출력
             req.getImg(imgurlName: list.userimgurl!, defaultImgurlName: "userimg", toImg: cell.imgViewUser)
